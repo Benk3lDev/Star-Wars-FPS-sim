@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://deo12i5mkptii"]
 
-[ext_resource type="PackedScene" uid="uid://cmva5m6kygk0n" path="res://test_world.tscn" id="1_6sgls"]
+[ext_resource type="PackedScene" uid="uid://cmva5m6kygk0n" path="res://assets/scenes/level/test_world.tscn" id="1_6sgls"]
 [ext_resource type="Script" uid="uid://cibhd7qnu43ta" path="res://assets/scripts/Managers/game_manager.gd" id="1_gagv8"]
-[ext_resource type="PackedScene" uid="uid://mttyh2jip616" path="res://assets/scenes/user_interface.tscn" id="2_6sgls"]
+[ext_resource type="PackedScene" uid="uid://mttyh2jip616" path="res://assets/scenes/user interface/user_interface.tscn" id="2_6sgls"]
 
 [node name="MainScene" type="Node" unique_id=606893954]
 
