@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://cmva5m6kygk0n"]
+
+[ext_resource type="PackedScene" uid="uid://bwj5y51b6l1ml" path="res://player.tscn" id="2_gy3sr"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1lwx6"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_dsnr4"]
+sky_material = SubResource("ProceduralSkyMaterial_1lwx6")
+
+[sub_resource type="Environment" id="Environment_lf0gk"]
+background_mode = 2
+sky = SubResource("Sky_dsnr4")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dxppu"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_gy3sr"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1lwx6"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_dsnr4"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dxppu"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_1lwx6"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dsnr4"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gy3sr"]
+size = Vector3(0.5, 0.3, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_lf0gk"]
+data = PackedVector3Array(-0.25, 0.14999999, 0.5, 0.25, 0.14999999, 0.5, -0.25, -0.14999999, 0.5, 0.25, 0.14999999, 0.5, 0.25, -0.14999999, 0.5, -0.25, -0.14999999, 0.5, 0.25, 0.14999999, -0.5, -0.25, 0.14999999, -0.5, 0.25, -0.14999999, -0.5, -0.25, 0.14999999, -0.5, -0.25, -0.14999999, -0.5, 0.25, -0.14999999, -0.5, 0.25, 0.14999999, 0.5, 0.25, 0.14999999, -0.5, 0.25, -0.14999999, 0.5, 0.25, 0.14999999, -0.5, 0.25, -0.14999999, -0.5, 0.25, -0.14999999, 0.5, -0.25, 0.14999999, -0.5, -0.25, 0.14999999, 0.5, -0.25, -0.14999999, -0.5, -0.25, 0.14999999, 0.5, -0.25, -0.14999999, 0.5, -0.25, -0.14999999, -0.5, 0.25, 0.14999999, 0.5, -0.25, 0.14999999, 0.5, 0.25, 0.14999999, -0.5, -0.25, 0.14999999, 0.5, -0.25, 0.14999999, -0.5, 0.25, 0.14999999, -0.5, -0.25, -0.14999999, 0.5, 0.25, -0.14999999, 0.5, -0.25, -0.14999999, -0.5, 0.25, -0.14999999, 0.5, 0.25, -0.14999999, -0.5, -0.25, -0.14999999, -0.5)
+
+[node name="test_world" type="Node3D" unique_id=1642084489]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=745652130]
+environment = SubResource("Environment_lf0gk")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1491372969]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="player" parent="." unique_id=199960749 instance=ExtResource("2_gy3sr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 8)
+
+[node name="Geometry" type="Node3D" parent="." unique_id=1913082259]
+
+[node name="floor" type="MeshInstance3D" parent="Geometry" unique_id=593142771]
+transform = Transform3D(40, 0, 0, 0, 1, 0, 0, 0, 40, 0, 0, 0)
+mesh = SubResource("PlaneMesh_dxppu")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/floor" unique_id=265791277]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/floor/StaticBody3D" unique_id=1979738855]
+shape = SubResource("ConcavePolygonShape3D_gy3sr")
+
+[node name="CrouchHeightTest" type="Node3D" parent="Geometry" unique_id=106799061]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Geometry/CrouchHeightTest" unique_id=747196617]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+mesh = SubResource("BoxMesh_1lwx6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/CrouchHeightTest/MeshInstance3D" unique_id=864114937]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/CrouchHeightTest/MeshInstance3D/StaticBody3D" unique_id=1206110264]
+shape = SubResource("ConcavePolygonShape3D_dsnr4")
+
+[node name="JumpHeightTest" type="Node3D" parent="Geometry" unique_id=877883690]
+
+[node name="1m" type="MeshInstance3D" parent="Geometry/JumpHeightTest" unique_id=58893008]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
+mesh = SubResource("BoxMesh_dxppu")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/JumpHeightTest/1m" unique_id=797150795]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/JumpHeightTest/1m/StaticBody3D" unique_id=2027170895]
+shape = SubResource("ConcavePolygonShape3D_1lwx6")
+
+[node name="2m" type="MeshInstance3D" parent="Geometry/JumpHeightTest" unique_id=1990787426]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -6)
+mesh = SubResource("BoxMesh_dsnr4")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/JumpHeightTest/2m" unique_id=776327383]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/JumpHeightTest/2m/StaticBody3D" unique_id=735783994]
+shape = SubResource("ConcavePolygonShape3D_1lwx6")
+
+[node name="StairsTest" type="Node3D" parent="Geometry" unique_id=701522449]
+
+[node name="0_3" type="MeshInstance3D" parent="Geometry/StairsTest" unique_id=1024261297]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14999998, 4)
+mesh = SubResource("BoxMesh_gy3sr")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Geometry/StairsTest/0_3" unique_id=1506187586]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/StairsTest/0_3/StaticBody3D2" unique_id=98333456]
+shape = SubResource("ConcavePolygonShape3D_lf0gk")
+
+[node name="0_4" type="MeshInstance3D" parent="Geometry/StairsTest" unique_id=2019536232]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.15, 4)
+mesh = SubResource("BoxMesh_gy3sr")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Geometry/StairsTest/0_4" unique_id=2103524672]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/StairsTest/0_4/StaticBody3D2" unique_id=1097551322]
+shape = SubResource("ConcavePolygonShape3D_lf0gk")

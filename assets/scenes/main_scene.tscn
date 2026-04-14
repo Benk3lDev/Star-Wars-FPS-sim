@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://deo12i5mkptii"]
+
+[ext_resource type="PackedScene" uid="uid://cmva5m6kygk0n" path="res://test_world.tscn" id="1_6sgls"]
+[ext_resource type="Script" uid="uid://cibhd7qnu43ta" path="res://assets/scripts/Managers/game_manager.gd" id="1_gagv8"]
+[ext_resource type="PackedScene" uid="uid://mttyh2jip616" path="res://assets/scenes/user_interface.tscn" id="2_6sgls"]
+
+[node name="MainScene" type="Node" unique_id=606893954]
+
+[node name="Managers" type="Node" parent="." unique_id=1784637182]
+
+[node name="GameManager" type="Node" parent="Managers" unique_id=780690985]
+script = ExtResource("1_gagv8")
+
+[node name="CurrentLevel" type="Node3D" parent="." unique_id=636245738]
+
+[node name="MyLevel" type="Node3D" parent="CurrentLevel" unique_id=944851392]
+
+[node name="test_world" parent="CurrentLevel/MyLevel" unique_id=1642084489 instance=ExtResource("1_6sgls")]
+
+[node name="UserInterface" parent="." unique_id=1085611445 instance=ExtResource("2_6sgls")]
