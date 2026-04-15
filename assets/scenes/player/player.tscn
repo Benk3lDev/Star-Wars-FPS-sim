@@ -30,10 +30,10 @@
 [ext_resource type="Script" uid="uid://b06audpaynv0n" path="res://assets/scripts/player/states/straight_state.gd" id="22_qtqh7"]
 [ext_resource type="Script" uid="uid://bh30v2ux3a8t2" path="res://assets/scripts/player/states/left_leaning_state.gd" id="25_qtqh7"]
 [ext_resource type="Script" uid="uid://3b06jospe6dx" path="res://assets/scripts/player/states/right_leaning_state.gd" id="26_2wuci"]
-[ext_resource type="Script" uid="uid://be4yn36valak" path="res://assets/weapons/scripts/states/idle_state.gd" id="31_a187t"]
+[ext_resource type="Script" uid="uid://be4yn36valak" path="res://assets/weapons/scripts/states/weapon_idle_state.gd" id="31_a187t"]
 [ext_resource type="Script" uid="uid://dnfiknyf47rf4" path="res://assets/weapons/scripts/weapon_state_machine.gd" id="31_c8ixa"]
-[ext_resource type="Script" uid="uid://gt0susdwqx7q" path="res://assets/weapons/scripts/states/firing_state.gd" id="31_svfgx"]
-[ext_resource type="Script" uid="uid://dip8cvc6fguav" path="res://assets/weapons/scripts/states/empty_state.gd" id="34_nhni2"]
+[ext_resource type="Script" uid="uid://gt0susdwqx7q" path="res://assets/weapons/scripts/states/weapon_firing_state.gd" id="31_svfgx"]
+[ext_resource type="Script" uid="uid://dip8cvc6fguav" path="res://assets/weapons/scripts/states/weapon_empty_state.gd" id="34_nhni2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
 
