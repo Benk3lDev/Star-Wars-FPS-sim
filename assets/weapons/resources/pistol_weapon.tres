@@ -8,8 +8,8 @@
 script = ExtResource("1_0uk5e")
 max_ammo = 50
 fire_rate = 20.0
-is_automatic = true
 projectile_speed = 120.0
+is_hit_scan = false
 weapon_model = ExtResource("2_ibn3s")
 projectile_scene = ExtResource("1_uwekg")
 spread_angle = 0.1

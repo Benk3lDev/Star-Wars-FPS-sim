@@ -8,6 +8,7 @@ class_name PlayerController extends CharacterBody3D
 @export var camera : CameraController
 @export var state_chart : StateChart
 @export var camera_effects : CameraEffects
+@export var weapon_controller : WeaponController
 @export var step_handler : StepHandlerComponent
 @export_category("Movement Settings")
 @export_group("Easing")

@@ -14,7 +14,7 @@ func _on_firing_state_processing(delta: float) -> void:
 		return
 
 	# Check if ammo is empty
-	if weapon_controller.current_ammo <= 0:
+	if not weapon_controller.has_ammo():
 		weapon_controller.weapon_state_chart.send_event("OnEmpty")
 		return
 

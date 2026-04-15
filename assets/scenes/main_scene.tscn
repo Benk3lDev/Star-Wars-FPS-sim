@@ -1,8 +1,13 @@
 [gd_scene format=3 uid="uid://deo12i5mkptii"]
 
 [ext_resource type="PackedScene" uid="uid://cmva5m6kygk0n" path="res://assets/scenes/level/test_world.tscn" id="1_6sgls"]
-[ext_resource type="Script" uid="uid://cibhd7qnu43ta" path="res://assets/scripts/Managers/game_manager.gd" id="1_gagv8"]
+[ext_resource type="Script" uid="uid://cibhd7qnu43ta" path="res://assets/scripts/systems/game_manager.gd" id="1_gagv8"]
+[ext_resource type="Script" uid="uid://cnaqq3oxjvi56" path="res://assets/scripts/systems/weapon_manager.gd" id="2_0ft0v"]
 [ext_resource type="PackedScene" uid="uid://mttyh2jip616" path="res://assets/scenes/user interface/user_interface.tscn" id="2_6sgls"]
+[ext_resource type="Script" uid="uid://dm8x11erh2f4p" path="res://assets/weapons/scripts/weapon_data.gd" id="3_702vk"]
+[ext_resource type="PackedScene" uid="uid://bwj5y51b6l1ml" path="res://assets/scenes/player/player.tscn" id="3_u44wh"]
+[ext_resource type="Resource" uid="uid://3vd32npsfcxg" path="res://assets/weapons/resources/pistol_data.tres" id="4_yecn6"]
+[ext_resource type="Resource" uid="uid://cdt4spdm1avwo" path="res://assets/weapons/resources/shotgun_data.tres" id="5_supws"]
 
 [node name="MainScene" type="Node" unique_id=606893954]
 
@@ -11,10 +16,21 @@
 [node name="GameManager" type="Node" parent="Managers" unique_id=780690985]
 script = ExtResource("1_gagv8")
 
+[node name="WeaponManager" type="Node" parent="Managers" unique_id=1018777902 node_paths=PackedStringArray("player")]
+script = ExtResource("2_0ft0v")
+weapons = Dictionary[int, ExtResource("3_702vk")]({
+1: ExtResource("4_yecn6"),
+2: ExtResource("5_supws")
+})
+player = NodePath("../../CurrentLevel/player")
+
 [node name="CurrentLevel" type="Node3D" parent="." unique_id=636245738]
 
 [node name="MyLevel" type="Node3D" parent="CurrentLevel" unique_id=944851392]
 
 [node name="test_world" parent="CurrentLevel/MyLevel" unique_id=1642084489 instance=ExtResource("1_6sgls")]
+
+[node name="player" parent="CurrentLevel" unique_id=199960749 groups=["player"] instance=ExtResource("3_u44wh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="UserInterface" parent="." unique_id=1085611445 instance=ExtResource("2_6sgls")]

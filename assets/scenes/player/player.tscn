@@ -12,7 +12,6 @@
 [ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="7_ivps1"]
 [ext_resource type="Script" uid="uid://dxpihtxneacr5" path="res://assets/weapons/scripts/weapon_controller.gd" id="8_j8woi"]
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="8_urp6f"]
-[ext_resource type="Resource" uid="uid://wog2axrc7cc8" path="res://assets/weapons/resources/pistol_weapon.tres" id="9_b7y43"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="9_bwjto"]
 [ext_resource type="Script" uid="uid://juohqe3ks247" path="res://assets/scripts/player/states/state_machine.gd" id="10_606se"]
 [ext_resource type="Script" uid="uid://dbhltdd2mdpr" path="res://assets/scripts/player/states/base_state.gd" id="11_nvl01"]
@@ -45,11 +44,12 @@
 radius = 0.375
 height = 1.2
 
-[node name="player" type="CharacterBody3D" unique_id=199960749 node_paths=PackedStringArray("camera", "state_chart", "camera_effects", "step_handler")]
+[node name="player" type="CharacterBody3D" unique_id=199960749 node_paths=PackedStringArray("camera", "state_chart", "camera_effects", "weapon_controller", "step_handler")]
 script = ExtResource("1_4flbx")
 camera = NodePath("CameraController")
 state_chart = NodePath("StateChart")
 camera_effects = NodePath("CameraController/Camera3D")
+weapon_controller = NodePath("Components/WeaponController")
 step_handler = NodePath("Components/StepHandler")
 
 [node name="StateChartDebugger" parent="." unique_id=1240893149 instance=ExtResource("2_urp6f")]
@@ -106,7 +106,6 @@ player = NodePath("../..")
 [node name="WeaponController" type="Node" parent="Components" unique_id=661217526 node_paths=PackedStringArray("camera", "weapon_model_parent", "weapon_state_chart")]
 script = ExtResource("8_j8woi")
 camera = NodePath("../../CameraController/Camera3D")
-current_weapon = ExtResource("9_b7y43")
 weapon_model_parent = NodePath("../../CameraController/Camera3D")
 weapon_state_chart = NodePath("../../WeaponStateChart")
 

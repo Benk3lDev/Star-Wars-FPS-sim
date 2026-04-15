@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 CyclopsAutoload="uid://4siqre3jhe80"
+Managers="*uid://j2hqtoxlmdxl"
 
 [editor]
 
@@ -27,6 +28,10 @@ version_control/autoload_on_startup=true
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/func_godot/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg")
+
+[global_group]
+
+player=""
 
 [input]
 
