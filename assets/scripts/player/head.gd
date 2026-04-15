@@ -12,7 +12,7 @@ var sensitivity = 0.2
 var _rotation : Vector3
 
 @export_category("Leaning Vars")
-@export var lean_angle : float = 15.0
+@export var lean_angle : float = 20
 @export var lean_offset : float = 0.25
 @export var lean_speed : float = 8
 var current_lean : float = 0
