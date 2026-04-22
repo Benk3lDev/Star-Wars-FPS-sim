@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://7wly856hfa0j"]
+
+[ext_resource type="Script" uid="uid://bmjaiqm7acw4j" path="res://assets/scripts/user interface/inventory/inventory_ui.gd" id="1_8dq0w"]
+[ext_resource type="PackedScene" uid="uid://c8hkfk2tf132t" path="res://assets/scenes/user interface/slot.tscn" id="2_kliix"]
+
+[node name="Inventory_UI" type="Control" unique_id=150101117]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8dq0w")
+slot_scene = ExtResource("2_kliix")
+dimensions = Vector2i(5, 6)
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1850587746]
+custom_minimum_size = Vector2(800, 434)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -267.0
+offset_right = 400.0
+offset_bottom = 233.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.36846417, 0.34627578, 0.32640874, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect" unique_id=1754488931]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer" unique_id=852101823]
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=2067917061]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="ColorRect/MarginContainer/VBoxContainer/Header" unique_id=1474245498]
+custom_minimum_size = Vector2(300, 50)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=849339817]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer" unique_id=938287685]
+custom_minimum_size = Vector2(320, 384)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 5

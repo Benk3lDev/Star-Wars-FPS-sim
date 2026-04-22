@@ -30,6 +30,7 @@ var current_speed_modifier = 0
 @onready var crouch_check = $CrouchCheck
 @onready var lean_check = $LeanCheck
 @onready var interaction_raycast = $CameraController/Camera3D/InteractionRaycast
+@onready var inventory_ui = $InventoryUI
 
 var _input_dir : Vector2 = Vector2.ZERO
 var _movement_velocity : Vector3 = Vector3.ZERO
@@ -43,6 +44,8 @@ var previous_velocity : Vector3
 # Get gravity from project settings to keep consistent
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+func _ready() -> void:
+	InventoryGlobal.set_player_reference(self)
 
 
 func crouch() -> void:
@@ -96,6 +99,13 @@ func _input(event: InputEvent) -> void:
 	else:
 		target_lean = 0.0
 
+	if event.is_action_pressed("ui_inventory"):
+		inventory_ui.visible = !inventory_ui.visible
+		get_tree().paused = !get_tree().paused
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func update_rotation(rotation_input) -> void:
 	global_transform.basis = Basis.from_euler(rotation_input)
@@ -115,7 +125,7 @@ func _physics_process(delta):
 	
 	var CURRENT_SPEED = current_speed_modifier
 	
-	if direction:
+	if direction and !inventory_ui.visible:
 		is_move = true
 		current_velocity = lerp(current_velocity, Vector2(direction.x, direction.z) * CURRENT_SPEED, acceleration)
 	else:

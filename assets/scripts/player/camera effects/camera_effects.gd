@@ -59,8 +59,6 @@ const MAX_SCREEN_SHAKE : float = 0.5
 func _process(delta: float) -> void:
 	calculate_view_offset(delta)
 
-	if Input.is_action_pressed("test"):
-		add_fall_kick(2.0)
 
 func calculate_view_offset(delta):
 	if not player:

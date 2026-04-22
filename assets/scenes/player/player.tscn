@@ -10,7 +10,6 @@
 [ext_resource type="Script" uid="uid://c1vp0ojjvaby1" path="res://addons/godot_state_charts/parallel_state.gd" id="6_nvl01"]
 [ext_resource type="Script" uid="uid://clouq8ur1i2hw" path="res://assets/scripts/components/step_climber.gd" id="6_qtqh7"]
 [ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="7_ivps1"]
-[ext_resource type="Script" uid="uid://dxpihtxneacr5" path="res://assets/weapons/scripts/weapon_controller.gd" id="8_j8woi"]
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="8_urp6f"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="9_bwjto"]
 [ext_resource type="Script" uid="uid://juohqe3ks247" path="res://assets/scripts/player/states/state_machine.gd" id="10_606se"]
@@ -32,6 +31,8 @@
 [ext_resource type="Script" uid="uid://be4yn36valak" path="res://assets/weapons/scripts/states/weapon_idle_state.gd" id="31_a187t"]
 [ext_resource type="Script" uid="uid://dnfiknyf47rf4" path="res://assets/weapons/scripts/weapon_state_machine.gd" id="31_c8ixa"]
 [ext_resource type="Script" uid="uid://gt0susdwqx7q" path="res://assets/weapons/scripts/states/weapon_firing_state.gd" id="31_svfgx"]
+[ext_resource type="Script" uid="uid://y0kepwhl55m0" path="res://assets/scripts/user interface/interaction_label.gd" id="33_3oaqr"]
+[ext_resource type="PackedScene" uid="uid://7wly856hfa0j" path="res://assets/scenes/user interface/inventory_ui.tscn" id="34_c8ixa"]
 [ext_resource type="Script" uid="uid://dip8cvc6fguav" path="res://assets/weapons/scripts/states/weapon_empty_state.gd" id="34_nhni2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
@@ -44,22 +45,24 @@
 radius = 0.375
 height = 1.2
 
-[node name="player" type="CharacterBody3D" unique_id=199960749 node_paths=PackedStringArray("camera", "state_chart", "camera_effects", "weapon_controller", "step_handler")]
+[node name="player" type="CharacterBody3D" unique_id=199960749 node_paths=PackedStringArray("camera", "state_chart", "camera_effects", "step_handler")]
 script = ExtResource("1_4flbx")
 camera = NodePath("CameraController")
 state_chart = NodePath("StateChart")
 camera_effects = NodePath("CameraController/Camera3D")
-weapon_controller = NodePath("Components/WeaponController")
 step_handler = NodePath("Components/StepHandler")
 
 [node name="StateChartDebugger" parent="." unique_id=1240893149 instance=ExtResource("2_urp6f")]
+visible = false
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_right = 200.0
-offset_bottom = 100.0
+offset_left = -4.0
+offset_right = 719.0
+offset_bottom = 303.0
 grow_horizontal = 1
 grow_vertical = 1
+enabled = false
 initial_node_to_watch = NodePath("../StateChart")
 
 [node name="StandingCollision" type="CollisionShape3D" parent="." unique_id=340325219]
@@ -102,12 +105,6 @@ script = ExtResource("6_2wuci")
 [node name="StepHandler" type="Node" parent="Components" unique_id=1258817437 node_paths=PackedStringArray("player")]
 script = ExtResource("6_qtqh7")
 player = NodePath("../..")
-
-[node name="WeaponController" type="Node" parent="Components" unique_id=661217526 node_paths=PackedStringArray("camera", "weapon_model_parent", "weapon_state_chart")]
-script = ExtResource("8_j8woi")
-camera = NodePath("../../CameraController/Camera3D")
-weapon_model_parent = NodePath("../../CameraController/Camera3D")
-weapon_state_chart = NodePath("../../WeaponStateChart")
 
 [node name="StateChart" type="Node" parent="." unique_id=1980311667]
 script = ExtResource("5_n7ghd")
@@ -379,10 +376,9 @@ to = NodePath("../Empty")
 event = &"OnEmpty"
 delay_in_seconds = "0.0"
 
-[node name="WeaponStateMachine" type="Node" parent="." unique_id=1712541240 node_paths=PackedStringArray("weapon_controller")]
+[node name="WeaponStateMachine" type="Node" parent="." unique_id=1712541240]
 unique_name_in_owner = true
 script = ExtResource("31_c8ixa")
-weapon_controller = NodePath("../Components/WeaponController")
 
 [node name="FiringState" type="Node" parent="WeaponStateMachine" unique_id=694928737]
 script = ExtResource("31_svfgx")
@@ -392,6 +388,35 @@ script = ExtResource("31_a187t")
 
 [node name="EmptyState" type="Node" parent="WeaponStateMachine" unique_id=419225363]
 script = ExtResource("34_nhni2")
+
+[node name="Interact_UI" type="CanvasLayer" parent="." unique_id=376521560]
+
+[node name="ColorRect" type="ColorRect" parent="Interact_UI" unique_id=1690168343]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 20.0
+offset_right = 20.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="InteractionLabel" type="Label" parent="Interact_UI/ColorRect" unique_id=1781563350]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("33_3oaqr")
+
+[node name="InventoryUI" type="CanvasLayer" parent="." unique_id=1567609645]
+visible = false
+
+[node name="Inventory_UI" parent="InventoryUI" unique_id=150101117 instance=ExtResource("34_c8ixa")]
+offset_left = 2.0
+offset_right = 2.0
 
 [connection signal="state_processing" from="StateChart/Root/Movement/Grounded" to="StateMachine/MovementState/GroundedState" method="_on_grounded_state_processing"]
 [connection signal="state_processing" from="StateChart/Root/Movement/Grounded/Idle" to="StateMachine/MovementState/GroundedState/IdleState" method="_on_idle_state_processing"]
