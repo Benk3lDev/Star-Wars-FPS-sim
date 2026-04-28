@@ -35,12 +35,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 [node name="Inventory_Item" parent="." unique_id=261088470 instance=ExtResource("5_eqalh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.635664, 0.5, 0.9400749)
 
-[node name="@CollisionShape3D@174479" type="CollisionShape3D" parent="Inventory_Item" unique_id=591047533]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inventory_Item" unique_id=591047533]
 shape = SubResource("ConvexPolygonShape3D_miln8")
 
 [node name="Inventory_Item2" parent="." unique_id=126556342 instance=ExtResource("5_eqalh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.760656, 0.5, -10.198309)
 item_data = ExtResource("6_vo808")
 
-[node name="@CollisionShape3D@174480" type="CollisionShape3D" parent="Inventory_Item2" unique_id=1751827201]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Inventory_Item2" unique_id=1751827201]
 shape = SubResource("ConvexPolygonShape3D_06c4h")

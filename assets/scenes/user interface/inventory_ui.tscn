@@ -55,11 +55,28 @@ size_flags_vertical = 4
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="GridContainer" type="GridContainer" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer" unique_id=938287685]
+[node name="Control" type="Control" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer" unique_id=2081929259]
 custom_minimum_size = Vector2(320, 384)
 layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="GridContainer" type="GridContainer" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/Control" unique_id=938287685]
+custom_minimum_size = Vector2(320, 384)
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 384.0
 size_flags_horizontal = 6
 size_flags_vertical = 6
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 5
+
+[node name="ItemLayer" type="Control" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/Control" unique_id=838718509]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

@@ -10,6 +10,7 @@ var is_hovering := false
 enum States {DEFAULT, TAKEN, FREE}
 var state = States.DEFAULT
 var item_stored = null
+var grid_pos : Vector2i
 
 func set_color(a_state = States.DEFAULT) -> void:
 	match a_state:

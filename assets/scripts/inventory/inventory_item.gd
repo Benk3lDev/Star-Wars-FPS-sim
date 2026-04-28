@@ -44,15 +44,10 @@ func _setup_collisions(node: Node):
 
 
 func pickup_item():
-	var item = {
-		"quantity" : 1,
-		"item_type" : item_data.item_type,
-		"item_name" : item_data.item_name,
-		"item_icon" : item_data.icon,
-		"item_effect" : item_data.item_effect,
-		"scene_path" : scene_path,
-	}
-	
 	if InventoryGlobal.player_node:
-		InventoryGlobal.add_item(item)
-		self.queue_free()
+		var success = InventoryGlobal.add_item(item_data)
+		
+		if success:
+			self.queue_free()
+		else:
+			print("Inventory is full or item doesn't fit!")

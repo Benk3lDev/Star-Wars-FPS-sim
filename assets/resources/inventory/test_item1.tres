@@ -9,4 +9,6 @@ script = ExtResource("3_rijmq")
 item_name = "Test Item 1"
 item_type = "Weapon"
 icon = ExtResource("1_h6uag")
+width = 1
+height = 1
 item_model = ExtResource("2_atr1g")
