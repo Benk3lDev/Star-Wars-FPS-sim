@@ -2,8 +2,8 @@ extends Node
 
 
 var inventory = []
-var grid_width : int
-var grid_height : int
+var grid_width : int = 5
+var grid_height : int = 6
 
 signal inventory_updated
 
@@ -12,23 +12,22 @@ var player_node : Node3D = null
 func _ready() -> void:
 	grid_width = 5
 	grid_height = 6
-	_initialize_inventory()
-
-
-func _initialize_inventory():
 	inventory.clear()
 	for i in range(grid_width * grid_height):
 		inventory.append({"is_occupied": false, "item_resource": null})
 
 
 func get_slot_at(x: int, y: int):
-	var index = x +(y * grid_width)
+	var index = x + (y * grid_width)
 	if index >= 0 and index < inventory.size():
 		return inventory[index]
 	return null
 
 
 func is_space_available(x: int, y: int, w: int, h: int) -> bool:
+	if x < 0 or y < 0 or (x + w) > grid_width or (y + h) > grid_height:
+		return false
+	
 	for i in range(x, x + w):
 		for j in range(y, y + h):
 			if i >= grid_width or j >= grid_height: return false
@@ -40,23 +39,36 @@ func is_space_available(x: int, y: int, w: int, h: int) -> bool:
 
 
 func add_item(item_data: ItemData):
-	var w = item_data.width
-	var h = item_data.height
 	
-	for y in range(grid_height - h + 1):
-		for x in range(grid_width - w + 1):
-			if is_space_available(x, y, w, h):
-				_fill_grid_slots(x, y, w, h, item_data)
-				print("Placed ", item_data.item_name, " at ", x, ", ", y)
+	var unique_item = item_data.duplicate()
+	var size = unique_item.get_size()
+	
+	
+	
+	for y in range(grid_height - size.y + 1):
+		for x in range(grid_width - size.x + 1):
+			if is_space_available(x, y, size.x, size.y):
+				_fill_grid_slots(x, y, size.x, size.y, unique_item)
+				print("Placed ", unique_item.item_name, " at ", x, ", ", y)
 				inventory_updated.emit()
 				return true
-		print("No space for item!")
+	unique_item.is_rotated = !unique_item.is_rotated
+	size = unique_item.get_size()
+	for y in range(grid_height - size.y + 1):
+		for x in range(grid_width - size.x + 1):
+			if is_space_available(x, y, size.x, size.y):
+				_fill_grid_slots(x, y, size.x, size.y, unique_item)
+				print("Placed rotated ", unique_item.item_name, " at ", x, ",", y)
+				inventory_updated.emit()
+				return true
+	
+	print("No space for item!")
 	return false
 
 
-func _fill_grid_slots(x: int, y: int, w: int, h: int, item_data):
-	for i in range(x, x + w):
-		for j in range(y, y + h):
+func _fill_grid_slots(x: int, y: int, w: int, h: int, item_data: ItemData):
+	for j in range(y, y + h):
+		for i in range(x, x + w):
 			var index = i + (j * grid_width)
 			
 			if index >= inventory.size(): continue
@@ -73,10 +85,8 @@ func _fill_grid_slots(x: int, y: int, w: int, h: int, item_data):
 
 
 func place_item_at(x: int, y: int, data: ItemData):
-	var w = data.height if data.is_rotated else data.width
-	var h = data.width if data.is_rotated else data.height
-	
-	_fill_grid_slots(x, y, w, h, data)
+	var size = data.get_size()
+	_fill_grid_slots(x, y, size.x, size.y, data)
 	inventory_updated.emit()
 
 
@@ -85,13 +95,15 @@ func remove_item_at_pos(x: int, y: int):
 	if pivot_slot == null or pivot_slot.item_resource == null: return
 	
 	var data = pivot_slot.item_resource
-	var w = data.get("width", 1)
-	var h = data.get("height", 1)
+	var size = data.get_size()
+	var w = size.x
+	var h = size.y
 	
 	for i in range(x, x + w):
 		for j in range(y, y + h):
 			var index = i + (j * grid_width)
-			inventory[index] = {"is_occupied": false}
+			if index < inventory.size():
+				inventory[index] = {"is_occupied": false, "item_resource": null, "is_pivot": false}
 		inventory_updated.emit()
 
 

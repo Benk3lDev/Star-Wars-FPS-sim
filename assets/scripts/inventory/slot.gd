@@ -34,11 +34,12 @@ func _process(delta: float) -> void:
 
 
 func _can_drop_data(at_position, data):
-	if data is ItemData:
-		var size = data.get_size()
-		return InventoryGlobal.is_space_available(grid_pos.x, grid_pos.y, size.x, size.y)
-	return false
+	var size = data.get_size()
+	var result = InventoryGlobal.is_space_available(grid_pos.x, grid_pos.y, size.x, size.y)
+	print("Slot ", grid_pos, " can drop?", result)
+	return result
 
 
 func _drop_data(at_position, data):
+	print("DROPPED at ", grid_pos)
 	InventoryGlobal.place_item_at(grid_pos.x, grid_pos.y, data)

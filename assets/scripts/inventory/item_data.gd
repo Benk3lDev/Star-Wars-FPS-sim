@@ -12,4 +12,7 @@ class_name ItemData extends Resource
 var is_rotated : bool = false
 
 func get_size() -> Vector2i:
-	return Vector2i(height, width) if is_rotated else Vector2i(width, height)
+	if is_rotated:
+		return Vector2i(height, width)
+	else:
+		return Vector2i(width, height)
