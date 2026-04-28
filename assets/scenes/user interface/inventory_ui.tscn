@@ -10,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_8dq0w")
 slot_scene = ExtResource("2_kliix")
 dimensions = Vector2i(5, 6)
@@ -28,6 +29,7 @@ offset_right = 400.0
 offset_bottom = 233.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0.36846417, 0.34627578, 0.32640874, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="ColorRect" unique_id=1754488931]
@@ -37,9 +39,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer" unique_id=852101823]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Header" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=2067917061]
 custom_minimum_size = Vector2(0, 75)
@@ -54,12 +58,14 @@ size_flags_vertical = 4
 [node name="ScrollContainer" type="ScrollContainer" parent="ColorRect/MarginContainer/VBoxContainer" unique_id=849339817]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="Control" type="Control" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer" unique_id=2081929259]
 custom_minimum_size = Vector2(320, 384)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
+mouse_filter = 2
 
 [node name="GridContainer" type="GridContainer" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/Control" unique_id=938287685]
 custom_minimum_size = Vector2(320, 384)

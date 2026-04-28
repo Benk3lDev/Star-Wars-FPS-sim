@@ -10,7 +10,15 @@ signal inventory_updated
 var player_node : Node3D = null
 
 func _ready() -> void:
-	pass
+	grid_width = 5
+	grid_height = 6
+	_initialize_inventory()
+
+
+func _initialize_inventory():
+	inventory.clear()
+	for i in range(grid_width * grid_height):
+		inventory.append({"is_occupied": false, "item_resource": null})
 
 
 func get_slot_at(x: int, y: int):
@@ -62,6 +70,14 @@ func _fill_grid_slots(x: int, y: int, w: int, h: int, item_data):
 			
 			# Overwrite the index directly
 			inventory[index] = new_slot_data
+
+
+func place_item_at(x: int, y: int, data: ItemData):
+	var w = data.height if data.is_rotated else data.width
+	var h = data.width if data.is_rotated else data.height
+	
+	_fill_grid_slots(x, y, w, h, data)
+	inventory_updated.emit()
 
 
 func remove_item_at_pos(x: int, y: int):

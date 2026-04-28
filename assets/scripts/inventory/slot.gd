@@ -31,3 +31,14 @@ func _process(delta: float) -> void:
 		if is_hovering:
 			is_hovering = false
 			emit_signal("slot_exited",self)
+
+
+func _can_drop_data(at_position, data):
+	if data is ItemData:
+		var size = data.get_size()
+		return InventoryGlobal.is_space_available(grid_pos.x, grid_pos.y, size.x, size.y)
+	return false
+
+
+func _drop_data(at_position, data):
+	InventoryGlobal.place_item_at(grid_pos.x, grid_pos.y, data)

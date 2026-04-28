@@ -10,20 +10,28 @@ var grid_array := []
 var current_held_item_size = Vector2i(2, 2)
 var highlighted_slots: Array = []
 var current_hovered_slot
+var held_item_data: ItemData = null
 
 func _ready():
 	InventoryGlobal.grid_width = dimensions.x
 	InventoryGlobal.grid_height = dimensions.y
 	
-	InventoryGlobal.inventory.clear()
-	for i in range(dimensions.x * dimensions.y):
+	var total_slots = dimensions.x * dimensions.y
+	if InventoryGlobal.inventory.size() == 0:
+		for i in range(total_slots):
+			InventoryGlobal.inventory.append({"is_occupied": false})
+	
+	for child in grid_container.get_children():
+		child.queue_free()
+	
+	for i in range(total_slots):
 		var x = i % dimensions.x
-		var y = i / dimensions.y
-		InventoryGlobal.inventory.append({"is_occupied": false, "item_resource": null})
+		var y = i / dimensions.x
 		create_slot(x, y)
 	
 	InventoryGlobal.inventory_updated.connect(refresh_items)
-		
+	refresh_items()
+	
 	item_layer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	item_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
@@ -60,7 +68,15 @@ func spawn_item_icon(slot_index: int, data: ItemData):
 	var item_icon = preload("res://assets/scenes/user interface/item_ui.tscn").instantiate()
 	item_layer.add_child(item_icon)
 	
+	item_icon.drag_started.connect(_on_item_drag_started)
+	
 	item_icon.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	
+	var x = slot_index % InventoryGlobal.grid_width
+	var y = slot_index / InventoryGlobal.grid_width
+	
+	item_icon.item_data = data
+	item_icon.grid_pos = Vector2i(x, y)
 	
 	var target_slot = grid_container.get_child(slot_index)
 	if target_slot.size.x <= 5:
@@ -115,3 +131,19 @@ func _clear_highlights():
 		if is_instance_valid(slot):
 			slot.set_color(slot.States.DEFAULT)
 	highlighted_slots.clear()
+
+
+func _on_item_drag_started(data):
+	held_item_data = data
+	current_held_item_size = data.get_size()
+
+
+func _notification(what):
+	if what == NOTIFICATION_DRAG_END:
+		held_item_data = null
+
+
+func _gui_input(event: InputEvent) -> void:
+	if event.is_action_pressed("item_rotate") and held_item_data:
+		held_item_data.is_rotated = !held_item_data.is_rotated
+		current_held_item_size = held_item_data.get_size()
