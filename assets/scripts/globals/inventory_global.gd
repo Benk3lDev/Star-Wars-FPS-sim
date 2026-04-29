@@ -25,6 +25,7 @@ func get_slot_at(x: int, y: int):
 
 
 func is_space_available(x: int, y: int, w: int, h: int) -> bool:
+	print("Checking placement at: ", x, ",", y, " Size: ", w, "x", h, "Grid H: ", grid_height)
 	if x < 0 or y < 0 or (x + w) > grid_width or (y + h) > grid_height:
 		return false
 	
@@ -67,6 +68,8 @@ func add_item(item_data: ItemData):
 
 
 func _fill_grid_slots(x: int, y: int, w: int, h: int, item_data: ItemData):
+	print("Filling at: ", x, ",", y, " for item size: ", w, "x", h)
+	
 	for j in range(y, y + h):
 		for i in range(x, x + w):
 			var index = i + (j * grid_width)

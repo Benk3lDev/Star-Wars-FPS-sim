@@ -38,6 +38,13 @@ func update_visuals():
 		texture = item_data.icon
 		var display_width = item_data.width
 		var display_height = item_data.height
+		var slot_size = 64
 		if item_data.is_rotated:
 			display_width = item_data.height
 			display_height = item_data.width
+			rotation_degrees = 90
+		else:
+			rotation_degrees = 0
+			
+		custom_minimum_size = Vector2(display_width * slot_size, display_height * slot_size)
+		pivot_offset = custom_minimum_size / 2

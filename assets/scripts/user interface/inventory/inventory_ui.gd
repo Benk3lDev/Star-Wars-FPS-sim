@@ -105,6 +105,13 @@ func spawn_item_icon(slot_index: int, data: ItemData):
 	item_icon.update_visuals()
 
 
+func get_slot_at_coords(x: int, y: int):
+	var index = x + (y * dimensions.x)
+	if index >= 0 and index < grid_container.get_child_count():
+		return grid_container.get_child(index)
+	return null
+
+
 func get_slots_in_range(start_pos: Vector2i, size: Vector2i) -> Array:
 	var affected_slots = []
 	for y in range(start_pos.y, start_pos.y + size.y):
@@ -136,6 +143,28 @@ func _on_slot_mouse_exited(a_Slot):
 		current_hovered_slot = null
 
 
+func _can_drop_data(_at_position, data):
+	var local_mouse = grid_container.get_local_mouse_position()
+	var s_size = grid_container.get_child(0).size
+	var gx = int(local_mouse.x / s_size.x)
+	var gy = int(local_mouse.y / s_size.y)
+	
+	var current_size = data.get_size()
+	
+	if InventoryGlobal.is_space_available(gx, gy, data.width, data.height):
+		return true
+	return false
+
+
+func _drop_data(_at_position, data):
+	var local_mouse = grid_container.get_local_mouse_position()
+	var s_size = grid_container.get_child(0).size
+	var gx = int(local_mouse.x / s_size.x)
+	var gy = int(local_mouse.y / s_size.y)
+	
+	InventoryGlobal.place_item(gx, gy, data)
+
+
 func _clear_highlights():
 	for slot in highlighted_slots:
 		if is_instance_valid(slot):
@@ -154,6 +183,27 @@ func _notification(what):
 		held_item_data = null
 		active_preview_node = null
 
+
+func _process(_delta):
+	if not is_visible_in_tree(): return
+	
+	var local_mouse = grid_container.get_local_mouse_position()
+	
+	var first_slot = grid_container.get_child(0)
+	if not first_slot: return
+	var s_size = first_slot.size
+	
+	var gx = int(local_mouse.x / s_size.x)
+	var gy = int(local_mouse.y / s_size.y)
+	
+	if gx >= 0 and gx < dimensions.x and gy >= 0 and gy < dimensions.y:
+		var slot = get_slot_at_coords(gx, gy)
+		if slot and slot != current_hovered_slot:
+			_on_slot_mouse_entered(slot)
+	else:
+		if current_hovered_slot != null:
+			_clear_highlights()
+			current_hovered_slot = null
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("item_rotate") and held_item_data:
