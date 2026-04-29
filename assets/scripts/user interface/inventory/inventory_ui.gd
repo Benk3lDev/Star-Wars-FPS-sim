@@ -12,6 +12,7 @@ var highlighted_slots: Array = []
 var current_hovered_slot
 var held_item_data: ItemData = null
 var active_preview_node: Control = null
+var last_original_pos : Vector2i
 
 func _ready():
 	var total_slots = dimensions.x * dimensions.y
@@ -82,22 +83,19 @@ func spawn_item_icon(slot_index: int, data: ItemData):
 	item_icon.grid_pos = Vector2i(x, y)
 	
 	var target_slot = grid_container.get_child(slot_index)
-	while target_slot.position == Vector2.ZERO and slot_index != 0:
-		await get_tree().process_frame
-	
 	item_icon.position = target_slot.position
 	
 	var slot_size = target_slot.size
 	var base_size = Vector2(data.width * slot_size.x, data.height * slot_size.y)
 	item_icon.size = base_size
-	item_icon.pivot_offset = base_size / 2
 	
 	if data.is_rotated:
 		item_icon.rotation_degrees = 90
-		var offset = (base_size.x - base_size.y) / 2
-		item_icon.position += Vector2(-offset, offset)
+		item_icon.pivot_offset = Vector2(0, 0)
+		item_icon.position.x += slot_size.x
 	else:
 		item_icon.rotation_degrees = 0
+		item_icon.pivot_offset = Vector2(0, 0)
 		
 	item_icon.texture = data.icon
 	item_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -155,7 +153,6 @@ func _can_drop_data(_at_position, data):
 		return true
 	return false
 
-
 func _drop_data(_at_position, data):
 	var local_mouse = grid_container.get_local_mouse_position()
 	var s_size = grid_container.get_child(0).size
@@ -172,14 +169,19 @@ func _clear_highlights():
 	highlighted_slots.clear()
 
 
-func _on_item_drag_started(data, preview_node):
-	held_item_data = data
-	current_held_item_size = data.get_size()
+func _on_item_drag_started(data_dict, preview_node):
+	held_item_data = data_dict.item_data
+	last_original_pos = data_dict.original_pos
+	current_held_item_size = held_item_data.get_size()
 	active_preview_node = preview_node
 
 
 func _notification(what):
 	if what == NOTIFICATION_DRAG_END:
+		if not get_viewport().gui_is_drag_successful():
+			if held_item_data:
+				InventoryGlobal.place_item(last_original_pos.x, last_original_pos.y, held_item_data)
+		
 		held_item_data = null
 		active_preview_node = null
 
@@ -227,15 +229,13 @@ func _update_drag_preview():
 			var slot_size = grid_container.get_child(0).size
 			var base_pixel_size = Vector2(held_item_data.width * slot_size.x, held_item_data.height * slot_size.y)
 		
-			icon.custom_minimum_size = base_pixel_size
 			icon.size = base_pixel_size
 			
-			icon.pivot_offset = base_pixel_size / 2
+			icon.pivot_offset = Vector2.ZERO
 		
 			if held_item_data.is_rotated:
 				icon.rotation_degrees = 90
-				var offset = (base_pixel_size.x -base_pixel_size.y) / 2
-				icon.position = Vector2(-offset, offset)
+				icon.position = Vector2(slot_size.x, 0)
 			else:
 				icon.rotation_degrees = 0
 				icon.position = Vector2.ZERO

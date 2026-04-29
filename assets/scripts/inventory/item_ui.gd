@@ -6,6 +6,10 @@ var grid_pos : Vector2i
 signal drag_started(data, preview_node)
 
 func _get_drag_data(_at_position):
+	var drag_data = {
+		"item_data": item_data,
+		"original_pos": grid_pos
+	}
 	
 	InventoryGlobal.remove_item_at_pos(grid_pos.x, grid_pos.y)
 	
@@ -18,11 +22,12 @@ func _get_drag_data(_at_position):
 	preview.size = self.size
 	preview.modulate.a = 0.5
 	
-	preview.position = -preview.size / 2
-	preview.pivot_offset = preview.size / 2
+	preview.position = Vector2.ZERO
+	preview.pivot_offset = Vector2.ZERO
 	
 	if item_data.is_rotated:
 		preview.rotation_degrees = 90
+		preview.position.x = InventoryGlobal.slot_size
 	
 	preview_handle.add_child(preview)
 	
@@ -30,21 +35,22 @@ func _get_drag_data(_at_position):
 	
 	drag_started.emit(item_data, preview_handle)
 	
-	return item_data
+	return drag_data
 
 
 func update_visuals():
 	if item_data:
 		texture = item_data.icon
-		var display_width = item_data.width
-		var display_height = item_data.height
-		var slot_size = 64
+		var base_w = item_data.width * InventoryGlobal.slot_size
+		var base_h = item_data.height * InventoryGlobal.slot_size
+		
+		custom_minimum_size = Vector2(base_w, base_h)
+		size = custom_minimum_size
+		
+		pivot_offset = Vector2.ZERO
+		
 		if item_data.is_rotated:
-			display_width = item_data.height
-			display_height = item_data.width
 			rotation_degrees = 90
 		else:
 			rotation_degrees = 0
 			
-		custom_minimum_size = Vector2(display_width * slot_size, display_height * slot_size)
-		pivot_offset = custom_minimum_size / 2

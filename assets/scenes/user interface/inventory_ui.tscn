@@ -13,20 +13,17 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_8dq0w")
 slot_scene = ExtResource("2_kliix")
-dimensions = Vector2i(5, 6)
+dimensions = Vector2i(5, 5)
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1850587746]
 custom_minimum_size = Vector2(800, 434)
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = 14
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -267.0
-offset_right = 400.0
-offset_bottom = 233.0
+offset_top = -324.0
+offset_bottom = 217.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -63,14 +60,14 @@ mouse_filter = 2
 follow_focus = true
 
 [node name="InventoryContainer" type="Control" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer" unique_id=2081929259]
-custom_minimum_size = Vector2(320, 425)
+custom_minimum_size = Vector2(320, 320)
 layout_mode = 2
 size_flags_horizontal = 6
-size_flags_vertical = 3
+size_flags_vertical = 6
 mouse_filter = 2
 
 [node name="GridContainer" type="GridContainer" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/InventoryContainer" unique_id=938287685]
-custom_minimum_size = Vector2(320, 384)
+custom_minimum_size = Vector2(320, 320)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

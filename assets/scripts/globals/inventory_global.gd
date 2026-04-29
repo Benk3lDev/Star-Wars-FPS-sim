@@ -3,7 +3,8 @@ extends Node
 
 var inventory = []
 var grid_width : int = 5
-var grid_height : int = 6
+var grid_height : int = 5
+var slot_size : int = 64
 
 signal inventory_updated
 
@@ -11,7 +12,7 @@ var player_node : Node3D = null
 
 func _ready() -> void:
 	grid_width = 5
-	grid_height = 6
+	grid_height = 5
 	inventory.clear()
 	for i in range(grid_width * grid_height):
 		inventory.append({"is_occupied": false, "item_resource": null})
