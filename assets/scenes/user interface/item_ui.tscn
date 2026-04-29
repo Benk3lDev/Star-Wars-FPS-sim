@@ -7,3 +7,12 @@ mouse_filter = 0
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("1_1i3so")
+
+[node name="QuantityLabel" type="Label" parent="." unique_id=413033352]
+z_index = 1
+layout_mode = 1
+offset_right = 20.0
+offset_bottom = 20.0
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 1
+vertical_alignment = 1

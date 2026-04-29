@@ -40,12 +40,27 @@ func is_space_available(x: int, y: int, w: int, h: int) -> bool:
 	return true
 
 
-func add_item(item_data: ItemData):
+func add_item(new_item: ItemData):
 	
-	var unique_item = item_data.duplicate()
+	if new_item.is_stackable:
+		for i in range(inventory.size()):
+			var slot = inventory[i]
+			if slot.get("is_pivot", false):
+				var existing_item = slot.item_resource
+				if existing_item and existing_item.item_name == new_item.item_name:
+					var space_left = existing_item.max_stack_size - existing_item.quantity
+					
+					if space_left > 0:
+						var amount_to_add = min(space_left, new_item.quantity)
+						existing_item.quantity += amount_to_add
+						new_item.quantity -= amount_to_add
+						
+						if new_item.quantity <= 0:
+							inventory_updated.emit()
+							return true
+	
+	var unique_item = new_item.duplicate()
 	var size = unique_item.get_size()
-	
-	
 	
 	for y in range(grid_height - size.y + 1):
 		for x in range(grid_width - size.x + 1):
@@ -88,10 +103,26 @@ func _fill_grid_slots(x: int, y: int, w: int, h: int, item_data: ItemData):
 			inventory[index] = new_slot_data
 
 
-func place_item_at(x: int, y: int, data: ItemData):
-	var size = data.get_size()
-	_fill_grid_slots(x, y, size.x, size.y, data)
-	inventory_updated.emit()
+func place_item_at(gx: int, gy: int, new_item: ItemData) -> bool:
+	var index = gx + (gy * grid_width)
+	var existing_slot = inventory[index]
+	
+	if existing_slot.item_resource and existing_slot.item_resource.item_name == new_item.item_name:
+		if existing_slot.item_resource.stackable:
+			var space_left = existing_slot.item_resource.max_stack_size - existing_slot.item_resource.quantity
+			if space_left > 0:
+				var amount_to_add = min(space_left, new_item.quantity)
+				existing_slot.item_resource.quantity += amount_to_add
+				inventory_updated.emit()
+				return true
+	
+	var size = new_item.get_size()
+	if is_space_available(gx, gy, size.x, size.y):
+		_fill_grid_slots(gx, gy, size.x, size.y, new_item)
+		inventory_updated.emit()
+		return true
+	
+	return false
 
 
 func remove_item_at_pos(x: int, y: int):

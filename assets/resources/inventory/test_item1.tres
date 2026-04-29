@@ -12,3 +12,5 @@ icon = ExtResource("1_h6uag")
 width = 1
 height = 1
 item_model = ExtResource("2_atr1g")
+is_stackable = true
+max_stack_size = 2

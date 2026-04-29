@@ -13,6 +13,7 @@ var current_hovered_slot
 var held_item_data: ItemData = null
 var active_preview_node: Control = null
 var last_original_pos : Vector2i
+var original_rotation : bool
 
 func _ready():
 	var total_slots = dimensions.x * dimensions.y
@@ -36,6 +37,8 @@ func create_slot(x, y):
 
 	var new_slot = slot_scene.instantiate()
 	grid_container.add_child(new_slot)
+	
+	new_slot.owner = self
 	
 	new_slot.grid_pos = Vector2i(x, y)
 	
@@ -83,19 +86,18 @@ func spawn_item_icon(slot_index: int, data: ItemData):
 	item_icon.grid_pos = Vector2i(x, y)
 	
 	var target_slot = grid_container.get_child(slot_index)
-	item_icon.position = target_slot.position
+	var target_pos = target_slot.position
 	
 	var slot_size = target_slot.size
-	var base_size = Vector2(data.width * slot_size.x, data.height * slot_size.y)
-	item_icon.size = base_size
+	var base_width = data.width * slot_size.x
+	var base_height = data.height * slot_size.y
 	
 	if data.is_rotated:
 		item_icon.rotation_degrees = 90
-		item_icon.pivot_offset = Vector2(0, 0)
-		item_icon.position.x += slot_size.x
+		item_icon.position = Vector2(target_pos.x + base_height, target_pos.y)
 	else:
 		item_icon.rotation_degrees = 0
-		item_icon.pivot_offset = Vector2(0, 0)
+		item_icon.position = target_pos
 		
 	item_icon.texture = data.icon
 	item_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -125,11 +127,15 @@ func _on_slot_mouse_entered(a_Slot):
 	_clear_highlights()
 	
 	highlighted_slots = get_slots_in_range(a_Slot.grid_pos, current_held_item_size)
-	var fits = highlighted_slots.size() == (current_held_item_size.x * current_held_item_size.y)
+	
+	var within_bounds = highlighted_slots.size() == (current_held_item_size.x * current_held_item_size.y)
+	var is_free = InventoryGlobal.is_space_available(a_Slot.grid_pos.x, a_Slot.grid_pos.y, current_held_item_size.x, current_held_item_size.y)
+	
 	current_hovered_slot = a_Slot
+	
 	if held_item_data:
 		for slot in highlighted_slots:
-			if fits:
+			if within_bounds and is_free:
 				slot.set_color(a_Slot.States.FREE)
 			else:
 				slot.set_color(a_Slot.States.TAKEN)
@@ -170,8 +176,13 @@ func _clear_highlights():
 
 
 func _on_item_drag_started(data_dict, preview_node):
-	held_item_data = data_dict.item_data
-	last_original_pos = data_dict.original_pos
+	if data_dict is Dictionary:
+		held_item_data = data_dict.item_data
+		last_original_pos = data_dict.original_pos
+	else:
+		held_item_data = data_dict
+	
+	original_rotation = held_item_data.is_rotated
 	current_held_item_size = held_item_data.get_size()
 	active_preview_node = preview_node
 
@@ -180,10 +191,13 @@ func _notification(what):
 	if what == NOTIFICATION_DRAG_END:
 		if not get_viewport().gui_is_drag_successful():
 			if held_item_data:
-				InventoryGlobal.place_item(last_original_pos.x, last_original_pos.y, held_item_data)
+				held_item_data.is_rotated = original_rotation
+				InventoryGlobal.place_item_at(last_original_pos.x, last_original_pos.y, held_item_data)
 		
 		held_item_data = null
 		active_preview_node = null
+		current_held_item_size = Vector2i.ZERO
+		_clear_highlights()
 
 
 func _process(_delta):

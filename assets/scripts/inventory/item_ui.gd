@@ -1,5 +1,7 @@
 extends TextureRect
 
+@onready var quantity_label = $QuantityLabel
+
 var item_data : ItemData
 var grid_pos : Vector2i
 
@@ -33,12 +35,14 @@ func _get_drag_data(_at_position):
 	
 	set_drag_preview(preview_handle)
 	
-	drag_started.emit(item_data, preview_handle)
+	drag_started.emit(drag_data, preview_handle)
 	
 	return drag_data
 
 
 func update_visuals():
+	if not item_data: return
+	
 	if item_data:
 		texture = item_data.icon
 		var base_w = item_data.width * InventoryGlobal.slot_size
@@ -53,4 +57,22 @@ func update_visuals():
 			rotation_degrees = 90
 		else:
 			rotation_degrees = 0
+		
+	if item_data.is_stackable and item_data.quantity > 1:
+		quantity_label.text = str(item_data.quantity)
+		quantity_label.show()
+		
+		quantity_label.pivot_offset = Vector2.ZERO
+		
+		if item_data.is_rotated:
 			
+			quantity_label.rotation_degrees = -90
+			var padding = 5
+			quantity_label.position.x = 2
+			quantity_label.position.y = size.x + 2
+		
+		else:
+			quantity_label.rotation_degrees = 0
+			quantity_label.position = size - quantity_label.size - Vector2(2, 2)
+	else:
+		quantity_label.hide()

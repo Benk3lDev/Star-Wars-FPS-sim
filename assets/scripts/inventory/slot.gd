@@ -34,12 +34,27 @@ func _process(delta: float) -> void:
 
 
 func _can_drop_data(at_position, data):
-	var size = data.get_size()
-	var result = InventoryGlobal.is_space_available(grid_pos.x, grid_pos.y, size.x, size.y)
-	print("Slot ", grid_pos, " can drop?", result)
-	return result
+	var item_resource = data.get("item_data")
+	if not item_resource:
+		return false
+	
+	var grid = owner.grid_container
+	var local_mouse = grid.get_local_mouse_position()
+	
+	var gx = int(local_mouse.x / size.x)
+	var gy = int(local_mouse.y / size.y)
+	
+	var item_size = item_resource.get_size()
+	
+	return InventoryGlobal.is_space_available(gx, gy, item_size.x, item_size.y)
 
 
 func _drop_data(at_position, data):
-	print("DROPPED at ", grid_pos)
-	InventoryGlobal.place_item_at(grid_pos.x, grid_pos.y, data)
+	var item_resource = data.get("item_data")
+	var grid = owner.grid_container
+	var local_mouse = grid.get_local_mouse_position()
+	
+	var gx = int(local_mouse.x / size.x)
+	var gy = int(local_mouse.y / size.y)
+	
+	InventoryGlobal.place_item_at(gx, gy, item_resource)

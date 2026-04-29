@@ -8,6 +8,9 @@ class_name ItemData extends Resource
 @export var height : int
 @export var hotbar_icon : Texture2D
 @export var item_model : PackedScene
+@export var is_stackable : bool
+@export var max_stack_size : int
+var quantity : int = 1
 
 var is_rotated : bool = false
 
