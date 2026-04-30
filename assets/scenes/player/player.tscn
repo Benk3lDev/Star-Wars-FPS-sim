@@ -53,7 +53,6 @@ camera_effects = NodePath("CameraController/Camera3D")
 step_handler = NodePath("Components/StepHandler")
 
 [node name="StateChartDebugger" parent="." unique_id=1240893149 instance=ExtResource("2_urp6f")]
-visible = false
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
@@ -95,6 +94,8 @@ player = NodePath("../..")
 
 [node name="InteractionRaycast" type="RayCast3D" parent="CameraController/Camera3D" unique_id=1863295613]
 target_position = Vector3(0, 0, -3)
+collision_mask = 2
+hit_from_inside = true
 script = ExtResource("4_7ahtn")
 
 [node name="Components" type="Node" parent="." unique_id=1284863860]

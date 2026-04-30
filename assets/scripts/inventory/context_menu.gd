@@ -20,18 +20,20 @@ func open(item: ItemData, slot_pos: Vector2i, mouse_pos: Vector2):
 	show()
 
 
-func _on_use_button_pressed():
-	action_selected.emit("use", current_item, current_slot_pos)
-	hide()
-
-
-func _on_drop_button_pressed():
+func _on_drop_pressed() -> void:
 	action_selected.emit("drop", current_item, current_slot_pos)
 	hide()
 
 
-func _on_equip_button_pressed():
-	action_selected.emit("equip", current_item, current_slot_pos)
+func _on_use_pressed():
+	print("use")
+	#action_selected.emit("use", current_item, current_slot_pos)
+	hide()
+
+
+func _on_equip_pressed():
+	print("equip")
+	#action_selected.emit("equip", current_item, current_slot_pos)
 	hide()
 
 

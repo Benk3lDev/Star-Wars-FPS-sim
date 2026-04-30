@@ -30,6 +30,7 @@ func _ready():
 	InventoryGlobal.inventory_updated.connect(refresh_items)
 	visibility_changed.connect(_on_visibility_changed)
 	InventoryGlobal.request_context_menu.connect(_on_context_menu_requested)
+	context_menu.action_selected.connect(_on_context_menu_action)
 	
 	item_layer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
@@ -266,3 +267,8 @@ func _update_drag_preview():
 
 func _on_context_menu_requested(item: ItemData, pivot_pos: Vector2i, mouse_pos: Vector2):
 	context_menu.open(item, pivot_pos, mouse_pos)
+
+
+func _on_context_menu_action(action: String, item: ItemData, pivot_pos: Vector2i):
+	if action == "drop":
+		InventoryGlobal.drop_item(pivot_pos.x, pivot_pos.y)

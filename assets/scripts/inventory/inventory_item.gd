@@ -1,5 +1,5 @@
 @tool
-extends StaticBody3D
+extends RigidBody3D
 
 
 @export var item_data : ItemData:
@@ -33,12 +33,19 @@ func load_item_model():
 
 func _setup_collisions(node: Node):
 	for child in node.get_children():
-		if child is CollisionShape3D:
-			child.get_parent().remove_child(child)
-			add_child(child)
-		
+		if child is MeshInstance3D:
+			var col_shape_node = CollisionShape3D.new()
+			
+			col_shape_node.shape = child.mesh.create_convex_shape()
+			
+			add_child(col_shape_node)
+			
+			col_shape_node.top_level = false
+			
+			col_shape_node.transform = child.transform
+			
 			if Engine.is_editor_hint():
-				child.owner = get_tree().edited_scene_root
+				col_shape_node.owner = get_tree().edited_scene_rootwd
 	
 		_setup_collisions(child)
 

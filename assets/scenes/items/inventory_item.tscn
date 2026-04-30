@@ -1,10 +1,16 @@
 [gd_scene format=3 uid="uid://c5bkjlnxari1e"]
 
 [ext_resource type="Script" uid="uid://csa13tcal5w1s" path="res://assets/scripts/inventory/inventory_item.gd" id="1_07e5k"]
-[ext_resource type="Resource" uid="uid://b482k6fwuxmll" path="res://assets/resources/inventory/test_item1.tres" id="2_ow3d3"]
 
-[node name="Inventory_Item" type="StaticBody3D" unique_id=261088470 groups=["Items"]]
+[sub_resource type="BoxShape3D" id="BoxShape3D_t2584"]
+
+[node name="Inventory_Item" type="RigidBody3D" unique_id=2043428686 groups=["Items"]]
+physics_interpolation_mode = 1
+collision_layer = 2
+continuous_cd = true
 script = ExtResource("1_07e5k")
-item_data = ExtResource("2_ow3d3")
 
 [node name="ModelContainer" type="Node3D" parent="." unique_id=518068066]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1734748705]
+shape = SubResource("BoxShape3D_t2584")

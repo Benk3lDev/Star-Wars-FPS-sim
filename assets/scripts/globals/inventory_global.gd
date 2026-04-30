@@ -143,3 +143,40 @@ func remove_item_at_pos(x: int, y: int):
 
 func set_player_reference(player):
 	player_node = player
+
+
+func drop_item(gx: int, gy: int):
+	var slot = get_slot_at(gx, gy)
+	if not slot or not slot.item_resource:
+		return
+	
+	var item_data = slot.item_resource
+	
+	if player_node and item_data.item_model:
+		_spawn_item_in_world(item_data)
+		
+		remove_item_at_pos(gx, gy)
+		print("Dropped: ", item_data.item_name)
+		
+	else:
+		print("Cannot drop: Player missing or Item has no scene!")
+
+
+func _spawn_item_in_world(item_data: ItemData):
+	var item_instance = item_data.item_model.instantiate()
+	
+	get_tree().root.add_child(item_instance)
+	
+	var cam = get_viewport().get_camera_3d()
+	
+	if cam:
+		var forward_vector = -cam.global_transform.basis.z
+		var spawn_pos = cam.global_position + (forward_vector * 2)
+		item_instance.global_position = spawn_pos
+		
+		if item_instance is RigidBody3D:
+			var throw_force = 5.0
+			item_instance.apply_central_impulse(forward_vector * throw_force)
+	
+	else:
+		item_instance.global_position = player_node.global_position + Vector3(0, 1.5, -1)
