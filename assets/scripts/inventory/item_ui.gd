@@ -6,6 +6,7 @@ var item_data : ItemData
 var grid_pos : Vector2i
 
 signal drag_started(data, preview_node)
+signal request_context_menu(item: ItemData, pivot_pos: Vector2i, mouse_pos: Vector2)
 
 func _get_drag_data(_at_position):
 	var drag_data = {
@@ -76,3 +77,18 @@ func update_visuals():
 			quantity_label.position = size - quantity_label.size - Vector2(2, 2)
 	else:
 		quantity_label.hide()
+
+
+func _gui_input(event: InputEvent):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			print ("Right click detected on slot!")
+			var slot_data = InventoryGlobal.inventory[grid_pos.x + (grid_pos.y * InventoryGlobal.grid_width)]
+			if slot_data.get("is_occupied", false):
+				var px = slot_data.pivot_gx
+				var py = slot_data.pivot_gy
+				var pivot_slot = InventoryGlobal.inventory[px + (py * InventoryGlobal.grid_width)]
+				
+				var item = pivot_slot.item_resource
+				if item:
+					InventoryGlobal.request_context_menu.emit(item, Vector2i(px, py), get_global_mouse_position())

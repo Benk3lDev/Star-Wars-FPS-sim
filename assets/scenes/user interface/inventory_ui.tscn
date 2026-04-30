@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bmjaiqm7acw4j" path="res://assets/scripts/user interface/inventory/inventory_ui.gd" id="1_8dq0w"]
 [ext_resource type="PackedScene" uid="uid://c8hkfk2tf132t" path="res://assets/scenes/user interface/slot.tscn" id="2_kliix"]
+[ext_resource type="PackedScene" uid="uid://dx6pio8osa5so" path="res://assets/scenes/user interface/context_menu.tscn" id="3_0k2qo"]
 
 [node name="Inventory_UI" type="Control" unique_id=150101117]
 layout_mode = 3
@@ -89,3 +90,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="ContextMenu" parent="." unique_id=1344355442 instance=ExtResource("3_0k2qo")]
+z_index = 1
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 48.0

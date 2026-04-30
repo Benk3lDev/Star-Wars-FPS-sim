@@ -2,6 +2,7 @@ extends Control
 
 @onready var grid_container = $ColorRect/MarginContainer/VBoxContainer/ScrollContainer/InventoryContainer/GridContainer
 @onready var item_layer = $ColorRect/MarginContainer/VBoxContainer/ScrollContainer/InventoryContainer/ItemLayer
+@onready var context_menu = $ContextMenu
 
 @export var slot_scene : PackedScene
 @export var dimensions : Vector2i
@@ -28,6 +29,7 @@ func _ready():
 	
 	InventoryGlobal.inventory_updated.connect(refresh_items)
 	visibility_changed.connect(_on_visibility_changed)
+	InventoryGlobal.request_context_menu.connect(_on_context_menu_requested)
 	
 	item_layer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
@@ -44,6 +46,9 @@ func create_slot(x, y):
 	
 	new_slot.slot_entered.connect(_on_slot_mouse_entered)
 	new_slot.slot_exited.connect(_on_slot_mouse_exited)
+	
+	if new_slot.has_signal("request_context_menu"):
+		new_slot.request_context_menu.connect(_on_context_menu_requested)
 
 
 func _on_visibility_changed():
@@ -60,14 +65,11 @@ func refresh_items():
 	
 	await get_tree().process_frame
 	
-	print("UI: Checking ", InventoryGlobal.inventory.size(), " slots...")
-	
 	for i in range(InventoryGlobal.inventory.size()):
 		var slot_data = InventoryGlobal.inventory[i]
 			
 		if slot_data.get("is_pivot", false) == true:
 			var data = slot_data.get("item_resource")
-			print("Found Pivot! Spawning icon for: ", data.item_name)
 			spawn_item_icon(i, data)
 
 
@@ -153,9 +155,10 @@ func _can_drop_data(_at_position, data):
 	var gx = int(local_mouse.x / s_size.x)
 	var gy = int(local_mouse.y / s_size.y)
 	
-	var current_size = data.get_size()
+	var w = data.get("width", 1)
+	var h = data.get("height", 1)
 	
-	if InventoryGlobal.is_space_available(gx, gy, data.width, data.height):
+	if InventoryGlobal.is_space_available(gx, gy, w, h):
 		return true
 	return false
 
@@ -232,11 +235,9 @@ func _input(event: InputEvent) -> void:
 			_on_slot_mouse_entered(current_hovered_slot)
 		
 		get_viewport().set_input_as_handled()
-		print("Rotated ", held_item_data.item_name)
 
 
 func _update_drag_preview():
-	print("Preview rotation: ", active_preview_node.rotation_degrees)
 	if active_preview_node:
 		var icon = active_preview_node.find_child("*", true, false)
 		if icon is TextureRect:
@@ -261,3 +262,7 @@ func _update_drag_preview():
 			icon.queue_redraw()
 		else:
 			print("Error: Could not find TextureRect in preview handle!")
+
+
+func _on_context_menu_requested(item: ItemData, pivot_pos: Vector2i, mouse_pos: Vector2):
+	context_menu.open(item, pivot_pos, mouse_pos)

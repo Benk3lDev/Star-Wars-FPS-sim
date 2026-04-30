@@ -7,6 +7,7 @@ var grid_height : int = 5
 var slot_size : int = 64
 
 signal inventory_updated
+signal request_context_menu(item_data, grid_pos, mouse_pos)
 
 var player_node : Node3D = null
 
@@ -26,7 +27,6 @@ func get_slot_at(x: int, y: int):
 
 
 func is_space_available(x: int, y: int, w: int, h: int) -> bool:
-	print("Checking placement at: ", x, ",", y, " Size: ", w, "x", h, "Grid H: ", grid_height)
 	if x < 0 or y < 0 or (x + w) > grid_width or (y + h) > grid_height:
 		return false
 	
@@ -41,8 +41,9 @@ func is_space_available(x: int, y: int, w: int, h: int) -> bool:
 
 
 func add_item(new_item: ItemData):
+	var item_to_process = new_item.duplicate()
 	
-	if new_item.is_stackable:
+	if item_to_process.is_stackable:
 		for i in range(inventory.size()):
 			var slot = inventory[i]
 			if slot.get("is_pivot", false):
@@ -51,31 +52,28 @@ func add_item(new_item: ItemData):
 					var space_left = existing_item.max_stack_size - existing_item.quantity
 					
 					if space_left > 0:
-						var amount_to_add = min(space_left, new_item.quantity)
+						var amount_to_add = min(space_left, item_to_process.quantity)
 						existing_item.quantity += amount_to_add
-						new_item.quantity -= amount_to_add
+						item_to_process.quantity -= amount_to_add
 						
-						if new_item.quantity <= 0:
+						if item_to_process.quantity <= 0:
 							inventory_updated.emit()
 							return true
 	
-	var unique_item = new_item.duplicate()
-	var size = unique_item.get_size()
+	var size = item_to_process.get_size()
 	
 	for y in range(grid_height - size.y + 1):
 		for x in range(grid_width - size.x + 1):
 			if is_space_available(x, y, size.x, size.y):
-				_fill_grid_slots(x, y, size.x, size.y, unique_item)
-				print("Placed ", unique_item.item_name, " at ", x, ", ", y)
+				_fill_grid_slots(x, y, size.x, size.y, item_to_process)
 				inventory_updated.emit()
 				return true
-	unique_item.is_rotated = !unique_item.is_rotated
-	size = unique_item.get_size()
+	item_to_process.is_rotated = !item_to_process.is_rotated
+	size = item_to_process.get_size()
 	for y in range(grid_height - size.y + 1):
 		for x in range(grid_width - size.x + 1):
 			if is_space_available(x, y, size.x, size.y):
-				_fill_grid_slots(x, y, size.x, size.y, unique_item)
-				print("Placed rotated ", unique_item.item_name, " at ", x, ",", y)
+				_fill_grid_slots(x, y, size.x, size.y, item_to_process)
 				inventory_updated.emit()
 				return true
 	
@@ -84,7 +82,6 @@ func add_item(new_item: ItemData):
 
 
 func _fill_grid_slots(x: int, y: int, w: int, h: int, item_data: ItemData):
-	print("Filling at: ", x, ",", y, " for item size: ", w, "x", h)
 	
 	for j in range(y, y + h):
 		for i in range(x, x + w):
@@ -96,7 +93,9 @@ func _fill_grid_slots(x: int, y: int, w: int, h: int, item_data: ItemData):
 			var new_slot_data = {
 				"is_occupied": true,
 				"item_resource": item_data if (i == x and j == y) else null,
-				"is_pivot": (i == x and j == y)
+				"is_pivot": (i == x and j == y),
+				"pivot_gx": x,
+				"pivot_gy": y
 			}
 			
 			# Overwrite the index directly

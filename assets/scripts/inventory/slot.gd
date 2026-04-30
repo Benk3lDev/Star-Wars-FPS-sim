@@ -12,6 +12,8 @@ var state = States.DEFAULT
 var item_stored = null
 var grid_pos : Vector2i
 
+
+
 func set_color(a_state = States.DEFAULT) -> void:
 	match a_state:
 		States.DEFAULT:
@@ -35,6 +37,7 @@ func _process(delta: float) -> void:
 
 func _can_drop_data(at_position, data):
 	var item_resource = data.get("item_data")
+	
 	if not item_resource:
 		return false
 	
@@ -51,6 +54,7 @@ func _can_drop_data(at_position, data):
 
 func _drop_data(at_position, data):
 	var item_resource = data.get("item_data")
+	
 	var grid = owner.grid_container
 	var local_mouse = grid.get_local_mouse_position()
 	
