@@ -3,8 +3,7 @@
 [sub_resource type="CylinderMesh" id="CylinderMesh_5sbny"]
 height = 1.0
 
-[node name="TestItem3" type="RigidBody3D" unique_id=601857202]
-collision_layer = 2
+[node name="TestItem3" type="Node3D" unique_id=1940593507]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1915510814]
 mesh = SubResource("CylinderMesh_5sbny")

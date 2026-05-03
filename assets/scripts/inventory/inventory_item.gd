@@ -14,10 +14,14 @@ var scene_path : String = "res://assets/scenes/items/inventory_item.tscn"
 
 
 func _ready():
-	load_item_model()
+	if item_data:
+		load_item_model()
 
 
 func load_item_model():
+	if not model_container:
+		return
+	
 	for child in model_container.get_children():
 		child.queue_free()
 	

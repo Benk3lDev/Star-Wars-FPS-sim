@@ -2,8 +2,7 @@
 
 [sub_resource type="SphereMesh" id="SphereMesh_miln8"]
 
-[node name="TestItem1" type="RigidBody3D" unique_id=2011727893]
-collision_layer = 2
+[node name="TestItem1" type="Node3D" unique_id=1199286006]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1380198763]
 mesh = SubResource("SphereMesh_miln8")

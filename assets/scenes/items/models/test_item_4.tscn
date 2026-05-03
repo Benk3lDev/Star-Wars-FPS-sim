@@ -2,8 +2,7 @@
 
 [sub_resource type="PrismMesh" id="PrismMesh_bl8dv"]
 
-[node name="TestItem4" type="RigidBody3D" unique_id=49352292]
-collision_layer = 2
+[node name="TestItem4" type="Node3D" unique_id=1972276275]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1915510814]
 mesh = SubResource("PrismMesh_bl8dv")

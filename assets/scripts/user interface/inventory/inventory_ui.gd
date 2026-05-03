@@ -1,7 +1,7 @@
 extends Control
 
-@onready var grid_container = $ColorRect/MarginContainer/VBoxContainer/ScrollContainer/InventoryContainer/GridContainer
-@onready var item_layer = $ColorRect/MarginContainer/VBoxContainer/ScrollContainer/InventoryContainer/ItemLayer
+@onready var grid_container = $ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/InventoryContainer/GridContainer
+@onready var item_layer = $ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/InventoryContainer/ItemLayer
 @onready var context_menu = $ContextMenu
 
 @export var slot_scene : PackedScene
@@ -34,11 +34,12 @@ func _ready():
 	
 	item_layer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
-
+# Inventory Slots
 func create_slot(x, y):
 	grid_container.columns = dimensions.x
 
 	var new_slot = slot_scene.instantiate()
+	new_slot.filter_type = "Any"
 	grid_container.add_child(new_slot)
 	
 	new_slot.owner = self
@@ -269,6 +270,6 @@ func _on_context_menu_requested(item: ItemData, pivot_pos: Vector2i, mouse_pos: 
 	context_menu.open(item, pivot_pos, mouse_pos)
 
 
-func _on_context_menu_action(action: String, item: ItemData, pivot_pos: Vector2i):
+func _on_context_menu_action(action: String, item_wrapper: ItemData, pivot_pos: Vector2i):
 	if action == "drop":
 		InventoryGlobal.drop_item(pivot_pos.x, pivot_pos.y)

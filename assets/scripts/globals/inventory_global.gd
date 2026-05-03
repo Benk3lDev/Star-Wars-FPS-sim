@@ -1,6 +1,8 @@
 extends Node
 
 
+const INVENTORY_ITEM_SCENE = preload("res://assets/scenes/items/inventory_item.tscn")
+
 var inventory = []
 var grid_width : int = 5
 var grid_height : int = 5
@@ -152,7 +154,7 @@ func drop_item(gx: int, gy: int):
 	
 	var item_data = slot.item_resource
 	
-	if player_node and item_data.item_model:
+	if player_node and item_data:
 		_spawn_item_in_world(item_data)
 		
 		remove_item_at_pos(gx, gy)
@@ -163,9 +165,11 @@ func drop_item(gx: int, gy: int):
 
 
 func _spawn_item_in_world(item_data: ItemData):
-	var item_instance = item_data.item_model.instantiate()
+	var item_instance = INVENTORY_ITEM_SCENE.instantiate()
 	
 	get_tree().root.add_child(item_instance)
+	
+	item_instance.item_data = item_data
 	
 	var cam = get_viewport().get_camera_3d()
 	

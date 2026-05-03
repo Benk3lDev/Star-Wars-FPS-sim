@@ -2,6 +2,7 @@ extends PanelContainer
 
 signal action_selected(action_type: String, item_data: ItemData, slot_pos: Vector2i)
 
+
 var current_item : ItemData
 var current_slot_pos : Vector2i
 

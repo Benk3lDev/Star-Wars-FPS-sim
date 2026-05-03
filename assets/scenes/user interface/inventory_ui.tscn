@@ -60,14 +60,49 @@ size_flags_vertical = 3
 mouse_filter = 2
 follow_focus = true
 
-[node name="InventoryContainer" type="Control" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer" unique_id=2081929259]
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer" unique_id=2040725848]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="ArmorContainer" type="Control" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer" unique_id=2081929259]
 custom_minimum_size = Vector2(320, 320)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 mouse_filter = 2
 
-[node name="GridContainer" type="GridContainer" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/InventoryContainer" unique_id=938287685]
+[node name="GridContainer" type="GridContainer" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/ArmorContainer" unique_id=938287685]
+custom_minimum_size = Vector2(320, 320)
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+mouse_filter = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 5
+
+[node name="ItemLayer" type="Control" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/ArmorContainer" unique_id=838718509]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="InventoryContainer" type="Control" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer" unique_id=286814630]
+custom_minimum_size = Vector2(320, 320)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+mouse_filter = 2
+
+[node name="GridContainer" type="GridContainer" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/InventoryContainer" unique_id=64230368]
 custom_minimum_size = Vector2(320, 320)
 layout_mode = 1
 anchors_preset = 15
@@ -82,13 +117,20 @@ theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 5
 
-[node name="ItemLayer" type="Control" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/InventoryContainer" unique_id=838718509]
+[node name="ItemLayer" type="Control" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/InventoryContainer" unique_id=974489669]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+
+[node name="ItemDetailsContainer" type="Control" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer" unique_id=360420104]
+custom_minimum_size = Vector2(320, 320)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
 mouse_filter = 2
 
 [node name="ContextMenu" parent="." unique_id=1344355442 instance=ExtResource("3_0k2qo")]

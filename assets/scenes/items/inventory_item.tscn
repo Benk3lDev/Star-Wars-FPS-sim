@@ -2,8 +2,6 @@
 
 [ext_resource type="Script" uid="uid://csa13tcal5w1s" path="res://assets/scripts/inventory/inventory_item.gd" id="1_07e5k"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_t2584"]
-
 [node name="Inventory_Item" type="RigidBody3D" unique_id=2043428686 groups=["Items"]]
 physics_interpolation_mode = 1
 collision_layer = 2
@@ -11,6 +9,3 @@ continuous_cd = true
 script = ExtResource("1_07e5k")
 
 [node name="ModelContainer" type="Node3D" parent="." unique_id=518068066]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1734748705]
-shape = SubResource("BoxShape3D_t2584")

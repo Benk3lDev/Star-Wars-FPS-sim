@@ -5,6 +5,8 @@ signal slot_exited(slot)
 
 @onready var filter = $StatusFilter
 
+@export_enum("Any", "Head", "Belt", "Chest", "Back") var filter_type
+
 var slot_ID
 var is_hovering := false
 enum States {DEFAULT, TAKEN, FREE}
@@ -41,6 +43,11 @@ func _can_drop_data(at_position, data):
 	if not item_resource:
 		return false
 	
+	if filter_type != "Any":
+		if item_resource.item_type != filter_type:
+			return false
+		return item_stored == null
+	
 	var grid = owner.grid_container
 	var local_mouse = grid.get_local_mouse_position()
 	
@@ -55,10 +62,14 @@ func _can_drop_data(at_position, data):
 func _drop_data(at_position, data):
 	var item_resource = data.get("item_data")
 	
-	var grid = owner.grid_container
-	var local_mouse = grid.get_local_mouse_position()
-	
-	var gx = int(local_mouse.x / size.x)
-	var gy = int(local_mouse.y / size.y)
-	
-	InventoryGlobal.place_item_at(gx, gy, item_resource)
+	if filter_type != "Any":
+		item_stored = item_resource
+		print("Equipped ", item_resource.item_name, " to ", filter_type)
+	else:
+		var grid = owner.grid_container
+		var local_mouse = grid.get_local_mouse_position()
+		
+		var gx = int(local_mouse.x / size.x)
+		var gy = int(local_mouse.y / size.y)
+		
+		InventoryGlobal.place_item_at(gx, gy, item_resource)
