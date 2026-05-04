@@ -30,7 +30,7 @@ var current_speed_modifier = 0
 @onready var crouch_check = $CrouchCheck
 @onready var lean_check = $LeanCheck
 @onready var interaction_raycast = $CameraController/Camera3D/InteractionRaycast
-@onready var inventory_ui = $InventoryUI
+
 
 var _input_dir : Vector2 = Vector2.ZERO
 var _movement_velocity : Vector3 = Vector3.ZERO
@@ -100,7 +100,8 @@ func _input(event: InputEvent) -> void:
 		target_lean = 0.0
 
 	if event.is_action_pressed("ui_inventory"):
-		inventory_ui.visible = !inventory_ui.visible
+		InventoryGlobal.ui_node.visible = !InventoryGlobal.ui_node.visible
+		
 		get_tree().paused = !get_tree().paused
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -125,7 +126,7 @@ func _physics_process(delta):
 	
 	var CURRENT_SPEED = current_speed_modifier
 	
-	if direction and !inventory_ui.visible:
+	if direction:
 		is_move = true
 		current_velocity = lerp(current_velocity, Vector2(direction.x, direction.z) * CURRENT_SPEED, acceleration)
 	else:

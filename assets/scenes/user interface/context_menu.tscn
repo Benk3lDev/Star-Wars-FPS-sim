@@ -26,6 +26,11 @@ layout_mode = 2
 size_flags_vertical = 3
 text = "Equip"
 
+[node name="Unequip" type="Button" parent="VBoxContainer" unique_id=361052857]
+layout_mode = 2
+text = "Unequip"
+
 [connection signal="pressed" from="VBoxContainer/Drop" to="." method="_on_drop_pressed"]
 [connection signal="pressed" from="VBoxContainer/Use" to="." method="_on_use_pressed"]
 [connection signal="pressed" from="VBoxContainer/Equip" to="." method="_on_equip_pressed"]
+[connection signal="pressed" from="VBoxContainer/Unequip" to="." method="_on_unequip_pressed"]

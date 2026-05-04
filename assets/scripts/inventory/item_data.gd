@@ -1,7 +1,9 @@
 class_name ItemData extends Resource
 
+@export_enum("Head", "Chest", "Belt", "Backpack") var armor_type: String
+@export_enum("Armor", "Weapon", "Consumable") var item_type : String
+
 @export var item_name : String = ""
-@export var item_type : String = ""
 @export var item_effect : String = ""
 @export var icon : Texture2D
 @export var width : int

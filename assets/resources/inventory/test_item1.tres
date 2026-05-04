@@ -1,16 +1,19 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://b482k6fwuxmll"]
 
+[ext_resource type="Texture2D" uid="uid://cofg8ha0mmnwg" path="res://assets/textures/items/hotbar icons/test_item1_hotbar.png" id="1_atr1g"]
 [ext_resource type="Texture2D" uid="uid://lgbqjklnp3s8" path="res://assets/textures/items/icons/test_item1.png" id="1_h6uag"]
 [ext_resource type="PackedScene" uid="uid://dou7n5l6kjd6f" path="res://assets/scenes/items/models/test_item1.tscn" id="2_atr1g"]
 [ext_resource type="Script" uid="uid://bmsou0jk4d6cx" path="res://assets/scripts/inventory/item_data.gd" id="3_rijmq"]
 
 [resource]
 script = ExtResource("3_rijmq")
-item_name = "Test Item 1"
+armor_type = "Head"
 item_type = "Weapon"
+item_name = "Test Item 1"
 icon = ExtResource("1_h6uag")
 width = 1
 height = 1
+hotbar_icon = ExtResource("1_atr1g")
 item_model = ExtResource("2_atr1g")
 is_stackable = true
 max_stack_size = 2

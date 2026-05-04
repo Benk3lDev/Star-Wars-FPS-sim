@@ -4,14 +4,28 @@ extends Node
 const INVENTORY_ITEM_SCENE = preload("res://assets/scenes/items/inventory_item.tscn")
 
 var inventory = []
+var equipped_armor = {
+	"Head": null,
+	"Chest": null,
+	"Belt1": null,
+	"Belt2": null,
+	"Backpack": null
+}
+var hotbar_items = {
+	0: null, 1: null, 2: null, 3:null, 4: null, 5: null, 6: null, 7: null, 8: null, 9: null
+}
 var grid_width : int = 5
 var grid_height : int = 5
 var slot_size : int = 64
 
 signal inventory_updated
 signal request_context_menu(item_data, grid_pos, mouse_pos)
+signal armor_equipped(type, item_data)
+signal armor_unequipped(type)
+signal hotbar_updated(index, item_data)
 
 var player_node : Node3D = null
+var ui_node : Control
 
 func _ready() -> void:
 	grid_width = 5
@@ -81,6 +95,24 @@ func add_item(new_item: ItemData):
 	
 	print("No space for item!")
 	return false
+
+
+func add_item_to_hotbar(index: int, item: ItemData):
+	for i in hotbar_items.keys():
+		if hotbar_items[i] == item:
+			hotbar_items[i] = null
+			hotbar_updated.emit(i, null)
+	
+	hotbar_items[index] = item
+	hotbar_updated.emit(index, item)
+	
+	print("Shortcut created for ", item.item_name, " in hotbar slot: ", index)
+
+
+func remove_from_hotbar(index: int):
+	if hotbar_items.has(index):
+		hotbar_items[index] = null
+		hotbar_updated.emit(index, null)
 
 
 func _fill_grid_slots(x: int, y: int, w: int, h: int, item_data: ItemData):
@@ -154,11 +186,23 @@ func drop_item(gx: int, gy: int):
 	
 	var item_data = slot.item_resource
 	
+	for i in hotbar_items.keys():
+		if hotbar_items[i] == item_data:
+			hotbar_items[i] = null
+			hotbar_updated.emit(i, null)
+	
 	if player_node and item_data:
+		for type in equipped_armor.keys():
+			if equipped_armor[type] == item_data:
+				equipped_armor[type] = null
+				armor_unequipped.emit(type)
+				print("Global: Item dropped was unequipped")
+				break
+		
 		_spawn_item_in_world(item_data)
 		
 		remove_item_at_pos(gx, gy)
-		print("Dropped: ", item_data.item_name)
+
 		
 	else:
 		print("Cannot drop: Player missing or Item has no scene!")
@@ -184,3 +228,41 @@ func _spawn_item_in_world(item_data: ItemData):
 	
 	else:
 		item_instance.global_position = player_node.global_position + Vector3(0, 1.5, -1)
+
+
+func equip_item(x: int, y: int):
+	var slot_data = get_slot_at(x, y)
+	
+	if slot_data != null and slot_data is Dictionary:
+		var item = slot_data.get("item_resource")
+		
+		if item and item is ItemData:
+			
+			for equipped_item in equipped_armor.values():
+				if equipped_item == item:
+					return
+			
+			var type = item.armor_type
+		
+			#Belt slot logic
+			if type == "Belt":
+				if equipped_armor["Belt1"] == null:
+					equipped_armor["Belt1"] = item
+					armor_equipped.emit("Belt1", item)
+				elif equipped_armor["Belt2"] == null:
+					equipped_armor["Belt2"] = item
+					armor_equipped.emit("Belt2", item)
+				else:
+					print("Both belt slots are full!")
+			
+			else:
+				equipped_armor[type] = item
+				armor_equipped.emit(type, item)
+
+
+func unequip_item(item_to_remove: ItemData):
+	for type in equipped_armor.keys():
+		if equipped_armor[type] == item_to_remove:
+			equipped_armor[type] = null
+			armor_unequipped.emit(type)
+			break

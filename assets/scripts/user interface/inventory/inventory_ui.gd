@@ -17,6 +17,8 @@ var last_original_pos : Vector2i
 var original_rotation : bool
 
 func _ready():
+	InventoryGlobal.ui_node = self
+	
 	var total_slots = dimensions.x * dimensions.y
 	
 	for child in grid_container.get_children():
@@ -34,12 +36,12 @@ func _ready():
 	
 	item_layer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
+
 # Inventory Slots
 func create_slot(x, y):
 	grid_container.columns = dimensions.x
 
 	var new_slot = slot_scene.instantiate()
-	new_slot.filter_type = "Any"
 	grid_container.add_child(new_slot)
 	
 	new_slot.owner = self
@@ -73,6 +75,9 @@ func refresh_items():
 		if slot_data.get("is_pivot", false) == true:
 			var data = slot_data.get("item_resource")
 			spawn_item_icon(i, data)
+
+
+
 
 
 func spawn_item_icon(slot_index: int, data: ItemData):
@@ -165,12 +170,22 @@ func _can_drop_data(_at_position, data):
 	return false
 
 func _drop_data(_at_position, data):
+	if data.has("origin_hotbar_index"):
+		InventoryGlobal.remove_from_hotbar(data["origin_hotbar_index"])
+		return
+	
 	var local_mouse = grid_container.get_local_mouse_position()
 	var s_size = grid_container.get_child(0).size
 	var gx = int(local_mouse.x / s_size.x)
 	var gy = int(local_mouse.y / s_size.y)
 	
-	InventoryGlobal.place_item(gx, gy, data)
+	var item_to_place = data["item_data"]
+	var success = InventoryGlobal.place_item_at(gx, gy, data)
+	
+	if success:
+		var old_pos = data.get("original_pos")
+		if old_pos != null and old_pos != Vector2i(gx, gy):
+			InventoryGlobal.remove_item_at_pos(old_pos.x, old_pos.y)
 
 
 func _clear_highlights():
@@ -194,10 +209,15 @@ func _on_item_drag_started(data_dict, preview_node):
 
 func _notification(what):
 	if what == NOTIFICATION_DRAG_END:
-		if not get_viewport().gui_is_drag_successful():
+		var current_slot = InventoryGlobal.get_slot_at(last_original_pos.x, last_original_pos.y)
+		var item_still_in_data = current_slot and current_slot.item_resource == held_item_data
+		
+		if not get_viewport().gui_is_drag_successful() or item_still_in_data:
 			if held_item_data:
 				held_item_data.is_rotated = original_rotation
-				InventoryGlobal.place_item_at(last_original_pos.x, last_original_pos.y, held_item_data)
+				if not item_still_in_data:
+					InventoryGlobal.place_item_at(last_original_pos.x, last_original_pos.y, held_item_data)
+				InventoryGlobal.inventory_updated.emit()
 		
 		held_item_data = null
 		active_preview_node = null
@@ -273,3 +293,9 @@ func _on_context_menu_requested(item: ItemData, pivot_pos: Vector2i, mouse_pos: 
 func _on_context_menu_action(action: String, item_wrapper: ItemData, pivot_pos: Vector2i):
 	if action == "drop":
 		InventoryGlobal.drop_item(pivot_pos.x, pivot_pos.y)
+	
+	if action == "equip":
+		InventoryGlobal.equip_item(pivot_pos.x, pivot_pos.y)
+	
+	if action == "unequip":
+		InventoryGlobal.unequip_item(item_wrapper)

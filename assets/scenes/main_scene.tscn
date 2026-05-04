@@ -4,6 +4,8 @@
 [ext_resource type="Script" uid="uid://cibhd7qnu43ta" path="res://assets/scripts/systems/game_manager.gd" id="1_gagv8"]
 [ext_resource type="PackedScene" uid="uid://mttyh2jip616" path="res://assets/scenes/user interface/user_interface.tscn" id="2_6sgls"]
 [ext_resource type="PackedScene" uid="uid://bwj5y51b6l1ml" path="res://assets/scenes/player/player.tscn" id="3_u44wh"]
+[ext_resource type="PackedScene" uid="uid://7wly856hfa0j" path="res://assets/scenes/user interface/inventory_ui.tscn" id="5_vo808"]
+[ext_resource type="PackedScene" uid="uid://bkt4uwsf7u0xp" path="res://assets/scenes/user interface/hotbar_ui.tscn" id="6_4v045"]
 
 [node name="MainScene" type="Node" unique_id=606893954]
 
@@ -23,3 +25,11 @@ process_mode = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="UserInterface" parent="." unique_id=1085611445 instance=ExtResource("2_6sgls")]
+
+[node name="Inventory_UI" parent="UserInterface" unique_id=150101117 instance=ExtResource("5_vo808")]
+process_mode = 3
+visible = false
+
+[node name="Hotbar_UI" parent="UserInterface" unique_id=1536922201 instance=ExtResource("6_4v045")]
+process_mode = 3
+mouse_filter = 2

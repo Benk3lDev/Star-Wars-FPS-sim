@@ -14,8 +14,6 @@ func _get_drag_data(_at_position):
 		"original_pos": grid_pos
 	}
 	
-	InventoryGlobal.remove_item_at_pos(grid_pos.x, grid_pos.y)
-	
 	var preview_handle = Control.new()
 	var preview = TextureRect.new()
 	
@@ -82,7 +80,6 @@ func update_visuals():
 func _gui_input(event: InputEvent):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			print ("Right click detected on slot!")
 			var slot_data = InventoryGlobal.inventory[grid_pos.x + (grid_pos.y * InventoryGlobal.grid_width)]
 			if slot_data.get("is_occupied", false):
 				var px = slot_data.pivot_gx

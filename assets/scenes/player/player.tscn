@@ -32,7 +32,6 @@
 [ext_resource type="Script" uid="uid://dnfiknyf47rf4" path="res://assets/weapons/scripts/weapon_state_machine.gd" id="31_c8ixa"]
 [ext_resource type="Script" uid="uid://gt0susdwqx7q" path="res://assets/weapons/scripts/states/weapon_firing_state.gd" id="31_svfgx"]
 [ext_resource type="Script" uid="uid://y0kepwhl55m0" path="res://assets/scripts/user interface/interaction_label.gd" id="33_3oaqr"]
-[ext_resource type="PackedScene" uid="uid://7wly856hfa0j" path="res://assets/scenes/user interface/inventory_ui.tscn" id="34_c8ixa"]
 [ext_resource type="Script" uid="uid://dip8cvc6fguav" path="res://assets/weapons/scripts/states/weapon_empty_state.gd" id="34_nhni2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
@@ -47,10 +46,21 @@ height = 1.2
 
 [node name="player" type="CharacterBody3D" unique_id=199960749 node_paths=PackedStringArray("camera", "state_chart", "camera_effects", "step_handler")]
 script = ExtResource("1_4flbx")
+debug = null
+crouch_height = null
+stand_height = null
 camera = NodePath("CameraController")
 state_chart = NodePath("StateChart")
 camera_effects = NodePath("CameraController/Camera3D")
 step_handler = NodePath("Components/StepHandler")
+acceleration = null
+deceleration = null
+default_speed = null
+walk_speed = null
+crouch_speed = null
+sprint_speed = null
+jump_velocity = null
+fall_velocity_threshold = null
 
 [node name="StateChartDebugger" parent="." unique_id=1240893149 instance=ExtResource("2_urp6f")]
 anchors_preset = 0
@@ -411,13 +421,6 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 script = ExtResource("33_3oaqr")
-
-[node name="InventoryUI" type="CanvasLayer" parent="." unique_id=1567609645]
-visible = false
-
-[node name="Inventory_UI" parent="InventoryUI" unique_id=150101117 instance=ExtResource("34_c8ixa")]
-offset_left = 2.0
-offset_right = 2.0
 
 [connection signal="state_processing" from="StateChart/Root/Movement/Grounded" to="StateMachine/MovementState/GroundedState" method="_on_grounded_state_processing"]
 [connection signal="state_processing" from="StateChart/Root/Movement/Grounded/Idle" to="StateMachine/MovementState/GroundedState/IdleState" method="_on_idle_state_processing"]

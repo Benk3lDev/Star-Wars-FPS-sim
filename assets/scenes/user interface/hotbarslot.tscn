@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cdpwd8puh5x4o"]
+
+[ext_resource type="Texture2D" uid="uid://edbmvqdr6mbl" path="res://assets/textures/user interface/hotbar_slot.png" id="1_gktl0"]
+[ext_resource type="Script" uid="uid://ba86lmgv1qxh5" path="res://assets/scripts/inventory/hotbarslot.gd" id="2_wkhge"]
+
+[node name="HotbarSlot" type="TextureRect" unique_id=2084455472]
+custom_minimum_size = Vector2(64, 64)
+offset_right = 64.0
+offset_bottom = 64.0
+mouse_filter = 0
+texture = ExtResource("1_gktl0")
+expand_mode = 1
+script = ExtResource("2_wkhge")
+
+[node name="Icon" type="TextureRect" parent="." unique_id=6193258]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 3

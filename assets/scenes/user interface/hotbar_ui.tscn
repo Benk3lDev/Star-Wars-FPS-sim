@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://bkt4uwsf7u0xp"]
+
+[ext_resource type="PackedScene" uid="uid://cdpwd8puh5x4o" path="res://assets/scenes/user interface/hotbarslot.tscn" id="1_a2vxn"]
+
+[node name="Hotbar_UI" type="Control" unique_id=1536922201]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1704559369]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -338.0
+offset_top = -64.0
+offset_right = 338.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HotbarSlot" parent="HBoxContainer" unique_id=2084455472 instance=ExtResource("1_a2vxn")]
+layout_mode = 2
+
+[node name="HotbarSlot2" parent="HBoxContainer" unique_id=1590791839 instance=ExtResource("1_a2vxn")]
+layout_mode = 2
+slot_index = 1
+
+[node name="HotbarSlot3" parent="HBoxContainer" unique_id=1613861897 instance=ExtResource("1_a2vxn")]
+layout_mode = 2
+slot_index = 2
+
+[node name="HotbarSlot4" parent="HBoxContainer" unique_id=26039916 instance=ExtResource("1_a2vxn")]
+layout_mode = 2
+slot_index = 3
+
+[node name="HotbarSlot5" parent="HBoxContainer" unique_id=1896757785 instance=ExtResource("1_a2vxn")]
+layout_mode = 2
+slot_index = 4
+
+[node name="HotbarSlot6" parent="HBoxContainer" unique_id=1496245861 instance=ExtResource("1_a2vxn")]
+layout_mode = 2
+slot_index = 5
+
+[node name="HotbarSlot7" parent="HBoxContainer" unique_id=1807145913 instance=ExtResource("1_a2vxn")]
+layout_mode = 2
+slot_index = 6
+
+[node name="HotbarSlot8" parent="HBoxContainer" unique_id=86220313 instance=ExtResource("1_a2vxn")]
+layout_mode = 2
+slot_index = 7
+
+[node name="HotbarSlot9" parent="HBoxContainer" unique_id=1310558323 instance=ExtResource("1_a2vxn")]
+layout_mode = 2
+slot_index = 8
+
+[node name="HotbarSlot10" parent="HBoxContainer" unique_id=1442881831 instance=ExtResource("1_a2vxn")]
+layout_mode = 2
+slot_index = 9
