@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cmva5m6kygk0n"]
 
 [ext_resource type="PackedScene" uid="uid://c5bkjlnxari1e" path="res://assets/scenes/items/inventory_item.tscn" id="1_pew12"]
-[ext_resource type="Resource" uid="uid://b482k6fwuxmll" path="res://assets/resources/inventory/test_item1.tres" id="2_yfvcw"]
+[ext_resource type="Resource" uid="uid://bcbjq5edbnnb0" path="res://assets/resources/inventory/DC15A_worlditem.tres" id="2_yfvcw"]
 [ext_resource type="Resource" uid="uid://bhtiwadbeipxr" path="res://assets/resources/inventory/test_item2.tres" id="3_bgynn"]
 [ext_resource type="Resource" uid="uid://rl2wx7p1vm4k" path="res://assets/resources/inventory/test_item3.tres" id="4_6iq4x"]
 [ext_resource type="Resource" uid="uid://da03df0rv2cl2" path="res://assets/resources/inventory/test_item4.tres" id="5_j0gt5"]

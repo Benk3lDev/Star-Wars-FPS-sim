@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://be86hgex4v2um" path="res://assets/scripts/player/player.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://df0or8c8olmnv" path="res://assets/scripts/player/head.gd" id="2_hqtel"]
 [ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="2_urp6f"]
+[ext_resource type="Script" uid="uid://cnaqq3oxjvi56" path="res://assets/scripts/systems/weapon_manager.gd" id="3_lxcnx"]
 [ext_resource type="Script" uid="uid://45cwhq1t3tvj" path="res://assets/scripts/player/interaction_raycast.gd" id="4_7ahtn"]
 [ext_resource type="Script" uid="uid://bx806xgtmn8j0" path="res://assets/scripts/player/camera effects/camera_effects.gd" id="4_7lmhl"]
 [ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="5_n7ghd"]
@@ -13,6 +14,7 @@
 [ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="7_ivps1"]
 [ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="8_urp6f"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="9_bwjto"]
+[ext_resource type="Script" uid="uid://dxpihtxneacr5" path="res://assets/weapons/scripts/weapon_controller.gd" id="9_nhni2"]
 [ext_resource type="Script" uid="uid://juohqe3ks247" path="res://assets/scripts/player/states/state_machine.gd" id="10_606se"]
 [ext_resource type="Script" uid="uid://dbhltdd2mdpr" path="res://assets/scripts/player/states/base_state.gd" id="11_nvl01"]
 [ext_resource type="Script" uid="uid://pi722hdco8j4" path="res://assets/scripts/player/states/idle_state.gd" id="12_ivps1"]
@@ -45,11 +47,12 @@
 radius = 0.375
 height = 1.2
 
-[node name="player" type="CharacterBody3D" unique_id=199960749 node_paths=PackedStringArray("camera", "state_chart", "camera_effects", "step_handler")]
+[node name="player" type="CharacterBody3D" unique_id=199960749 node_paths=PackedStringArray("camera", "state_chart", "camera_effects", "weapon_controller", "step_handler")]
 script = ExtResource("1_4flbx")
 camera = NodePath("CameraController")
 state_chart = NodePath("StateChart")
 camera_effects = NodePath("CameraController/Camera3D")
+weapon_controller = NodePath("Components/WeaponSystems")
 step_handler = NodePath("Components/StepHandler")
 
 [node name="StateChartDebugger" parent="." unique_id=1240893149 instance=ExtResource("2_urp6f")]
@@ -80,6 +83,10 @@ target_position = Vector3(0, 1, 0)
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -1, 0.5, 0)
 shape = SubResource("CapsuleShape3D_7ahtn")
 
+[node name="WeaponManager" type="Node" parent="." unique_id=1039164214 node_paths=PackedStringArray("player") groups=["weapon_manager"]]
+script = ExtResource("3_lxcnx")
+player = NodePath("..")
+
 [node name="CameraController" type="Node3D" parent="." unique_id=633576122 node_paths=PackedStringArray("player_controller", "component_mouse_capture")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 script = ExtResource("2_hqtel")
@@ -99,10 +106,10 @@ hit_from_inside = true
 script = ExtResource("4_7ahtn")
 
 [node name="HandAnchor" type="Node3D" parent="CameraController/Camera3D" unique_id=1608898906]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.57, 0, -0.915)
 
-[node name="EquipmentManager" type="Node3D" parent="CameraController/Camera3D" unique_id=1904989666]
+[node name="EquipmentManager" type="Node3D" parent="CameraController/Camera3D" unique_id=1904989666 node_paths=PackedStringArray("weapon_controller")]
 script = ExtResource("6_c8ixa")
+weapon_controller = NodePath("../../../Components/WeaponSystems")
 
 [node name="Components" type="Node" parent="." unique_id=1284863860]
 
@@ -112,6 +119,12 @@ script = ExtResource("6_2wuci")
 [node name="StepHandler" type="Node" parent="Components" unique_id=1258817437 node_paths=PackedStringArray("player")]
 script = ExtResource("6_qtqh7")
 player = NodePath("../..")
+
+[node name="WeaponSystems" type="Node" parent="Components" unique_id=1581346992 node_paths=PackedStringArray("camera", "weapon_state_chart", "hand_anchor")]
+script = ExtResource("9_nhni2")
+camera = NodePath("../../CameraController/Camera3D")
+weapon_state_chart = NodePath("../../WeaponStateChart")
+hand_anchor = NodePath("../../CameraController/Camera3D/HandAnchor")
 
 [node name="StateChart" type="Node" parent="." unique_id=1980311667]
 script = ExtResource("5_n7ghd")
@@ -383,9 +396,10 @@ to = NodePath("../Empty")
 event = &"OnEmpty"
 delay_in_seconds = "0.0"
 
-[node name="WeaponStateMachine" type="Node" parent="." unique_id=1712541240]
+[node name="WeaponStateMachine" type="Node" parent="." unique_id=1712541240 node_paths=PackedStringArray("weapon_controller")]
 unique_name_in_owner = true
 script = ExtResource("31_c8ixa")
+weapon_controller = NodePath("../Components/WeaponSystems")
 
 [node name="FiringState" type="Node" parent="WeaponStateMachine" unique_id=694928737]
 script = ExtResource("31_svfgx")

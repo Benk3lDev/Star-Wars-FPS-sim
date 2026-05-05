@@ -2,18 +2,29 @@ class_name WeaponController extends Node
 
 
 @export var camera: Camera3D
-@export var weapon_model_parent: Node3D
 @export var weapon_state_chart: StateChart
+@export var hand_anchor : Node3D
+
 
 var current_weapon: Weapon
-var current_weapon_model: Node3D
 var can_fire_next: bool = true
 var fire_rate_timer: float = 0.0
 
 
-func _ready() -> void:
-	if current_weapon:
-		spawn_weapon_model()
+func _ready():
+	print("WeaponController is ready and in groups: ", get_groups())
+
+
+func activate_weapon(stats: Weapon):
+	current_weapon = stats
+	can_fire_next = true
+	fire_rate_timer = 0.0
+	if weapon_state_chart:
+		weapon_state_chart.send_event("OnIdle")
+
+
+func deactivate_weapon():
+	current_weapon = null
 
 
 func _process(delta: float) -> void:
@@ -23,20 +34,8 @@ func _process(delta: float) -> void:
 			can_fire_next = true
 
 
-func spawn_weapon_model():
-	if current_weapon_model:
-		current_weapon_model.queue_free()
-	
-	if current_weapon.weapon_model:
-		current_weapon_model = current_weapon.weapon_model.instantiate()
-		weapon_model_parent.add_child(current_weapon_model)
-		current_weapon_model.position = current_weapon.weapon_position
-
-
-
 func can_fire() -> bool:
-	var weapon_data = Managers.weapon_manager.weapons[Managers.weapon_manager.current_slot]
-	return weapon_data.ammo > 0 and can_fire_next
+	return Managers.weapon_manager.has_ammo() and can_fire_next
 
 
 func fire_weapon() -> void:
@@ -113,14 +112,19 @@ func _spawn_projectile() -> void:
 	if not camera:
 		print("No camera assigned!")
 		return
-
-
+	
+	var muzzle = hand_anchor.find_child(current_weapon.muzzle_node_name, true, false)
+	
+	var spawn_pos = camera.global_position
+	if muzzle:
+		spawn_pos = muzzle.global_position
+	
 	# Spawn the projectile
 	var projectile = current_weapon.projectile_scene.instantiate() as Projectile
 	get_tree().current_scene.add_child(projectile)
 
 	# Position at camera
-	projectile.global_position = camera.global_position
+	projectile.global_position = spawn_pos
 
 	# Calculate accuracy spread
 	var accuracy_spread = (100 - current_weapon.accuracy) / 1000.0
@@ -140,19 +144,11 @@ func _spawn_projectile() -> void:
 	projectile.setup(velocity, current_weapon.damage)
 
 
-func switch_weapon(weapon_data: WeaponData) -> void:
-	current_weapon = weapon_data.weapon
-
-	if current_weapon_model:
-		current_weapon_model.queue_free()
-
-	spawn_weapon_model()
-
-	weapon_state_chart.send_event("OnIdle")
-
-	print(current_weapon.weapon_name)
-
-
 func has_ammo() -> bool:
-	var weapon_data = Managers.weapon_manager.weapons[Managers.weapon_manager.current_slot]
-	return weapon_data.ammo > 0
+	if Managers.weapon_manager == null:
+		return false
+	
+	if Managers.weapon_manager.current_equipped_item == null:
+		return false
+	
+	return Managers.weapon_manager.current_equipped_item.ammo > 0

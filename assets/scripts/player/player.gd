@@ -156,6 +156,7 @@ func _physics_process(delta):
 
 	if is_on_floor():
 		step_handler.handle_step_climbing()
+	
 
 func get_input_direction() -> Vector2:
 	return _input_dir

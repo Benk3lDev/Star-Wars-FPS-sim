@@ -12,6 +12,9 @@ class_name ItemData extends Resource
 @export var item_model : PackedScene
 @export var is_stackable : bool
 @export var max_stack_size : int
+@export var weapon_stats: Weapon
+@export var ammo : int
+
 var quantity : int = 1
 
 var is_rotated : bool = false
