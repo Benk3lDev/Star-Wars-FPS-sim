@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://bquwjl3yfqeo8" path="res://assets/scripts/inventory/item_ui.gd" id="1_1i3so"]
 
 [node name="ItemUI" type="TextureRect" unique_id=123482492]
-mouse_filter = 0
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("1_1i3so")

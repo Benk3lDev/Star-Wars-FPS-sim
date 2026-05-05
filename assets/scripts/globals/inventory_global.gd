@@ -109,6 +109,13 @@ func add_item_to_hotbar(index: int, item: ItemData):
 	print("Shortcut created for ", item.item_name, " in hotbar slot: ", index)
 
 
+func swap_hotbar_items(index: int, new_item: ItemData) -> ItemData:
+	var old_item = hotbar_items[index]
+	hotbar_items[index] = new_item
+	hotbar_updated.emit(index, new_item)
+	return old_item
+
+
 func remove_from_hotbar(index: int):
 	if hotbar_items.has(index):
 		hotbar_items[index] = null
@@ -158,21 +165,50 @@ func place_item_at(gx: int, gy: int, new_item: ItemData) -> bool:
 	return false
 
 
+func find_pivot_of_item_at(x: int, y: int) -> Vector2i:
+	var index = x + (y * grid_width)
+	var clicked_slot = inventory[index]
+	
+	if clicked_slot.get("is_pivot", false):
+		return Vector2i(x, y)
+	
+	var target_resource = clicked_slot.item_resource
+	if target_resource == null:
+		return Vector2i(x, y)
+	
+	for j in range(max(0, y -5), y + 1):
+		for i in range(max(0, x - 5), x + 1):
+			var check_index = i + (j * grid_width)
+			var s = inventory[check_index]
+			if s.item_resource == target_resource and s.get("is_pivot", false):
+				return Vector2i(i, j)
+	
+	return Vector2i(x, y)
+
+
+func clear_hotbar_slot(index: int):
+	if index >= 0 and index < hotbar_items.size():
+		hotbar_items[index] = null
+		hotbar_updated.emit(index, null)
+
+
 func remove_item_at_pos(x: int, y: int):
-	var pivot_slot = get_slot_at(x, y)
-	if pivot_slot == null or pivot_slot.item_resource == null: return
+	var pivot_pos = find_pivot_of_item_at(x, y)
+	var index = pivot_pos.x + (pivot_pos.y * grid_width)
 	
-	var data = pivot_slot.item_resource
-	var size = data.get_size()
-	var w = size.x
-	var h = size.y
+	var slot_data = inventory[index]
+	if slot_data.item_resource == null:
+		return
 	
-	for i in range(x, x + w):
-		for j in range(y, y + h):
-			var index = i + (j * grid_width)
-			if index < inventory.size():
-				inventory[index] = {"is_occupied": false, "item_resource": null, "is_pivot": false}
-		inventory_updated.emit()
+	var item_size = slot_data.item_resource.get_size()
+	
+	for i in range(pivot_pos.x, pivot_pos.x + item_size.x):
+		for j in range(pivot_pos.y, pivot_pos.y + item_size.y):
+			var target_index = i + (j * grid_width)
+			if target_index < inventory.size():
+				inventory[target_index] = {"is_occupied": false, "item_resource": null, "is_pivot": false}
+	
+	inventory_updated.emit()
 
 
 func set_player_reference(player):

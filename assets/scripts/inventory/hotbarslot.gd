@@ -22,7 +22,8 @@ func _get_drag_data(at_position):
 	
 	return {
 		"item_data": item,
-		"origin_hotbar_index": slot_index
+		"source_type": "hotbar",
+		"hotbar_index": slot_index
 	}
 
 
@@ -31,8 +32,23 @@ func _can_drop_data(at_position, data) -> bool:
 
 
 func _drop_data(at_position, data):
-	var item_resource = data["item_data"]
-	InventoryGlobal.add_item_to_hotbar(slot_index, item_resource)
+	var new_item = data.get("item_data")
+	var source_type = data.get("source_type")
+	
+	var old_item = InventoryGlobal.hotbar_items.get(slot_index)
+	InventoryGlobal.add_item_to_hotbar(slot_index, new_item)
+	
+	if old_item != null and old_item != new_item:
+		if source_type == "hotbar":
+			var old_index = data.get("hotbar_index")
+			InventoryGlobal.add_item_to_hotbar(old_index, old_item)
+		else: 
+			var origin = data.get("origin_pivot")
+			InventoryGlobal.place_item_at(origin.x, origin.y, old_item)
+	elif source_type == "hotbar":
+		var old_index = data.get("hotbar_index")
+		if old_index != slot_index:
+			InventoryGlobal.clear_hotbar_slot(old_index)
 
 
 func _on_hotbar_updated(index: int, item_data: ItemData):

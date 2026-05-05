@@ -69,15 +69,13 @@ func refresh_items():
 	
 	await get_tree().process_frame
 	
+	
 	for i in range(InventoryGlobal.inventory.size()):
 		var slot_data = InventoryGlobal.inventory[i]
 			
 		if slot_data.get("is_pivot", false) == true:
 			var data = slot_data.get("item_resource")
 			spawn_item_icon(i, data)
-
-
-
 
 
 func spawn_item_icon(slot_index: int, data: ItemData):
@@ -170,22 +168,23 @@ func _can_drop_data(_at_position, data):
 	return false
 
 func _drop_data(_at_position, data):
-	if data.has("origin_hotbar_index"):
-		InventoryGlobal.remove_from_hotbar(data["origin_hotbar_index"])
+	var item_resource = data.get("item_data")
+	
+	if data.get("source_type") == "hotbar":
+		var index = data.get("hotbar_index")
+		InventoryGlobal.clear_hotbar_slot(index)
+	else:
+		var origin = data.get("origin_pivot")
+		if origin != null:
+			InventoryGlobal.remove_item_at_pos(origin.x, origin.y)
 		return
 	
+	var grid = owner.grid_container
 	var local_mouse = grid_container.get_local_mouse_position()
-	var s_size = grid_container.get_child(0).size
-	var gx = int(local_mouse.x / s_size.x)
-	var gy = int(local_mouse.y / s_size.y)
+	var gx = int(local_mouse.x / size.x)
+	var gy = int(local_mouse.y / size.y)
 	
-	var item_to_place = data["item_data"]
-	var success = InventoryGlobal.place_item_at(gx, gy, data)
-	
-	if success:
-		var old_pos = data.get("original_pos")
-		if old_pos != null and old_pos != Vector2i(gx, gy):
-			InventoryGlobal.remove_item_at_pos(old_pos.x, old_pos.y)
+	InventoryGlobal.place_item_at(gx, gy, item_resource)
 
 
 func _clear_highlights():
@@ -196,6 +195,8 @@ func _clear_highlights():
 
 
 func _on_item_drag_started(data_dict, preview_node):
+	for icon in item_layer.get_children():
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if data_dict is Dictionary:
 		held_item_data = data_dict.item_data
 		last_original_pos = data_dict.original_pos
@@ -207,22 +208,32 @@ func _on_item_drag_started(data_dict, preview_node):
 	active_preview_node = preview_node
 
 
-func _notification(what):
-	if what == NOTIFICATION_DRAG_END:
-		var current_slot = InventoryGlobal.get_slot_at(last_original_pos.x, last_original_pos.y)
-		var item_still_in_data = current_slot and current_slot.item_resource == held_item_data
+func _notification(what: int):
+	match what:
+		NOTIFICATION_DRAG_BEGIN:
+			var data = get_viewport().gui_get_drag_data()
+			if data is Dictionary and data.get("source_type"):
+				for icon in item_layer.get_children():
+					icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		
-		if not get_viewport().gui_is_drag_successful() or item_still_in_data:
-			if held_item_data:
-				held_item_data.is_rotated = original_rotation
-				if not item_still_in_data:
-					InventoryGlobal.place_item_at(last_original_pos.x, last_original_pos.y, held_item_data)
-				InventoryGlobal.inventory_updated.emit()
+		NOTIFICATION_DRAG_END:
+			var current_slot = InventoryGlobal.get_slot_at(last_original_pos.x, last_original_pos.y)
+			var item_still_in_data = current_slot and current_slot.item_resource == held_item_data
+			
+			for icon in item_layer.get_children():
+				icon.mouse_filter = Control.MOUSE_FILTER_STOP
+			
+			if not get_viewport().gui_is_drag_successful() or item_still_in_data:
+				if held_item_data:
+					held_item_data.is_rotated = original_rotation
+					if not item_still_in_data:
+						InventoryGlobal.place_item_at(last_original_pos.x, last_original_pos.y, held_item_data)
+					InventoryGlobal.inventory_updated.emit()
 		
-		held_item_data = null
-		active_preview_node = null
-		current_held_item_size = Vector2i.ZERO
-		_clear_highlights()
+				held_item_data = null
+				active_preview_node = null
+				current_held_item_size = Vector2i.ZERO
+				_clear_highlights()
 
 
 func _process(_delta):
