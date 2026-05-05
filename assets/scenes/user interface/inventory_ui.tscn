@@ -158,6 +158,30 @@ size_flags_horizontal = 6
 size_flags_vertical = 6
 mouse_filter = 2
 
+[node name="DetailsPanel" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/ItemDetailsContainer" unique_id=1489220818]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Texture" type="TextureRect" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/ItemDetailsContainer/DetailsPanel" unique_id=1380366877]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/ItemDetailsContainer/DetailsPanel" unique_id=577444322]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DescLabel" type="Label" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/ItemDetailsContainer/DetailsPanel" unique_id=2082508427]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="ContextMenu" parent="." unique_id=1344355442 instance=ExtResource("3_0k2qo")]
 z_index = 1
 layout_mode = 0

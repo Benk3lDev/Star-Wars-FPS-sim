@@ -14,6 +14,7 @@ var equipped_armor = {
 var hotbar_items = {
 	0: null, 1: null, 2: null, 3:null, 4: null, 5: null, 6: null, 7: null, 8: null, 9: null
 }
+var active_slot_index : int = 0
 var grid_width : int = 5
 var grid_height : int = 5
 var slot_size : int = 64
@@ -23,6 +24,9 @@ signal request_context_menu(item_data, grid_pos, mouse_pos)
 signal armor_equipped(type, item_data)
 signal armor_unequipped(type)
 signal hotbar_updated(index, item_data)
+signal item_hovered(data: ItemData)
+signal item_unhovered
+signal hotbar_selection_changed(index: int, item: ItemData)
 
 var player_node : Node3D = null
 var ui_node : Control
@@ -33,6 +37,12 @@ func _ready() -> void:
 	inventory.clear()
 	for i in range(grid_width * grid_height):
 		inventory.append({"is_occupied": false, "item_resource": null})
+
+
+func set_active_slot(index: int):
+	active_slot_index = wrapi(index, 0, 10)
+	var current_item = hotbar_items.get(active_slot_index)
+	hotbar_selection_changed.emit(active_slot_index, current_item)
 
 
 func get_slot_at(x: int, y: int):

@@ -59,3 +59,11 @@ func _on_hotbar_updated(index: int, item_data: ItemData):
 		else:
 			icon_display.texture = null
 			icon_display.hide()
+
+
+func _on_hotbar_selection_changed(index: int, _item):
+	if index == slot_index:
+		var tween = create_tween()
+		tween.tween_property(self, "modulate", Color(1.5, 1.5, 2.0), 0.1)
+	else:
+		modulate = Color.WHITE

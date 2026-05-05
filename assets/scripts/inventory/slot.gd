@@ -57,8 +57,6 @@ func _get_drag_data(at_position):
 		"origin_pivot": pivot_pos,
 		"origin_node": self
 	}
-	
-	
 
 
 func _can_drop_data(at_position, data):

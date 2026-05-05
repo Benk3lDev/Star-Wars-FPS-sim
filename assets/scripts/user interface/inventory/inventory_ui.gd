@@ -3,6 +3,10 @@ extends Control
 @onready var grid_container = $ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/InventoryContainer/GridContainer
 @onready var item_layer = $ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/InventoryContainer/ItemLayer
 @onready var context_menu = $ContextMenu
+@onready var details_panel = $ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/ItemDetailsContainer/DetailsPanel
+@onready var details_texture = %Texture
+@onready var name_label = %NameLabel
+@onready var desc_label = %DescLabel
 
 @export var slot_scene : PackedScene
 @export var dimensions : Vector2i
@@ -33,6 +37,8 @@ func _ready():
 	visibility_changed.connect(_on_visibility_changed)
 	InventoryGlobal.request_context_menu.connect(_on_context_menu_requested)
 	context_menu.action_selected.connect(_on_context_menu_action)
+	InventoryGlobal.item_hovered.connect(_on_item_hovered)
+	InventoryGlobal.item_unhovered.connect(_on_item_unhovered)
 	
 	item_layer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
@@ -76,6 +82,39 @@ func refresh_items():
 		if slot_data.get("is_pivot", false) == true:
 			var data = slot_data.get("item_resource")
 			spawn_item_icon(i, data)
+	
+	for slot in grid_container.get_children():
+		if not slot.slot_entered.is_connected(_on_slot_mouse_entered):
+			slot.slot_entered.connect(_on_slot_hovered)
+			slot.slot_exited.connect(_on_slot_unhovered)
+
+
+func _on_slot_hovered(slot):
+	if slot.item_stored:
+		display_item_details(slot.item_stored)
+
+
+func _on_slot_unhovered(_slot):
+	hide_item_details()
+
+
+func _on_item_hovered(data: ItemData):
+	display_item_details(data)
+
+
+func _on_item_unhovered():
+	hide_item_details()
+
+
+func display_item_details(data: ItemData):
+	details_panel.show()
+	details_texture.texture = data.hotbar_icon
+	name_label.text = data.item_name
+	desc_label.text = data.item_effect
+
+
+func hide_item_details():
+	details_panel.hide()
 
 
 func spawn_item_icon(slot_index: int, data: ItemData):
@@ -96,7 +135,6 @@ func spawn_item_icon(slot_index: int, data: ItemData):
 	var target_pos = target_slot.position
 	
 	var slot_size = target_slot.size
-	var base_width = data.width * slot_size.x
 	var base_height = data.height * slot_size.y
 	
 	if data.is_rotated:
@@ -179,7 +217,6 @@ func _drop_data(_at_position, data):
 			InventoryGlobal.remove_item_at_pos(origin.x, origin.y)
 		return
 	
-	var grid = owner.grid_container
 	var local_mouse = grid_container.get_local_mouse_position()
 	var gx = int(local_mouse.x / size.x)
 	var gy = int(local_mouse.y / size.y)

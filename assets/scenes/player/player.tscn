@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bx806xgtmn8j0" path="res://assets/scripts/player/camera effects/camera_effects.gd" id="4_7lmhl"]
 [ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="5_n7ghd"]
 [ext_resource type="Script" uid="uid://ck4b4weyxrvam" path="res://assets/scripts/components/mouse_capture.gd" id="6_2wuci"]
+[ext_resource type="Script" uid="uid://84enc46jljk6" path="res://assets/scripts/systems/equipment_manager.gd" id="6_c8ixa"]
 [ext_resource type="Script" uid="uid://c1vp0ojjvaby1" path="res://addons/godot_state_charts/parallel_state.gd" id="6_nvl01"]
 [ext_resource type="Script" uid="uid://clouq8ur1i2hw" path="res://assets/scripts/components/step_climber.gd" id="6_qtqh7"]
 [ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="7_ivps1"]
@@ -46,21 +47,10 @@ height = 1.2
 
 [node name="player" type="CharacterBody3D" unique_id=199960749 node_paths=PackedStringArray("camera", "state_chart", "camera_effects", "step_handler")]
 script = ExtResource("1_4flbx")
-debug = null
-crouch_height = null
-stand_height = null
 camera = NodePath("CameraController")
 state_chart = NodePath("StateChart")
 camera_effects = NodePath("CameraController/Camera3D")
 step_handler = NodePath("Components/StepHandler")
-acceleration = null
-deceleration = null
-default_speed = null
-walk_speed = null
-crouch_speed = null
-sprint_speed = null
-jump_velocity = null
-fall_velocity_threshold = null
 
 [node name="StateChartDebugger" parent="." unique_id=1240893149 instance=ExtResource("2_urp6f")]
 anchors_preset = 0
@@ -107,6 +97,12 @@ target_position = Vector3(0, 0, -3)
 collision_mask = 2
 hit_from_inside = true
 script = ExtResource("4_7ahtn")
+
+[node name="HandAnchor" type="Node3D" parent="CameraController/Camera3D" unique_id=1608898906]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.57, 0, -0.915)
+
+[node name="EquipmentManager" type="Node3D" parent="CameraController/Camera3D" unique_id=1904989666]
+script = ExtResource("6_c8ixa")
 
 [node name="Components" type="Node" parent="." unique_id=1284863860]
 

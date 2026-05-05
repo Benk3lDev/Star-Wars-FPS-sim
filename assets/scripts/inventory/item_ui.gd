@@ -8,6 +8,21 @@ var grid_pos : Vector2i
 signal drag_started(data, preview_node)
 signal request_context_menu(item: ItemData, pivot_pos: Vector2i, mouse_pos: Vector2)
 
+
+func _ready():
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
+	mouse_filter = Control.MOUSE_FILTER_STOP
+
+
+func _on_mouse_entered():
+	InventoryGlobal.emit_signal("item_hovered", item_data)
+
+
+func _on_mouse_exited():
+	InventoryGlobal.emit_signal("item_unhovered")
+
+
 func _get_drag_data(_at_position):
 	var drag_data = {
 		"item_data": item_data,

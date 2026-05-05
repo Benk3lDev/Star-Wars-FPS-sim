@@ -81,6 +81,21 @@ func check_fall_speed() -> bool:
 		return false
 
 
+func _unhandled_input(event: InputEvent):
+	# Hotbar scroll select
+	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			InventoryGlobal.set_active_slot(InventoryGlobal.active_slot_index - 1)
+		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			InventoryGlobal.set_active_slot(InventoryGlobal.active_slot_index + 1)
+	
+	if event is InputEventKey and event.pressed and not event.is_echo():
+		if event.keycode >= KEY_1 and event.keycode <= KEY_9:
+			InventoryGlobal.set_active_slot(event.keycode - KEY_1)
+		elif event.keycode == KEY_0:
+			InventoryGlobal.set_active_slot(9)
+
+
 func _input(event: InputEvent) -> void:
 
 # Leaning
