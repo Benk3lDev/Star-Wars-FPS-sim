@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dk6osaf05k530"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_u82gs"]
+size = Vector3(0.05, 0.05, 1)
+
+[node name="E5C(placeholder)" type="Node3D" unique_id=1199286006]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1380198763]
+mesh = SubResource("BoxMesh_u82gs")
+
+[node name="Muzzle" type="Marker3D" parent="." unique_id=382579426]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.75)

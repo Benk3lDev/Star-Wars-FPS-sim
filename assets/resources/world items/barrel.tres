@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ObjectData" format=3 uid="uid://osvq7d1omvhe"]
+
+[ext_resource type="PackedScene" uid="uid://dmc87e7oi130u" path="res://assets/scenes/items/models/test_item_3.tscn" id="1_1bnlh"]
+[ext_resource type="Script" uid="uid://2xvtg77w4x3n" path="res://assets/scripts/world items/object_data.gd" id="1_wivjl"]
+
+[resource]
+script = ExtResource("1_wivjl")
+item_name = "Barrel"
+item_model = ExtResource("1_1bnlh")
+hold_offset = Vector3(0, -0.7, -1)

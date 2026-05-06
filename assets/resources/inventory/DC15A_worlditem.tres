@@ -1,20 +1,20 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bcbjq5edbnnb0"]
 
-[ext_resource type="Texture2D" uid="uid://dwlhj5wmy7cqb" path="res://assets/textures/items/hotbar icons/weapons/DC15A_Hotbar.png" id="1_n3csb"]
-[ext_resource type="Texture2D" uid="uid://bqkd4ll2rg0pa" path="res://assets/textures/items/icons/weapons/DC15A_Inventory.png" id="2_jcef2"]
-[ext_resource type="PackedScene" uid="uid://c4emkrj7ev6x1" path="res://assets/scenes/items/models/DC15A.tscn" id="3_qum51"]
+[ext_resource type="Texture2D" uid="uid://csl2g8p4lal" path="res://assets/textures/items/hotbar icons/weapons/E5C_Hotbar.png" id="1_qum51"]
+[ext_resource type="Texture2D" uid="uid://c5sa13w80shj4" path="res://assets/textures/items/icons/weapons/E5C_Inventory.png" id="2_5ifhg"]
+[ext_resource type="PackedScene" uid="uid://dk6osaf05k530" path="res://assets/scenes/items/models/E5C.tscn" id="3_2bv5q"]
 [ext_resource type="Script" uid="uid://bmsou0jk4d6cx" path="res://assets/scripts/inventory/item_data.gd" id="4_rq8ro"]
 [ext_resource type="Resource" uid="uid://bqorfknujgl4q" path="res://assets/weapons/resources/DC15A_weapon.tres" id="5_5ifhg"]
 
 [resource]
 script = ExtResource("4_rq8ro")
 item_type = "Weapon"
-item_name = "DC15A"
-icon = ExtResource("2_jcef2")
+item_name = "E5C"
+icon = ExtResource("2_5ifhg")
 width = 3
 height = 1
-hotbar_icon = ExtResource("1_n3csb")
-item_model = ExtResource("3_qum51")
+hotbar_icon = ExtResource("1_qum51")
+item_model = ExtResource("3_2bv5q")
 is_stackable = true
 max_stack_size = 2
 weapon_stats = ExtResource("5_5ifhg")

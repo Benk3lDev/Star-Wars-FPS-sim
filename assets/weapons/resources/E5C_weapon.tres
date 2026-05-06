@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://dorwnk4wxbmty"]
+
+[ext_resource type="PackedScene" uid="uid://dyqsv653r7ev1" path="res://assets/scenes/weapons/projectile.tscn" id="1_af7au"]
+[ext_resource type="Script" uid="uid://kik5sorkdss8" path="res://assets/weapons/scripts/weapon.gd" id="2_ixouu"]
+[ext_resource type="PackedScene" uid="uid://dwjcaybcvfwl5" path="res://assets/scenes/weapons/pistol_weapon.tscn" id="3_l0xyy"]
+
+[resource]
+script = ExtResource("2_ixouu")
+weapon_name = "E5C"
+max_ammo = 50
+fire_rate = 5.0
+is_automatic = true
+projectile_speed = 120.0
+is_hit_scan = false
+weapon_model = ExtResource("3_l0xyy")
+projectile_scene = ExtResource("1_af7au")
+spread_angle = 0.1
+weapon_position = Vector3(0.185, -0.125, -0.34)

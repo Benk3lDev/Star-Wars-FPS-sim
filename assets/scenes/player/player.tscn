@@ -111,6 +111,8 @@ script = ExtResource("4_7ahtn")
 script = ExtResource("6_c8ixa")
 weapon_controller = NodePath("../../../Components/WeaponSystems")
 
+[node name="HoldPos" type="Marker3D" parent="CameraController/Camera3D" unique_id=1041021319]
+
 [node name="Components" type="Node" parent="." unique_id=1284863860]
 
 [node name="MouseCapture" type="Node" parent="Components" unique_id=1011220758]

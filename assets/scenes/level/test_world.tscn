@@ -5,6 +5,8 @@
 [ext_resource type="Resource" uid="uid://bhtiwadbeipxr" path="res://assets/resources/inventory/test_item2.tres" id="3_bgynn"]
 [ext_resource type="Resource" uid="uid://rl2wx7p1vm4k" path="res://assets/resources/inventory/test_item3.tres" id="4_6iq4x"]
 [ext_resource type="Resource" uid="uid://da03df0rv2cl2" path="res://assets/resources/inventory/test_item4.tres" id="5_j0gt5"]
+[ext_resource type="PackedScene" uid="uid://b7d14nkig2473" path="res://assets/scenes/items/carryable_object.tscn" id="6_bgynn"]
+[ext_resource type="Resource" uid="uid://osvq7d1omvhe" path="res://assets/resources/world items/barrel.tres" id="7_6iq4x"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1lwx6"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -134,3 +136,7 @@ item_data = ExtResource("4_6iq4x")
 [node name="Inventory_Item4" parent="InventoryTestArea" unique_id=1170683054 instance=ExtResource("1_pew12")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.83117, 2.1143265, -0.7008107)
 item_data = ExtResource("5_j0gt5")
+
+[node name="CarryableObject" parent="InventoryTestArea" unique_id=2043428686 instance=ExtResource("6_bgynn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.604843, 1.3246393, 0)
+object_data = ExtResource("7_6iq4x")
