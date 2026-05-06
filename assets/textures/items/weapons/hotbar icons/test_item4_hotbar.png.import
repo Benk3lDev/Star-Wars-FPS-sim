@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvyrnkru4lhbx"
-path="res://.godot/imported/SE-14RInventory.png-33b96c1d4b31ca775aad89fda3ed328e.ctex"
+uid="uid://bkqu7okwhk8x2"
+path="res://.godot/imported/test_item4_hotbar.png-6ab6c52bdea793fd0757a2088c2b46f2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/items/icons/weapons/SE-14RInventory.png"
-dest_files=["res://.godot/imported/SE-14RInventory.png-33b96c1d4b31ca775aad89fda3ed328e.ctex"]
+source_file="res://assets/textures/items/weapons/hotbar icons/test_item4_hotbar.png"
+dest_files=["res://.godot/imported/test_item4_hotbar.png-6ab6c52bdea793fd0757a2088c2b46f2.ctex"]
 
 [params]
 

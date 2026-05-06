@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnnhdc5dnl67e"
-path="res://.godot/imported/DLT-18_Hotbar.png-a7b7055b3d105e3204190a449e5c5c89.ctex"
+uid="uid://bqkd4ll2rg0pa"
+path="res://.godot/imported/DC15A_Inventory.png-ef84c7a7903b6c8c26ef19f6987a8643.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/items/hotbar icons/weapons/DLT-18_Hotbar.png"
-dest_files=["res://.godot/imported/DLT-18_Hotbar.png-a7b7055b3d105e3204190a449e5c5c89.ctex"]
+source_file="res://assets/textures/items/weapons/icons/DC15A_Inventory.png"
+dest_files=["res://.godot/imported/DC15A_Inventory.png-ef84c7a7903b6c8c26ef19f6987a8643.ctex"]
 
 [params]
 

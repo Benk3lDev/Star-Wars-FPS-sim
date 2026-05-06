@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://crma2pgoof3et"
-path="res://.godot/imported/test_item2_hotbar.png-c5916f4aeffe4de36c529d4fe45828d2.ctex"
+uid="uid://d4hmuy32gbleb"
+path="res://.godot/imported/test_item4.png-78a39ef54a24cc2850ffc8a19f2773fe.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/items/hotbar icons/test_item2_hotbar.png"
-dest_files=["res://.godot/imported/test_item2_hotbar.png-c5916f4aeffe4de36c529d4fe45828d2.ctex"]
+source_file="res://assets/textures/items/weapons/icons/test_item4.png"
+dest_files=["res://.godot/imported/test_item4.png-78a39ef54a24cc2850ffc8a19f2773fe.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dauj5uwrxd6rn"
-path="res://.godot/imported/test_item3.png-c8ba2de12d5b4149b3262c0c4583d4b2.ctex"
+uid="uid://c2nu7taeuyt87"
+path="res://.godot/imported/DLT-18_Inventory.png-99bd11d589dfc108104d562cc72069c5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/items/icons/test_item3.png"
-dest_files=["res://.godot/imported/test_item3.png-c8ba2de12d5b4149b3262c0c4583d4b2.ctex"]
+source_file="res://assets/textures/items/weapons/icons/DLT-18_Inventory.png"
+dest_files=["res://.godot/imported/DLT-18_Inventory.png-99bd11d589dfc108104d562cc72069c5.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5sa13w80shj4"
-path="res://.godot/imported/E5C_Inventory.png-50cc978a685b293521aeacd0ffba2ca3.ctex"
+uid="uid://dvyrnkru4lhbx"
+path="res://.godot/imported/SE-14RInventory.png-df197dfbb3e730957f645ca0ac0a0da2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/items/icons/weapons/E5C_Inventory.png"
-dest_files=["res://.godot/imported/E5C_Inventory.png-50cc978a685b293521aeacd0ffba2ca3.ctex"]
+source_file="res://assets/textures/items/weapons/icons/SE-14RInventory.png"
+dest_files=["res://.godot/imported/SE-14RInventory.png-df197dfbb3e730957f645ca0ac0a0da2.ctex"]
 
 [params]
 

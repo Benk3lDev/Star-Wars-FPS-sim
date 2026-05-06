@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bqkd4ll2rg0pa"
-path="res://.godot/imported/DC15A_Inventory.png-92dcb227ae7849c061db820a365d03c8.ctex"
+uid="uid://bkt7b85igh6l8"
+path="res://.godot/imported/test_item2.png-618bcf70c7f85aff41d71a8673d952ce.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/items/icons/weapons/DC15A_Inventory.png"
-dest_files=["res://.godot/imported/DC15A_Inventory.png-92dcb227ae7849c061db820a365d03c8.ctex"]
+source_file="res://assets/textures/items/weapons/icons/test_item2.png"
+dest_files=["res://.godot/imported/test_item2.png-618bcf70c7f85aff41d71a8673d952ce.ctex"]
 
 [params]
 

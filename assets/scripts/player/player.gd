@@ -128,6 +128,10 @@ func update_rotation(rotation_input) -> void:
 
 
 func _physics_process(delta):
+	if get_tree().paused:
+		velocity = Vector3.ZERO
+		return
+	
 	previous_velocity = velocity
 	
 	if not is_on_floor():

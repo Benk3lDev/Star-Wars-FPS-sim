@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://c7hderxqekdtv"]
 
-[ext_resource type="Texture2D" uid="uid://dwlhj5wmy7cqb" path="res://assets/textures/items/hotbar icons/weapons/DC15A_Hotbar.png" id="1_yhwpx"]
-[ext_resource type="Texture2D" uid="uid://bqkd4ll2rg0pa" path="res://assets/textures/items/icons/weapons/DC15A_Inventory.png" id="2_krg42"]
-[ext_resource type="PackedScene" uid="uid://c4emkrj7ev6x1" path="res://assets/scenes/items/models/DC15A.tscn" id="3_ceyrm"]
+[ext_resource type="Texture2D" uid="uid://dwlhj5wmy7cqb" path="res://assets/textures/items/weapons/hotbar icons/DC15A_Hotbar.png" id="1_yhwpx"]
+[ext_resource type="Texture2D" uid="uid://bqkd4ll2rg0pa" path="res://assets/textures/items/weapons/icons/DC15A_Inventory.png" id="2_krg42"]
+[ext_resource type="PackedScene" uid="uid://c4emkrj7ev6x1" path="res://assets/scenes/items/models/weapons/DC15A.tscn" id="3_ceyrm"]
 [ext_resource type="Script" uid="uid://bmsou0jk4d6cx" path="res://assets/scripts/inventory/item_data.gd" id="4_ewl6s"]
-[ext_resource type="Resource" uid="uid://bqorfknujgl4q" path="res://assets/weapons/resources/DC15A_weapon.tres" id="5_a6ga0"]
+[ext_resource type="Resource" uid="uid://bqorfknujgl4q" path="res://assets/resources/weapons/DC15A_weapon.tres" id="5_a6ga0"]
 
 [resource]
 script = ExtResource("4_ewl6s")

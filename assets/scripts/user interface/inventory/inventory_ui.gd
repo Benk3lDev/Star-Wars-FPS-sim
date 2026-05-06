@@ -171,6 +171,9 @@ func get_slots_in_range(start_pos: Vector2i, size: Vector2i) -> Array:
 func _on_slot_mouse_entered(a_Slot):
 	_clear_highlights()
 	
+	if not held_item_data:
+		return
+	
 	highlighted_slots = get_slots_in_range(a_Slot.grid_pos, current_held_item_size)
 	
 	var within_bounds = highlighted_slots.size() == (current_held_item_size.x * current_held_item_size.y)
@@ -215,13 +218,16 @@ func _drop_data(_at_position, data):
 		var origin = data.get("origin_pivot")
 		if origin != null:
 			InventoryGlobal.remove_item_at_pos(origin.x, origin.y)
-		return
 	
 	var local_mouse = grid_container.get_local_mouse_position()
 	var gx = int(local_mouse.x / size.x)
 	var gy = int(local_mouse.y / size.y)
 	
 	InventoryGlobal.place_item_at(gx, gy, item_resource)
+	
+	held_item_data = null
+	current_held_item_size = Vector2i(0, 0)
+	_clear_highlights()
 
 
 func _clear_highlights():
@@ -267,10 +273,10 @@ func _notification(what: int):
 						InventoryGlobal.place_item_at(last_original_pos.x, last_original_pos.y, held_item_data)
 					InventoryGlobal.inventory_updated.emit()
 		
-				held_item_data = null
-				active_preview_node = null
-				current_held_item_size = Vector2i.ZERO
-				_clear_highlights()
+			held_item_data = null
+			active_preview_node = null
+			current_held_item_size = Vector2i.ZERO
+			_clear_highlights()
 
 
 func _process(_delta):

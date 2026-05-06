@@ -46,6 +46,11 @@ func _get_drag_data(at_position):
 	
 	var pivot_pos = InventoryGlobal.find_pivot_of_item_at(grid_pos.x, grid_pos.y)
 	
+	var main_ui = get_tree().get_root().find_child("Inventory_UI", true, false)
+	if main_ui:
+		main_ui.held_item_data = item_stored
+		main_ui.current_held_item_size = item_stored.get_size()
+	
 	var preview = TextureRect.new()
 	preview.texture = item_stored.icon
 	preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -55,7 +60,8 @@ func _get_drag_data(at_position):
 	return {
 		"item_data": item_stored,
 		"origin_pivot": pivot_pos,
-		"origin_node": self
+		"origin_node": self,
+		"type": "ivnentory"
 	}
 
 

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://da03df0rv2cl2"]
 
-[ext_resource type="Texture2D" uid="uid://d4hmuy32gbleb" path="res://assets/textures/items/icons/test_item4.png" id="1_43rwx"]
-[ext_resource type="Texture2D" uid="uid://bkqu7okwhk8x2" path="res://assets/textures/items/hotbar icons/test_item4_hotbar.png" id="1_wneq3"]
+[ext_resource type="Texture2D" uid="uid://d4hmuy32gbleb" path="res://assets/textures/items/weapons/icons/test_item4.png" id="1_43rwx"]
+[ext_resource type="Texture2D" uid="uid://bkqu7okwhk8x2" path="res://assets/textures/items/weapons/hotbar icons/test_item4_hotbar.png" id="1_wneq3"]
 [ext_resource type="PackedScene" uid="uid://t0ert4jfg8lq" path="res://assets/scenes/items/models/test_item_4.tscn" id="2_43rwx"]
 [ext_resource type="Script" uid="uid://bmsou0jk4d6cx" path="res://assets/scripts/inventory/item_data.gd" id="3_iocqs"]
 
