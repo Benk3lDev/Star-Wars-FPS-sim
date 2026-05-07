@@ -73,9 +73,6 @@ func refresh_items():
 	
 	grid_container.force_update_transform()
 	
-	await get_tree().process_frame
-	
-	
 	for i in range(InventoryGlobal.inventory.size()):
 		var slot_data = InventoryGlobal.inventory[i]
 			
@@ -193,41 +190,6 @@ func _on_slot_mouse_exited(a_Slot):
 	if current_hovered_slot == a_Slot:
 		_clear_highlights()
 		current_hovered_slot = null
-
-
-func _can_drop_data(_at_position, data):
-	var local_mouse = grid_container.get_local_mouse_position()
-	var s_size = grid_container.get_child(0).size
-	var gx = int(local_mouse.x / s_size.x)
-	var gy = int(local_mouse.y / s_size.y)
-	
-	var w = data.get("width", 1)
-	var h = data.get("height", 1)
-	
-	if InventoryGlobal.is_space_available(gx, gy, w, h):
-		return true
-	return false
-
-func _drop_data(_at_position, data):
-	var item_resource = data.get("item_data")
-	
-	if data.get("source_type") == "hotbar":
-		var index = data.get("hotbar_index")
-		InventoryGlobal.clear_hotbar_slot(index)
-	else:
-		var origin = data.get("origin_pivot")
-		if origin != null:
-			InventoryGlobal.remove_item_at_pos(origin.x, origin.y)
-	
-	var local_mouse = grid_container.get_local_mouse_position()
-	var gx = int(local_mouse.x / size.x)
-	var gy = int(local_mouse.y / size.y)
-	
-	InventoryGlobal.place_item_at(gx, gy, item_resource)
-	
-	held_item_data = null
-	current_held_item_size = Vector2i(0, 0)
-	_clear_highlights()
 
 
 func _clear_highlights():

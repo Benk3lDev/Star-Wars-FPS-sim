@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bcbjq5edbnnb0"]
 
-[ext_resource type="Texture2D" uid="uid://csl2g8p4lal" path="res://assets/textures/items/weapons/hotbar icons/E5C_Hotbar.png" id="1_qum51"]
-[ext_resource type="Texture2D" uid="uid://c5sa13w80shj4" path="res://assets/textures/items/weapons/icons/E5C_Inventory.png" id="2_5ifhg"]
+[ext_resource type="Texture2D" uid="uid://dwlhj5wmy7cqb" path="res://assets/textures/items/weapons/hotbar icons/DC15A_Hotbar.png" id="1_qum51"]
+[ext_resource type="Texture2D" uid="uid://bqkd4ll2rg0pa" path="res://assets/textures/items/weapons/icons/DC15A_Inventory.png" id="2_5ifhg"]
 [ext_resource type="PackedScene" uid="uid://dk6osaf05k530" path="res://assets/scenes/items/models/weapons/E5C.tscn" id="3_2bv5q"]
 [ext_resource type="Script" uid="uid://bmsou0jk4d6cx" path="res://assets/scripts/inventory/item_data.gd" id="4_rq8ro"]
 [ext_resource type="Resource" uid="uid://bqorfknujgl4q" path="res://assets/resources/weapons/DC15A_weapon.tres" id="5_5ifhg"]
@@ -9,7 +9,7 @@
 [resource]
 script = ExtResource("4_rq8ro")
 item_type = "Weapon"
-item_name = "E5C"
+item_name = "DC15A"
 icon = ExtResource("2_5ifhg")
 width = 3
 height = 1
