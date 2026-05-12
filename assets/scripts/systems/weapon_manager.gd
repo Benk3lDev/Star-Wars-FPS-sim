@@ -7,14 +7,35 @@ var current_slot: int = 1
 
 func _ready() -> void:
 	add_to_group("weapon_manager")
+	
+	# --- CONNECT THE GLOBAL HOTBAR SIGNAL ENGINE ---
+	InventoryGlobal.hotbar_selection_changed.connect(_on_hotbar_selection_changed)
+	
+	# Fetch initial assignment on spawn boot frames if items are already pre-loaded
+	var active_item = InventoryGlobal.hotbar_items.get(InventoryGlobal.active_hotbar_index, null)
+	if active_item:
+		activate_weapon(active_item)
+
+
+## Intermediate listener that catches hotbar switching events
+func _on_hotbar_selection_changed(index: int, item_data: ItemData) -> void:
+	current_slot = index + 1 # Convert 0-4 code array index back to gameplay slots 1-5
+	
+	# Safely pass the active item payload straight to your existing code block
+	activate_weapon(item_data)
 
 
 func activate_weapon(item: ItemData):
 	current_equipped_item = item
 	if item:
-		print("WeaponManager received: ", item.item_name, " with ammo: ", item.ammo)
+		# Use fallback lookup parameter strings if .item_name is ever empty
+		var name_check = item.item_name if "item_name" in item and item.item_name != "" else item.name
+		print("WeaponManager received: ", name_check, " with ammo: ", item.ammo)
+		
+		# Put your physical 3D mesh instantiating/enabling model switches here!
 	else:
 		print("WeaponManager: Hands are now empty.")
+		# Turn off visibilities of any visual weapons currently held in hand models
 
 
 func use_ammo(slot: int, amount: int = 1) -> void:

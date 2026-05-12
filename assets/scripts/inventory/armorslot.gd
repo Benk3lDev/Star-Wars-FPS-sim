@@ -33,11 +33,10 @@ func equip_item_visually(item_resource):
 
 func _on_armor_equipped(type: String, item_data: ItemData):
 	if type == slot_type:
-		var icon_node = get_node_or_null("Icon")
 		
-		if icon_node:
-			icon_node.texture = item_data.hotbar_icon
-			icon_node.show()
+		if icon_display:
+			icon_display.texture = item_data.hotbar_icon
+			icon_display.show()
 		else:
 			texture = item_data.hotbar_icon
 

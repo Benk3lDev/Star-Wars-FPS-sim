@@ -7,11 +7,10 @@
 
 [resource]
 script = ExtResource("3_a28gv")
-armor_type = "Chest"
+armor_type = "Belt"
 item_type = "Armor"
 item_name = "Test Item 2"
 icon = ExtResource("1_h8ybd")
-width = 2
-height = 1
+size = Vector2i(2, 1)
 hotbar_icon = ExtResource("1_dqc8c")
 item_model = ExtResource("2_h8ybd")

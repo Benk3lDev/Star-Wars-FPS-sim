@@ -106,3 +106,11 @@ func _drop_data(at_position, data):
 	var gy = int(local_mouse.y / size.y)
 	
 	InventoryGlobal.place_item_at(gx, gy, item_resource)
+
+
+func set_highlight(is_visible: bool, is_valid: bool = true) -> void:
+	if not is_visible:
+		set_color(States.DEFAULT)
+	elif is_valid:
+		set_color(States.FREE)
+	else: set_color(States.TAKEN)

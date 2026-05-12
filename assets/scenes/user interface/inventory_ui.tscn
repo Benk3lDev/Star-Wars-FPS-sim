@@ -1,27 +1,12 @@
 [gd_scene format=3 uid="uid://7wly856hfa0j"]
 
-[ext_resource type="Script" uid="uid://bmjaiqm7acw4j" path="res://assets/scripts/user interface/inventory/inventory_ui.gd" id="1_8dq0w"]
-[ext_resource type="Texture2D" uid="uid://bnv04eire1efl" path="res://assets/textures/user interface/slot.png" id="2_6uylv"]
+[ext_resource type="Script" uid="uid://c3pd3hdc0p046" path="res://assets/scripts/inventory/inventory_ui.gd" id="1_6uylv"]
 [ext_resource type="PackedScene" uid="uid://dx6pio8osa5so" path="res://assets/scenes/user interface/context_menu.tscn" id="3_0k2qo"]
-[ext_resource type="Script" uid="uid://b3rgngtaadp5n" path="res://assets/scripts/inventory/slot.gd" id="3_if5mp"]
+[ext_resource type="PackedScene" uid="uid://c8hkfk2tf132t" path="res://assets/scenes/user interface/slot.tscn" id="4_6uylv"]
 [ext_resource type="PackedScene" uid="uid://d3hhxwr8abkeo" path="res://assets/scenes/user interface/armorslot.tscn" id="4_htnyl"]
+[ext_resource type="Script" uid="uid://4gkdlxfwithn" path="res://assets/scripts/inventory/item_grid.gd" id="5_if5mp"]
 
-[sub_resource type="PackedScene" id="PackedScene_3qofl"]
-_bundled = {
-"conn_count": 0,
-"conns": PackedInt32Array(),
-"editable_instances": [],
-"id_paths": [PackedInt32Array()],
-"names": PackedStringArray("Slot", "TextureRect", "custom_minimum_size", "mouse_filter", "texture", "expand_mode", "script", "StatusFilter", "ColorRect", "layout_mode", "anchors_preset", "anchor_right", "anchor_bottom", "grow_horizontal", "grow_vertical", "mouse_filter", "color"),
-"node_count": 2,
-"node_ids": PackedInt32Array(2084455472, 1253942431),
-"node_paths": [NodePath(".")],
-"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 5, 2, 0, 3, 1, 4, 2, 5, 3, 6, 4, 0, 1073741824, 0, 8, 7, -1, 8, 9, 5, 10, 6, 11, 7, 12, 8, 13, 9, 14, 10, 15, 11, 16, 12, 0),
-"variants": [Vector2(64, 64), 0, ExtResource("2_6uylv"), 1, ExtResource("3_if5mp"), 1, 15, 1.0, 1.0, 2, 2, 2, Color(1, 1, 1, 0)],
-"version": 3
-}
-
-[node name="Inventory_UI" type="Control" unique_id=150101117]
+[node name="Inventory_UI" type="Control" unique_id=150101117 node_paths=PackedStringArray("inventory_grid")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -29,9 +14,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("1_8dq0w")
-slot_scene = SubResource("PackedScene_3qofl")
-dimensions = Vector2i(5, 5)
+script = ExtResource("1_6uylv")
+inventory_grid = NodePath("ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/InventoryContainer/GridContainer")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1850587746]
 custom_minimum_size = Vector2(800, 434)
@@ -127,7 +111,7 @@ size_flags_horizontal = 6
 size_flags_vertical = 6
 mouse_filter = 2
 
-[node name="GridContainer" type="GridContainer" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/InventoryContainer" unique_id=64230368]
+[node name="GridContainer" type="GridContainer" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/InventoryContainer" unique_id=64230368 node_paths=PackedStringArray("item_canvas", "context_menu")]
 custom_minimum_size = Vector2(320, 320)
 layout_mode = 1
 anchors_preset = 15
@@ -137,12 +121,16 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
-mouse_filter = 2
+mouse_filter = 0
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 5
+script = ExtResource("5_if5mp")
+inventory_slot_scene = ExtResource("4_6uylv")
+item_canvas = NodePath("../ItemCanvas")
+context_menu = NodePath("../../../../../../../ContextMenu")
 
-[node name="ItemLayer" type="Control" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/InventoryContainer" unique_id=974489669]
+[node name="ItemCanvas" type="Control" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer/InventoryContainer" unique_id=974489669]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

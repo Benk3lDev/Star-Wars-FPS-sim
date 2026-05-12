@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bkt4uwsf7u0xp"]
 
 [ext_resource type="PackedScene" uid="uid://cdpwd8puh5x4o" path="res://assets/scenes/user interface/hotbarslot.tscn" id="1_a2vxn"]
+[ext_resource type="Script" uid="uid://dd2fnlowr3oaf" path="res://assets/scripts/inventory/hotbar_controller.gd" id="1_ekbb7"]
 
 [node name="Hotbar_UI" type="Control" unique_id=1536922201]
 layout_mode = 3
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_ekbb7")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1704559369]
 layout_mode = 1

@@ -8,8 +8,6 @@ extends RigidBody3D
 		if is_inside_tree():
 			load_item_model()
 
-var scene_path : String = "res://assets/scenes/items/inventory_item.tscn"
-
 @onready var model_container = $ModelContainer
 
 
@@ -49,13 +47,13 @@ func _setup_collisions(node: Node):
 			col_shape_node.transform = child.transform
 			
 			if Engine.is_editor_hint():
-				col_shape_node.owner = get_tree().edited_scene_rootwd
+				col_shape_node.owner = get_tree().edited_scene_root
 	
 		_setup_collisions(child)
 
 
 func pickup_item():
-	if InventoryGlobal.player_node:
+	if InventoryGlobal.player:
 		var success = InventoryGlobal.add_item(item_data)
 		
 		if success:

@@ -2,14 +2,11 @@
 
 [ext_resource type="Script" uid="uid://bquwjl3yfqeo8" path="res://assets/scripts/inventory/item_ui.gd" id="1_1i3so"]
 
-[node name="ItemUI" type="TextureRect" unique_id=123482492]
-expand_mode = 1
-stretch_mode = 5
+[node name="ItemUI" type="Sprite2D" unique_id=1114728422]
 script = ExtResource("1_1i3so")
 
 [node name="QuantityLabel" type="Label" parent="." unique_id=413033352]
 z_index = 1
-layout_mode = 1
 offset_right = 20.0
 offset_bottom = 20.0
 theme_override_font_sizes/font_size = 10
