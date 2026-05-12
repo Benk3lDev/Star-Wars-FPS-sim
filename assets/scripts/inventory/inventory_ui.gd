@@ -22,9 +22,14 @@ func _ready() -> void:
 	InventoryGlobal.ui_node = self
 	context_menu.action_selected.connect(_on_context_menu_action)
 	
-	# Connect the grid's right-click signal to your existing menu request function
 	if inventory_grid:
 		inventory_grid.context_menu_requested.connect(_on_context_menu_requested)
+		
+		# Connect grid hover signals (Verify exact signal names in your ItemGrid script)
+		if inventory_grid.has_signal("item_hovered"):
+			inventory_grid.item_hovered.connect(_on_item_hovered)
+		if inventory_grid.has_signal("item_unhovered"):
+			inventory_grid.item_unhovered.connect(_on_item_unhovered)
 
 
 func _on_context_menu_requested(item: ItemData, pivot_pos: Vector2i, mouse_pos: Vector2):
@@ -95,3 +100,40 @@ func _on_context_menu_action(action_type: String, item_data: ItemData, slot_pos:
 			
 			if inventory_grid:
 				inventory_grid.refresh_ui()
+
+
+func update_details_panel(item_data: ItemData) -> void:
+	if item_data == null:
+		clear_details_panel()
+		return
+		
+	if details_panel:
+		details_panel.visible = true
+		
+	if details_texture and item_data.icon: # Change from item_data.texture to match ItemGrid's usage of .icon
+		details_texture.texture = item_data.icon
+	if name_label:
+		name_label.text = item_data.item_name
+	if desc_label:
+		# Double check if your script uses item_data.description or item_data.item_description
+		desc_label.text = item_data.item_effect 
+
+
+func clear_details_panel() -> void:
+	# Hide the panel entirely, or clear its text properties
+	if details_panel:
+		details_panel.visible = false
+	if details_texture:
+		details_texture.texture = null
+	if name_label:
+		name_label.text = ""
+	if desc_label:
+		desc_label.text = ""
+
+
+func _on_item_hovered(item_data: ItemData) -> void:
+	update_details_panel(item_data)
+
+
+func _on_item_unhovered() -> void:
+	clear_details_panel()

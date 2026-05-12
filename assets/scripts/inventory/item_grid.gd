@@ -10,8 +10,11 @@ var preview_sprite : TextureRect = null
 var target_rotation_deg : float = 0.0
 var hovered_slots : Array[Control] = []
 var last_calculated_origin : Vector2i = Vector2i(-1, -1)
+var _last_hovered_item: ItemData = null
 
 signal context_menu_requested(item: ItemData, pivot_pos: Vector2i, mouse_pos: Vector2)
+signal item_hovered(item_data: ItemData)
+signal item_unhovered()
 
 func _ready() -> void:
 	dimensions = InventoryGlobal.dimensions
@@ -22,6 +25,7 @@ func _ready() -> void:
 	
 	create_slots()
 	InventoryGlobal.inventory_updated.connect(refresh_ui)
+	self.mouse_exited.connect(_on_mouse_exited)
 	refresh_ui()
 
 func create_slots() -> void:
@@ -71,6 +75,11 @@ func refresh_ui() -> void:
 			item_canvas.add_child(icon_rect)
 
 func _gui_input(event: InputEvent) -> void:
+	# 1. Capture mouse movement inside the grid to process hovering
+	if event is InputEventMouseMotion:
+		_process_grid_hover()
+		
+	# 2. Handle click logic (Your existing code)
 	if event is InputEventMouseButton and event.is_pressed():
 		var local_mouse = get_local_mouse_position()
 		var index = get_slot_index_from_coords(local_mouse)
@@ -124,6 +133,7 @@ func handle_slot_click(index: int, local_mouse: Vector2) -> void:
 		var clicked_item = InventoryGlobal.get_item_at_grid_coords(cell_coords)
 		
 		if clicked_item:
+			_clear_current_hover() 
 			# --- REMOVED THE IS_EQUIPPED RESTRICTION THAT LOCKED THE GRID ---
 			
 			InventoryGlobal.current_drag_data = clicked_item
@@ -331,3 +341,38 @@ func finalize_hotbar_drop() -> void:
 		# Redraw the grid to show the newly duplicated/dimmed item asset block
 		refresh_ui()
 		print("[ItemGrid] Item locked to original grid coords and visually dimmed.")
+
+
+func _process_grid_hover() -> void:
+	# 1. Do not process item tooltips or hover cards if the player is actively dragging an item
+	if InventoryGlobal.current_drag_data != null:
+		_clear_current_hover()
+		return
+		
+	var local_mouse = get_local_mouse_position()
+	var slot_index = get_slot_index_from_coords(local_mouse)
+	
+	# 2. If the mouse leaves the visual bounding box of the slot matrix
+	if slot_index == -1:
+		_clear_current_hover()
+		return
+		
+	var cell_coords = get_grid_coords_from_index(slot_index)
+	var hovered_item = InventoryGlobal.get_item_at_grid_coords(cell_coords)
+	
+	# 3. Handle state transitions between items
+	if hovered_item != _last_hovered_item:
+		_clear_current_hover() # Clean up the old item display state first
+		
+		if hovered_item != null:
+			_last_hovered_item = hovered_item
+			item_hovered.emit(hovered_item)
+
+func _clear_current_hover() -> void:
+	if _last_hovered_item != null:
+		_last_hovered_item = null
+		item_unhovered.emit()
+
+
+func _on_mouse_exited() -> void:
+	_clear_current_hover()

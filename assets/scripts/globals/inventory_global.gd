@@ -119,13 +119,26 @@ func drop_item_into_world(index: int) -> void:
 	
 	if item and player:
 		var scene_to_spawn = INVENTORY_ITEM_SCENE
-		var item_instance = scene_to_spawn.instantiate() as RigidBody3D
+		var item_instance = scene_to_spawn.instantiate()
 		
+		# 1. Inject the data resource BEFORE adding to the tree
+		if item_instance.has_method("initialize_item"):
+			item_instance.initialize_item(item)
+		elif "item_data" in item_instance:
+			item_instance.item_data = item
+			
+		# 2. Add node to the active world tree
 		get_tree().root.add_child(item_instance)
 		
-		
+		# 3. Calculate position relative to the camera/player transform
 		var drop_offset = -player.global_transform.basis.z * 1.5
-		item_instance.global_position = player.global_position + drop_offset
+		var target_pos = player.global_position + drop_offset
+		
+		# 4. Overcome RigidBody positioning race conditions
+		item_instance.global_position = target_pos
+		if item_instance is RigidBody3D:
+			# Resets physics interpolation state to force translation update
+			item_instance.reset_physics_interpolation() 
 		
 		print("Item: ", item.item_name, " dropped into world!")
 		update_slot(index, null)
