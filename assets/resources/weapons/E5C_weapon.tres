@@ -8,9 +8,9 @@
 script = ExtResource("2_ixouu")
 weapon_name = "E5C"
 max_ammo = 50
-fire_rate = 5.0
+fire_rate = 15.0
 is_automatic = true
-projectile_speed = 120.0
+projectile_speed = 90.0
 is_hit_scan = false
 weapon_model = ExtResource("3_l0xyy")
 projectile_scene = ExtResource("1_af7au")

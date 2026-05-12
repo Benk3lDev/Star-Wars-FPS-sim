@@ -35,9 +35,28 @@ func _on_context_menu_requested(item: ItemData, pivot_pos: Vector2i, mouse_pos: 
 func _on_context_menu_action(action_type: String, item_data: ItemData, slot_pos: Vector2i) -> void:
 	match action_type:
 		"drop":
-			# FIX: Changed item_data.resource_name to item_data.name
+			if item_data == null: return
 			print("Dropping item: ", item_data.item_name, " from ", slot_pos)
-			InventoryGlobal.remove_item(item_data)
+			
+			# 1. Convert the 2D coordinate positions back into a flat 1D array index
+			var grid_width = InventoryGlobal.dimensions.x
+			var flat_array_index : int = slot_pos.x + (slot_pos.y * grid_width)
+			
+			# 2. Call your existing drop function to spawn the RigidBody3D scene actor
+			if has_method("drop_item_into_world"):
+				InventoryGlobal.drop_item_into_world(flat_array_index)
+			elif InventoryGlobal.has_method("drop_item_into_world"):
+				InventoryGlobal.drop_item_into_world(flat_array_index)
+				
+			# 3. Simultaneously execute the temporary/persistent data cleanup method.
+			# This clears out mirroring registrations from your 10 hotbar slots
+			# and turns off 'is_equipped_now' status values.
+			if InventoryGlobal.has_method("remove_item"):
+				InventoryGlobal.remove_item(item_data)
+				
+			# 4. Force the UI grid layout container to redraw its slots cleanly
+			if inventory_grid:
+				inventory_grid.refresh_ui()
 			
 		"equip":
 			# FIX: Changed item_data.resource_name to item_data.name

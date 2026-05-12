@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://snn831uhgsnf"]
+
+[ext_resource type="Texture2D" uid="uid://bnnhdc5dnl67e" path="res://assets/textures/items/weapons/hotbar icons/DLT-18_Hotbar.png" id="1_tlq0o"]
+[ext_resource type="Texture2D" uid="uid://c2nu7taeuyt87" path="res://assets/textures/items/weapons/icons/DLT-18_Inventory.png" id="2_arxua"]
+[ext_resource type="PackedScene" uid="uid://bjmynpbiwt3vc" path="res://assets/scenes/items/models/weapons/DLT-18.tscn" id="3_8bpra"]
+[ext_resource type="Script" uid="uid://bmsou0jk4d6cx" path="res://assets/scripts/inventory/item_data.gd" id="4_jl0ta"]
+[ext_resource type="Resource" uid="uid://bgfgglwqo0uac" path="res://assets/resources/weapons/DLT-18_weapon.tres" id="5_cetkm"]
+
+[resource]
+script = ExtResource("4_jl0ta")
+item_type = "Weapon"
+item_name = "DLT-18"
+icon = ExtResource("2_arxua")
+size = Vector2i(1, 1)
+hotbar_icon = ExtResource("1_tlq0o")
+item_model = ExtResource("3_8bpra")
+is_stackable = true
+max_stack_size = 2
+weapon_stats = ExtResource("5_cetkm")
+ammo = 50

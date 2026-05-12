@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://bgfgglwqo0uac"]
+
+[ext_resource type="PackedScene" uid="uid://dyqsv653r7ev1" path="res://assets/scenes/items/models/weapons/projectile.tscn" id="1_d1nwx"]
+[ext_resource type="Script" uid="uid://kik5sorkdss8" path="res://assets/scripts/weapons/weapon.gd" id="2_qe3hs"]
+[ext_resource type="PackedScene" uid="uid://dwjcaybcvfwl5" path="res://assets/scenes/items/models/weapons/pistol_weapon.tscn" id="3_ftl0g"]
+
+[resource]
+script = ExtResource("2_qe3hs")
+weapon_name = "DLT-18"
+max_ammo = 50
+fire_rate = 10.0
+projectile_speed = 90.0
+is_hit_scan = false
+weapon_model = ExtResource("3_ftl0g")
+projectile_scene = ExtResource("1_d1nwx")
+spread_angle = 0.1
+weapon_position = Vector3(0.185, -0.125, -0.34)

@@ -123,9 +123,11 @@ func drop_item_into_world(index: int) -> void:
 		
 		get_tree().root.add_child(item_instance)
 		
+		
 		var drop_offset = -player.global_transform.basis.z * 1.5
 		item_instance.global_position = player.global_position + drop_offset
 		
+		print("Item: ", item.item_name, " dropped into world!")
 		update_slot(index, null)
 
 
