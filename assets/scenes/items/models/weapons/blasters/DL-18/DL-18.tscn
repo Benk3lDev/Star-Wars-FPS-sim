@@ -5,6 +5,6 @@
 [node name="DL-18" type="Node3D" unique_id=1199286006]
 
 [node name="Muzzle" type="Marker3D" parent="." unique_id=382579426]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.0043173)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.034416914, -1.0043173)
 
 [node name="DL-18" parent="." unique_id=844372235 instance=ExtResource("1_temai")]

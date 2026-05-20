@@ -1,3 +1,4 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+assets/scenes/items/models/weapons/blasters/DL-18/DL-18.glb
