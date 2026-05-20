@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dk6osaf05k530"]
+
+[ext_resource type="PackedScene" uid="uid://dto1wsut24dw0" path="res://assets/scenes/items/models/weapons/blasters/E5C/e5c.glb" id="1_fdhqq"]
+
+[node name="E5C" type="Node3D" unique_id=1199286006]
+
+[node name="Muzzle" type="Marker3D" parent="." unique_id=382579426]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.074605286, -1.4206651)
+
+[node name="e5c" parent="." unique_id=573242141 instance=ExtResource("1_fdhqq")]

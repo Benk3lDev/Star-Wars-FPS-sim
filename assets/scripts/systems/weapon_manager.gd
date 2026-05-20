@@ -30,7 +30,6 @@ func activate_weapon(item: ItemData):
 func use_ammo(slot: int, amount: int = 1) -> void:
 	if current_equipped_item and "ammo" in current_equipped_item:
 		current_equipped_item.ammo = max(0, current_equipped_item.ammo - amount)
-		print("Fired! Remaining Ammo: ", current_equipped_item.ammo)
 		
 		# Force your 2D hotbar slot to redraw its numbers instantly
 		var hotbar_index = slot - 1

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://dlbi8w3cr3srf"]
+
+[ext_resource type="Script" uid="uid://p0imevumt74h" path="res://assets/scripts/characters/skill_data.gd" id="1_d40vv"]
+
+[resource]
+script = ExtResource("1_d40vv")
+skill_id = "explosives_skill"
+skill_name = "Explosives"
+primary_attribute = "Strength"
+secondary_attribute = "Vitality"

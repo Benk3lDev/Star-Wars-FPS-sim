@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://deri3hb4ie7xw"]
+
+[ext_resource type="Script" uid="uid://p0imevumt74h" path="res://assets/scripts/characters/skill_data.gd" id="1_fx41g"]
+
+[resource]
+script = ExtResource("1_fx41g")
+skill_id = "stealth_skill"
+skill_name = "Stealth"
+primary_attribute = "Constitution"
+secondary_attribute = "Dexterity"

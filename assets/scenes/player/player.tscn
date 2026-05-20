@@ -17,17 +17,30 @@
 [ext_resource type="Script" uid="uid://dxpihtxneacr5" path="res://assets/scripts/weapons/weapon_controller.gd" id="9_nhni2"]
 [ext_resource type="Script" uid="uid://juohqe3ks247" path="res://assets/scripts/player/states/state_machine.gd" id="10_606se"]
 [ext_resource type="Script" uid="uid://dbhltdd2mdpr" path="res://assets/scripts/player/states/base_state.gd" id="11_nvl01"]
+[ext_resource type="PackedScene" uid="uid://qhmfi4r2dd45" path="res://assets/scenes/components/attributes_component.tscn" id="11_o4mve"]
+[ext_resource type="Resource" uid="uid://c6ry164fc8w8o" path="res://assets/resources/characters/player_attributes.tres" id="12_5g8rr"]
 [ext_resource type="Script" uid="uid://pi722hdco8j4" path="res://assets/scripts/player/states/idle_state.gd" id="12_ivps1"]
 [ext_resource type="Script" uid="uid://baq5ywljtt4jd" path="res://assets/scripts/player/states/grounded_state.gd" id="13_5tmop"]
+[ext_resource type="PackedScene" uid="uid://blsentgir1nmw" path="res://assets/scenes/components/skills_component.tscn" id="13_1452w"]
+[ext_resource type="Script" uid="uid://p0imevumt74h" path="res://assets/scripts/characters/skill_data.gd" id="14_8l2ex"]
 [ext_resource type="Script" uid="uid://dtdba61hcimo4" path="res://assets/scripts/player/states/moving_state.gd" id="14_bwjto"]
+[ext_resource type="PackedScene" uid="uid://co3xk8k8h0g60" path="res://assets/scenes/components/health_component.tscn" id="14_vf118"]
 [ext_resource type="Script" uid="uid://ccwx0d4tls4h7" path="res://assets/scripts/player/states/jogging_state.gd" id="15_u1c27"]
+[ext_resource type="Resource" uid="uid://cg4fq08lryl4p" path="res://assets/resources/characters/skills/light_blasters.tres" id="15_vn88y"]
+[ext_resource type="Resource" uid="uid://dd032slp2k7hh" path="res://assets/resources/characters/skills/heavy_blasters.tres" id="16_n45th"]
 [ext_resource type="Script" uid="uid://bvi4ogarhjqxh" path="res://assets/scripts/player/states/sprinting_state.gd" id="16_op7ga"]
 [ext_resource type="Script" uid="uid://b3tjwuo300ldx" path="res://assets/scripts/player/states/walking_state.gd" id="16_q13i1"]
+[ext_resource type="Resource" uid="uid://c257cskegkyqw" path="res://assets/resources/characters/skills/melee.tres" id="17_avvtr"]
 [ext_resource type="Script" uid="uid://dn33jfu8ln1c0" path="res://assets/scripts/player/states/standing_state.gd" id="18_pylmc"]
+[ext_resource type="Resource" uid="uid://dlbi8w3cr3srf" path="res://assets/resources/characters/skills/explosives.tres" id="18_tstuq"]
 [ext_resource type="Script" uid="uid://cmb58smew5xj0" path="res://assets/scripts/player/states/airborne_state.gd" id="19_7ahtn"]
 [ext_resource type="Script" uid="uid://ni4mxph374uy" path="res://assets/scripts/player/states/crouching_state.gd" id="19_pbfsw"]
+[ext_resource type="Resource" uid="uid://cly0321b7blte" path="res://assets/resources/characters/skills/mechanics.tres" id="19_r2oq8"]
+[ext_resource type="Resource" uid="uid://bolb3w15ccvf4" path="res://assets/resources/characters/skills/splicing.tres" id="20_2m2ie"]
 [ext_resource type="Script" uid="uid://bqu0n2xrksc4p" path="res://assets/scripts/player/states/jump_state.gd" id="20_7ahtn"]
 [ext_resource type="Script" uid="uid://t82h36tndo3i" path="res://assets/scripts/player/states/fall_state.gd" id="21_7lmhl"]
+[ext_resource type="Resource" uid="uid://bl1ew7kajxjyf" path="res://assets/resources/characters/skills/medical.tres" id="21_lg2mx"]
+[ext_resource type="Resource" uid="uid://deri3hb4ie7xw" path="res://assets/resources/characters/skills/stealth.tres" id="22_avyy0"]
 [ext_resource type="Script" uid="uid://b06audpaynv0n" path="res://assets/scripts/player/states/straight_state.gd" id="22_qtqh7"]
 [ext_resource type="Script" uid="uid://bh30v2ux3a8t2" path="res://assets/scripts/player/states/left_leaning_state.gd" id="25_qtqh7"]
 [ext_resource type="Script" uid="uid://3b06jospe6dx" path="res://assets/scripts/player/states/right_leaning_state.gd" id="26_2wuci"]
@@ -92,6 +105,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 script = ExtResource("2_hqtel")
 player_controller = NodePath("..")
 component_mouse_capture = NodePath("../Components/MouseCapture")
+lean_angle = 30.0
+lean_offset = 0.5
 
 [node name="Camera3D" type="Camera3D" parent="CameraController" unique_id=377077906 node_paths=PackedStringArray("player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -127,6 +142,17 @@ script = ExtResource("9_nhni2")
 camera = NodePath("../../CameraController/Camera3D")
 weapon_state_chart = NodePath("../../WeaponStateChart")
 hand_anchor = NodePath("../../CameraController/Camera3D/HandAnchor")
+
+[node name="AttributesComponent" parent="Components" unique_id=1931749227 instance=ExtResource("11_o4mve")]
+character_attributes = ExtResource("12_5g8rr")
+
+[node name="SkillsComponent" parent="Components" unique_id=891944786 node_paths=PackedStringArray("attributes") instance=ExtResource("13_1452w")]
+attributes = NodePath("../AttributesComponent")
+skills_list = Array[ExtResource("14_8l2ex")]([ExtResource("15_vn88y"), ExtResource("16_n45th"), ExtResource("17_avvtr"), ExtResource("18_tstuq"), ExtResource("19_r2oq8"), ExtResource("20_2m2ie"), ExtResource("21_lg2mx"), ExtResource("22_avyy0")])
+is_cybernetic = true
+
+[node name="HealthComponent" parent="Components" unique_id=763287296 node_paths=PackedStringArray("skills_component") instance=ExtResource("14_vf118")]
+skills_component = NodePath("../SkillsComponent")
 
 [node name="StateChart" type="Node" parent="." unique_id=1980311667]
 script = ExtResource("5_n7ghd")

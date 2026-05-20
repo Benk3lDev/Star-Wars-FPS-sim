@@ -5,7 +5,6 @@ func _on_jogging_state_entered() -> void:
 
 
 func _on_jogging_state_processing(delta: float) -> void:
-	
 	if Input.is_action_pressed("sprint"):
 		player_controller.state_chart.send_event("OnSprinting")
 	

@@ -12,7 +12,9 @@ class_name ItemData extends Resource
 @export var is_stackable : bool
 @export var max_stack_size : int
 @export var weapon_stats: Weapon
+@export var consumable_stats : Consumable
 @export var ammo : int
+@export var hand_pos : Vector3 = Vector3(0.2, -0.2, -0.3)
 
 var quantity : int = 1
 

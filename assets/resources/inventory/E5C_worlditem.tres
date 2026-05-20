@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://csl2g8p4lal" path="res://assets/textures/items/weapons/hotbar icons/E5C_Hotbar.png" id="1_yhwpx"]
 [ext_resource type="Texture2D" uid="uid://c5sa13w80shj4" path="res://assets/textures/items/weapons/icons/E5C_Inventory.png" id="2_krg42"]
-[ext_resource type="PackedScene" uid="uid://c4emkrj7ev6x1" path="res://assets/scenes/items/models/weapons/DC15A.tscn" id="3_ceyrm"]
+[ext_resource type="PackedScene" uid="uid://dk6osaf05k530" path="res://assets/scenes/items/models/weapons/blasters/E5C/E5C.tscn" id="3_yhwpx"]
 [ext_resource type="Script" uid="uid://bmsou0jk4d6cx" path="res://assets/scripts/inventory/item_data.gd" id="4_ewl6s"]
 [ext_resource type="Resource" uid="uid://dorwnk4wxbmty" path="res://assets/resources/weapons/E5C_weapon.tres" id="5_ceyrm"]
 
@@ -14,8 +14,9 @@ item_effect = "Light Blaster Carbine"
 icon = ExtResource("2_krg42")
 size = Vector2i(2, 1)
 hotbar_icon = ExtResource("1_yhwpx")
-item_model = ExtResource("3_ceyrm")
+item_model = ExtResource("3_yhwpx")
 is_stackable = true
 max_stack_size = 2
 weapon_stats = ExtResource("5_ceyrm")
 ammo = 50
+hand_pos = Vector3(0.265, -0.335, -1.015)

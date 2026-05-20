@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dyqsv653r7ev1" path="res://assets/scenes/items/models/weapons/projectile.tscn" id="1_lcmgs"]
 [ext_resource type="Script" uid="uid://kik5sorkdss8" path="res://assets/scripts/weapons/weapon.gd" id="2_ngq32"]
-[ext_resource type="PackedScene" uid="uid://dwjcaybcvfwl5" path="res://assets/scenes/items/models/weapons/pistol_weapon.tscn" id="3_orqke"]
+[ext_resource type="PackedScene" uid="uid://c4emkrj7ev6x1" path="res://assets/scenes/items/models/weapons/blasters/DC15A/DC15A.tscn" id="3_eyyo1"]
 
 [resource]
 script = ExtResource("2_ngq32")
@@ -12,7 +12,6 @@ fire_rate = 5.0
 is_automatic = true
 projectile_speed = 120.0
 is_hit_scan = false
-weapon_model = ExtResource("3_orqke")
+weapon_model = ExtResource("3_eyyo1")
 projectile_scene = ExtResource("1_lcmgs")
 spread_angle = 0.1
-weapon_position = Vector3(0.185, -0.125, -0.34)

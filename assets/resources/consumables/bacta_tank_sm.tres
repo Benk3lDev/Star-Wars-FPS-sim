@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Consumable" format=3 uid="uid://bbpj0v8agrpls"]
+
+[ext_resource type="Script" uid="uid://xo2lqkab34og" path="res://assets/scripts/consumables/consumable.gd" id="1_hekgd"]
+
+[resource]
+script = ExtResource("1_hekgd")
+consumable_name = "Test Bacta"
+consumable_type = "Healing"
+healing = 20.0
+hand_position = Vector3(0, -0.8, -2)

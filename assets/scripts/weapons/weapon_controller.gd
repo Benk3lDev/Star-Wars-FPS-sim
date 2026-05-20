@@ -67,20 +67,28 @@ func _perform_hitscan() -> void:
 		var forward = -camera.global_transform.basis.z
 		var accuracy_x = randf_range(-accuracy_spread, accuracy_spread)
 		var accuracy_y = randf_range(-accuracy_spread, accuracy_spread)
-		var direction = forward + Vector3(accuracy_x, accuracy_y, 0) * camera.global_transform.basis
+		var direction = forward + (Vector3(accuracy_x, accuracy_y, 0) * camera.global_transform.basis)
 
 		if current_weapon.pellet_count > 1:
 			var spread_x = randf_range(-current_weapon.spread_angle, current_weapon.spread_angle)
 			var spread_y = randf_range(-current_weapon.spread_angle, current_weapon.spread_angle)
 			direction += Vector3(spread_x, spread_y, 0) * camera.global_transform.basis
 	
-		var to = from + direction * current_weapon.range
+		var to = from + direction.normalized() * current_weapon.range
 		var query = PhysicsRayQueryParameters3D.create(from, to)
 		query.collision_mask = 1
 		var result = space_state.intersect_ray(query)
 
 		if result:
 			_spawn_impact_marker(result.position)
+			
+			var hit_body = result.collider
+			if hit_body and hit_body is Node3D:
+				var health = hit_body.get_node_or_null("HealthComponent") as HealthComponent
+				if health:
+					var shape_id = result.get("shape", -1)
+					# Pass null for the source parameter so shape_id fills the 4th argument slot
+					health.take_damage(int(current_weapon.damage), "bullet", null, shape_id)
 
 func _spawn_impact_marker(position: Vector3) -> void:
 	var marker = MeshInstance3D.new()

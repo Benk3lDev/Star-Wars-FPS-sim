@@ -13,5 +13,4 @@ class_name Weapon extends Resource
 @export var projectile_scene: PackedScene
 @export var pellet_count: int = 1
 @export var spread_angle: float = 0.0
-@export var weapon_position: Vector3 = Vector3(0.2, -0.2, -0.3)
 @export var muzzle_node_name: String = "Muzzle"

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://bl1ew7kajxjyf"]
+
+[ext_resource type="Script" uid="uid://p0imevumt74h" path="res://assets/scripts/characters/skill_data.gd" id="1_86534"]
+
+[resource]
+script = ExtResource("1_86534")
+skill_id = "medical_skill"
+skill_name = "Medical"
+primary_attribute = "Vitality"
+secondary_attribute = "Constitution"

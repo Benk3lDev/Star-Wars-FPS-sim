@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://cly0321b7blte"]
+
+[ext_resource type="Script" uid="uid://p0imevumt74h" path="res://assets/scripts/characters/skill_data.gd" id="1_07c8x"]
+
+[resource]
+script = ExtResource("1_07c8x")
+skill_id = "mechanics_skill"
+skill_name = "Mechanics"
+primary_attribute = "Intelligence"

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://c257cskegkyqw"]
+
+[ext_resource type="Script" uid="uid://p0imevumt74h" path="res://assets/scripts/characters/skill_data.gd" id="1_pylpc"]
+
+[resource]
+script = ExtResource("1_pylpc")
+skill_id = "melee_skill"
+skill_name = "Melee"
+primary_attribute = "Strength"

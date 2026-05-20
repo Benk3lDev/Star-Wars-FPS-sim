@@ -25,20 +25,26 @@ func _update_active_item(item: ItemData):
 		elif get_parent().has_node("WeaponManager"):
 			get_parent().get_node("WeaponManager").activate_weapon(item)
 		
-		# 2. Adjust physical position offsets based on weapon stats
-		if item.weapon_stats and "weapon_position" in item.weapon_stats:
-			hand_anchor.position = item.weapon_stats.weapon_position
+		# 2. Adjust physical position offsets based on universally accessible ItemData variables
+		if "hand_pos" in item:
+			hand_anchor.position = item.hand_pos
 			
-			if is_instance_valid(weapon_controller):
+			# ONLY activate the shooter tracking loops if the item actually carries weapon stats
+			if "weapon_stats" in item and item.weapon_stats and is_instance_valid(weapon_controller):
 				weapon_controller.activate_weapon(item.weapon_stats)
+			elif is_instance_valid(weapon_controller):
+				# Safely spin-down blaster crosshairs if holding a medical syringe/detonator
+				weapon_controller.deactivate_weapon()
 		else:
 			hand_anchor.position = Vector3.ZERO
+			if is_instance_valid(weapon_controller):
+				weapon_controller.deactivate_weapon()
 		
 		# 3. Instantiate and bind the 3D model asset onto the hand anchor
 		if "item_model" in item and item.item_model:
-			var weapon = item.item_model.instantiate()
-			hand_anchor.add_child(weapon)
-			weapon.transform = Transform3D.IDENTITY
+			var hand_item = item.item_model.instantiate()
+			hand_anchor.add_child(hand_item)
+			hand_item.transform = Transform3D.IDENTITY
 	else:
 		# Safety fallback: clear hands if an empty slot is selected
 		if "weapon_manager" in Managers and Managers.weapon_manager:
@@ -48,6 +54,7 @@ func _update_active_item(item: ItemData):
 			
 		if is_instance_valid(weapon_controller):
 			weapon_controller.deactivate_weapon()
+		hand_anchor.position = Vector3.ZERO
 
 func _clear_hands():
 	for child in hand_anchor.get_children():

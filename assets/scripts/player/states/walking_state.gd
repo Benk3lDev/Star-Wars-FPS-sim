@@ -7,7 +7,7 @@ func _on_walking_state_processing(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("walk"):
 		player_controller.state_chart.send_event("OnJogging")
-	if Input.is_action_pressed("sprint"):
+	if Input.is_action_pressed("sprint") and player_controller.is_crouch == false:
 		player_controller.state_chart.send_event("OnSprinting")
 
 

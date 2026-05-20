@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SkillData" format=3 uid="uid://cg4fq08lryl4p"]
+
+[ext_resource type="Script" uid="uid://p0imevumt74h" path="res://assets/scripts/characters/skill_data.gd" id="1_g10nj"]
+
+[resource]
+script = ExtResource("1_g10nj")
+skill_id = "light_blasters_skill"
+skill_name = "Light Blasters"
+primary_attribute = "Dexterity"
