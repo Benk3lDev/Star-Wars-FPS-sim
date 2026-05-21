@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://dl1om727hvp2e"]
+
+[ext_resource type="PackedScene" uid="uid://dyqsv653r7ev1" path="res://assets/scenes/items/models/weapons/projectile.tscn" id="1_i8w8x"]
+[ext_resource type="Script" uid="uid://kik5sorkdss8" path="res://assets/scripts/weapons/weapon.gd" id="2_luine"]
+[ext_resource type="PackedScene" uid="uid://c4emkrj7ev6x1" path="res://assets/scenes/items/models/weapons/blasters/DC15A/DC15A.tscn" id="3_jjnw1"]
+
+[resource]
+script = ExtResource("2_luine")
+weapon_name = "DC-15S"
+max_ammo = 50
+fire_rate = 5.0
+is_automatic = true
+projectile_speed = 120.0
+is_hit_scan = false
+weapon_model = ExtResource("3_jjnw1")
+projectile_scene = ExtResource("1_i8w8x")
+spread_angle = 0.1

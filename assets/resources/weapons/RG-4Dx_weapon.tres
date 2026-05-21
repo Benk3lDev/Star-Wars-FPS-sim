@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://bb4wqgbaalu6n"]
+
+[ext_resource type="PackedScene" uid="uid://dyqsv653r7ev1" path="res://assets/scenes/items/models/weapons/projectile.tscn" id="1_t0f8c"]
+[ext_resource type="Script" uid="uid://kik5sorkdss8" path="res://assets/scripts/weapons/weapon.gd" id="2_7k8ch"]
+[ext_resource type="PackedScene" uid="uid://dj25s7xehtckv" path="res://assets/scenes/items/models/weapons/blasters/RG-4Dx/RG-4Dx.tscn" id="3_t0f8c"]
+
+[resource]
+script = ExtResource("2_7k8ch")
+weapon_name = "RG-4Dx"
+max_ammo = 50
+fire_rate = 15.0
+projectile_speed = 90.0
+is_hit_scan = false
+weapon_model = ExtResource("3_t0f8c")
+projectile_scene = ExtResource("1_t0f8c")
+spread_angle = 0.1

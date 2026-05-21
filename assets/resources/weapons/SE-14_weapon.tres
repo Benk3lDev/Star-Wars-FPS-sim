@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://yfosgqnxx7uc"]
+
+[ext_resource type="PackedScene" uid="uid://dyqsv653r7ev1" path="res://assets/scenes/items/models/weapons/projectile.tscn" id="1_a5o41"]
+[ext_resource type="Script" uid="uid://kik5sorkdss8" path="res://assets/scripts/weapons/weapon.gd" id="2_wwlka"]
+[ext_resource type="PackedScene" uid="uid://dk6osaf05k530" path="res://assets/scenes/items/models/weapons/blasters/E5C/E5C.tscn" id="3_f4ykw"]
+
+[resource]
+script = ExtResource("2_wwlka")
+weapon_name = "SE-14"
+max_ammo = 50
+fire_rate = 15.0
+projectile_speed = 90.0
+is_hit_scan = false
+weapon_model = ExtResource("3_f4ykw")
+projectile_scene = ExtResource("1_a5o41")
+spread_angle = 0.1

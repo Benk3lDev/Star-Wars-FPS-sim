@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://c1081plggtgwo"]
+
+[ext_resource type="Texture2D" uid="uid://cvqt3trjahihw" path="res://assets/textures/items/weapons/hotbar icons/SE-14RHotbar.png" id="1_ybu4v"]
+[ext_resource type="Texture2D" uid="uid://cu3jqo7g4ej3f" path="res://assets/textures/items/weapons/icons/SE-14RInventory.png" id="2_uv2mi"]
+[ext_resource type="PackedScene" uid="uid://mxhso3wuhose" path="res://assets/scenes/items/models/weapons/blasters/SE-14/SE-14.tscn" id="3_h6ulc"]
+[ext_resource type="Script" uid="uid://bmsou0jk4d6cx" path="res://assets/scripts/inventory/item_data.gd" id="4_0m1ee"]
+[ext_resource type="Resource" uid="uid://yfosgqnxx7uc" path="res://assets/resources/weapons/SE-14_weapon.tres" id="5_0m1ee"]
+
+[resource]
+script = ExtResource("4_0m1ee")
+item_type = "Weapon"
+item_name = "SE-14"
+icon = ExtResource("2_uv2mi")
+size = Vector2i(1, 1)
+hotbar_icon = ExtResource("1_ybu4v")
+item_model = ExtResource("3_h6ulc")
+weapon_stats = ExtResource("5_0m1ee")
+ammo = 50
+hand_pos = Vector3(0.225, -0.125, -1)

@@ -5,6 +5,7 @@ class_name WeaponManager extends Node
 var current_equipped_item: ItemData
 var current_slot: int = 1
 
+
 func _ready() -> void:
 	add_to_group("weapon_manager")
 	InventoryGlobal.hotbar_selection_changed.connect(_on_hotbar_selection_changed)
@@ -15,7 +16,7 @@ func _ready() -> void:
 		activate_weapon(active_item)
 
 func _on_hotbar_selection_changed(index: int, item_data: ItemData) -> void:
-	current_slot = index + 1 # Convert index 0-4 to slot text 1-5
+	current_slot = index + 1
 	activate_weapon(item_data)
 
 func activate_weapon(item: ItemData):

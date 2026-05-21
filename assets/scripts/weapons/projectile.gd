@@ -52,12 +52,47 @@ func _on_hit_detected(body: Node3D, shape_id: int) -> void:
 	print("Projectile hit: ", body.name, " at ", global_position, " | Shape ID: ", shape_id)
 	_spawn_impact_marker(global_position)
 	
-	var health = body.get_node_or_null("Components/HealthComponent") as HealthComponent
+	var health: HealthComponent = null
+	
+	# --- HORIZONTAL AND VERTICAL SEARCH ---
+	# 1. Cast body to a plain variant to bypass the Node3D compile-time type constraint
+	var generic_body: Node = body
+	if generic_body is HealthComponent:
+		health = generic_body as HealthComponent
+	
+	# 2. Check if the HealthComponent is a child of the node we hit
 	if not health:
 		health = body.get_node_or_null("HealthComponent") as HealthComponent
+		if not health:
+			health = body.get_node_or_null("Components/HealthComponent") as HealthComponent
+			
+	# 3. If the raycast hit a sub-collision shape, check the parent node's children
+	if not health and body.get_parent():
+		var parent = body.get_parent()
+		health = parent.get_node_or_null("HealthComponent") as HealthComponent
+		if not health:
+			health = parent.get_node_or_null("Components/HealthComponent") as HealthComponent
+			
+			
+	# 4. Deep search check: Scan the immediate children of the hit body using loose typing
+	if not health:
+		for child in body.get_children():
+			if child.is_class("HealthComponent") or child.get_script() == HealthComponent:
+				health = child as HealthComponent
+				break
+			# Also check inside a "Components" grouping node if you used one
+			if child.name == "Components":
+				for sub_child in child.get_children():
+					if sub_child.get_script() == HealthComponent:
+						health = sub_child as HealthComponent
+						break
+
+	# --- EXECUTE DAMAGE ---
 	if health:
-		# Pass null for the source parameter so shape_id fills the 4th argument slot
+		print("Successfully found HealthComponent on: ", health.get_parent().name)
 		health.take_damage(int(damage), "blaster", null, shape_id)
+	else:
+		push_warning("Projectile hit " + body.name + " but couldn't find a HealthComponent among its children or parents!")
 	
 	queue_free()
 

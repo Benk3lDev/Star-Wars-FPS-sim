@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bmqinikxfpgw1"]
+
+[ext_resource type="PackedScene" uid="uid://dsw3flwex2a8i" path="res://assets/scenes/items/models/weapons/blasters/A280/A280.glb" id="1_nkw3s"]
+
+[node name="A280" type="Node3D" unique_id=1199286006]
+
+[node name="Muzzle" type="Marker3D" parent="." unique_id=382579426]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000513047, 0.0014373809, -1.5299127)
+
+[node name="A280" parent="." unique_id=841720535 instance=ExtResource("1_nkw3s")]

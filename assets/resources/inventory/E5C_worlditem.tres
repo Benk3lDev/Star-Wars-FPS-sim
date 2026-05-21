@@ -19,4 +19,4 @@ is_stackable = true
 max_stack_size = 2
 weapon_stats = ExtResource("5_ceyrm")
 ammo = 50
-hand_pos = Vector3(0.265, -0.335, -1.015)
+hand_pos = Vector3(0.285, -0.335, -1.015)

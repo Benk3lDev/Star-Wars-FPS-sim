@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://mxhso3wuhose"]
+
+[ext_resource type="PackedScene" uid="uid://bems88214kk6w" path="res://assets/scenes/items/models/weapons/blasters/SE-14/SE14.glb" id="1_6qyda"]
+
+[node name="SE-14" type="Node3D" unique_id=1199286006]
+
+[node name="Muzzle" type="Marker3D" parent="." unique_id=382579426]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000710994, 0.00026348233, -0.5643667)
+
+[node name="SE14" parent="." unique_id=816292933 instance=ExtResource("1_6qyda")]

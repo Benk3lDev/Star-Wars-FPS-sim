@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://jv5uu648q6od"]
+
+[ext_resource type="Texture2D" uid="uid://c4ksrdfr6w8im" path="res://assets/textures/items/weapons/hotbar icons/RG4DX_Hotbar.png" id="1_cbmg5"]
+[ext_resource type="Texture2D" uid="uid://dgw4hrfnmwmd4" path="res://assets/textures/items/weapons/icons/RG4DX_Inventory.png" id="2_0e342"]
+[ext_resource type="PackedScene" uid="uid://dj25s7xehtckv" path="res://assets/scenes/items/models/weapons/blasters/RG-4Dx/RG-4Dx.tscn" id="3_cbmg5"]
+[ext_resource type="Script" uid="uid://bmsou0jk4d6cx" path="res://assets/scripts/inventory/item_data.gd" id="4_sg2m7"]
+[ext_resource type="Resource" uid="uid://bb4wqgbaalu6n" path="res://assets/resources/weapons/RG-4Dx_weapon.tres" id="5_0e342"]
+
+[resource]
+script = ExtResource("4_sg2m7")
+item_type = "Weapon"
+item_name = "RG-4Dx"
+icon = ExtResource("2_0e342")
+size = Vector2i(1, 1)
+hotbar_icon = ExtResource("1_cbmg5")
+item_model = ExtResource("3_cbmg5")
+max_stack_size = 2
+weapon_stats = ExtResource("5_0e342")
+ammo = 50
+hand_pos = Vector3(0.22, -0.16, -0.865)

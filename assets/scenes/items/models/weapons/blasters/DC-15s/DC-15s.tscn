@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://4eso4k1wjfjy"]
+
+[ext_resource type="PackedScene" uid="uid://nnyfmefbthg4" path="res://assets/scenes/items/models/weapons/blasters/DC-15s/dc-15s.glb" id="1_y4trw"]
+
+[node name="DC-15s" type="Node3D" unique_id=1199286006]
+
+[node name="Muzzle" type="Marker3D" parent="." unique_id=382579426]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00019533932, 0.015552759, -1.2467364)
+
+[node name="dc-15s" parent="." unique_id=1723041627 instance=ExtResource("1_y4trw")]

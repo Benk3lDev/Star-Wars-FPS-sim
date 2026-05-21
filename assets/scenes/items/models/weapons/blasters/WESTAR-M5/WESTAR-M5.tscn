@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bmdrxo74r8ven"]
+
+[ext_resource type="PackedScene" uid="uid://jp11tx1bie4b" path="res://assets/scenes/items/models/weapons/blasters/WESTAR-M5/WESTAR-M5.glb" id="1_v7rsh"]
+
+[node name="WESTAR-M5" type="Node3D" unique_id=1199286006]
+
+[node name="Muzzle" type="Marker3D" parent="." unique_id=382579426]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000710994, 0.05632785, -0.9878899)
+
+[node name="WESTAR-M5" parent="." unique_id=697272913 instance=ExtResource("1_v7rsh")]

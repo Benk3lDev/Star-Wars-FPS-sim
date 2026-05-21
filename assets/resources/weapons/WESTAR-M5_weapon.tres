@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://davju60ant70f"]
+
+[ext_resource type="PackedScene" uid="uid://dyqsv653r7ev1" path="res://assets/scenes/items/models/weapons/projectile.tscn" id="1_j4brh"]
+[ext_resource type="Script" uid="uid://kik5sorkdss8" path="res://assets/scripts/weapons/weapon.gd" id="2_uose6"]
+[ext_resource type="PackedScene" uid="uid://dk6osaf05k530" path="res://assets/scenes/items/models/weapons/blasters/E5C/E5C.tscn" id="3_fhe3n"]
+
+[resource]
+script = ExtResource("2_uose6")
+weapon_name = "WESTAR-M5"
+max_ammo = 50
+fire_rate = 15.0
+projectile_speed = 90.0
+is_hit_scan = false
+weapon_model = ExtResource("3_fhe3n")
+projectile_scene = ExtResource("1_j4brh")
+spread_angle = 0.1

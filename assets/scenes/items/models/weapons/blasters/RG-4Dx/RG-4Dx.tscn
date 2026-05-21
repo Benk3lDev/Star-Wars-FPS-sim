@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dj25s7xehtckv"]
+
+[ext_resource type="PackedScene" uid="uid://dfp4tphkeepg4" path="res://assets/scenes/items/models/weapons/blasters/RG-4Dx/rg4dx.glb" id="1_hs15h"]
+
+[node name="RG-4Dx" type="Node3D" unique_id=1199286006]
+
+[node name="Muzzle" type="Marker3D" parent="." unique_id=382579426]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00070382655, -0.7224821)
+
+[node name="rg4dx" parent="." unique_id=1146727651 instance=ExtResource("1_hs15h")]

@@ -8,16 +8,31 @@ signal died
 @export var skills_component : SkillsComponent
 @export var head_shape_index : int = 1
 @export var headshot_multiplier : float = 2.0
+@export var actor : CharacterBody3D
 
 var current_health : int
 
 var is_alive : bool = true
 
 func _ready() -> void:
+	# If we didn't assign the actor in the inspector, find the NPC root automatically
+	if not actor:
+		var current = get_parent()
+		while current and not (current is CharacterBody3D):
+			current = current.get_parent()
+		actor = current as CharacterBody3D
+
+	# Fallback re-link for skills component if it broke during un-nesting
+	if not skills_component:
+		skills_component = get_parent().get_node_or_null("SkillsComponent")
+		if not skills_component and actor:
+			skills_component = actor.get_node_or_null("SkillsComponent")
+
+	# Secure our starting health value safely
 	if skills_component:
 		current_health = skills_component.max_hp
 	else:
-		push_error("HealthComponent missing a CharacterStats resource!")
+		current_health = 100.0
 
 
 func take_damage(amount: int, damage_type: String, source: Node3D = null, shape_id: int = -1) -> void:
@@ -36,6 +51,8 @@ func take_damage(amount: int, damage_type: String, source: Node3D = null, shape_
 	
 	# Calculate standard mitigated damage first
 	var final_damage : int = max(1, int(amount * (1.0 - resistance)))
+	
+	print("hit! damage: ", final_damage)
 	
 	# Apply headshot multiplier if the hit shape index matches the head
 	if shape_id == head_shape_index:
@@ -57,3 +74,4 @@ func heal(amount: float) -> void:
 
 func die() -> void:
 	died.emit()
+	

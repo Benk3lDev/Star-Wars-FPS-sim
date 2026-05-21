@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://c8w7x0gkxs3ra"]
+
+[ext_resource type="Script" uid="uid://fu1wud2qqllr" path="res://assets/scripts/characters/NPCs/NPC.gd" id="1_7yvs6"]
+[ext_resource type="Resource" uid="uid://dhsl4fp6xlfbi" path="res://assets/resources/characters/NPCs/clone-trooper_visuals.tres" id="2_7yvs6"]
+[ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="15_fr5mf"]
+[ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="16_4rbr8"]
+[ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="17_6bv7o"]
+[ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="18_tmjmd"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rs6y"]
+radius = 0.35
+height = 1.5776367
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1jtut"]
+radius = 0.25
+
+[node name="NPC" type="CharacterBody3D" unique_id=1965243391]
+script = ExtResource("1_7yvs6")
+visual_data = ExtResource("2_7yvs6")
+
+[node name="Body" type="CollisionShape3D" parent="." unique_id=380008671]
+transform = Transform3D(1, 0, 0, 0, 1.0242481, 0, 0, 0, 1, 0, -0.19335747, 0)
+shape = SubResource("CapsuleShape3D_0rs6y")
+
+[node name="Head" type="CollisionShape3D" parent="." unique_id=2106283105]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75136256, 0)
+shape = SubResource("SphereShape3D_1jtut")
+
+[node name="SpriteAnchor" type="Node3D" parent="." unique_id=313682682]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00016963482, 0.40973973, 0)
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="SpriteAnchor" unique_id=1669821726]
+pixel_size = 0.023
+billboard = 2
+texture_filter = 0
+animation = &""
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1664708414]
+path_desired_distance = 0.5
+avoidance_enabled = true
+
+[node name="StateChart" type="Node" parent="." unique_id=2085350762]
+script = ExtResource("15_fr5mf")
+metadata/_custom_type_script = "uid://couw105c3bde4"
+
+[node name="Root" type="Node" parent="StateChart" unique_id=223487484]
+script = ExtResource("16_4rbr8")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/Root" unique_id=1061560423]
+script = ExtResource("17_6bv7o")
+
+[node name="Follow" type="Node" parent="StateChart/Root" unique_id=468343136]
+script = ExtResource("17_6bv7o")
+
+[node name="ToIdle" type="Node" parent="StateChart/Root" unique_id=535983125]
+script = ExtResource("18_tmjmd")
+to = NodePath("../Idle")
+event = &"ToIdle"
+delay_in_seconds = "0.0"
+
+[node name="ToFollow" type="Node" parent="StateChart/Root" unique_id=817348621]
+script = ExtResource("18_tmjmd")
+to = NodePath("../Follow")
+event = &"ToFollow"
+delay_in_seconds = "0.0"

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cnw3ikduqi770"]
+
+[ext_resource type="Texture2D" uid="uid://bbnx06gcf4da0" path="res://assets/textures/items/weapons/hotbar icons/ACPScatterArray_Hotbar.png" id="1_tikdr"]
+[ext_resource type="Texture2D" uid="uid://iq63vc7a35ro" path="res://assets/textures/items/weapons/icons/ACPScatterArray_Inventory.png" id="2_iwky1"]
+[ext_resource type="PackedScene" uid="uid://bfeiumduf064y" path="res://assets/scenes/items/models/weapons/blasters/ACPScatterArray/ACP-ScatterArray.tscn" id="3_6i1x6"]
+[ext_resource type="Script" uid="uid://bmsou0jk4d6cx" path="res://assets/scripts/inventory/item_data.gd" id="4_tly3m"]
+[ext_resource type="Resource" uid="uid://duy0phws8r6s0" path="res://assets/resources/weapons/ACP-ScatterArray_weapon.tres" id="5_tly3m"]
+
+[resource]
+script = ExtResource("4_tly3m")
+item_type = "Weapon"
+item_name = "ACP Scatter Array"
+icon = ExtResource("2_iwky1")
+size = Vector2i(2, 1)
+hotbar_icon = ExtResource("1_tikdr")
+item_model = ExtResource("3_6i1x6")
+max_stack_size = 2
+weapon_stats = ExtResource("5_tly3m")
+ammo = 50
+hand_pos = Vector3(0.265, -0.335, -1.015)

@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://je8vv8b2l4l8"]
+
+[ext_resource type="Texture2D" uid="uid://cfp2j7c57tgd6" path="res://assets/textures/items/weapons/hotbar icons/DC-15s_Hotbar.png" id="1_sgyly"]
+[ext_resource type="Texture2D" uid="uid://bppo8s0yw30we" path="res://assets/textures/items/weapons/icons/DC-15s_Inventory.png" id="2_pb4pc"]
+[ext_resource type="PackedScene" uid="uid://4eso4k1wjfjy" path="res://assets/scenes/items/models/weapons/blasters/DC-15s/DC-15s.tscn" id="3_q2khj"]
+[ext_resource type="Script" uid="uid://bmsou0jk4d6cx" path="res://assets/scripts/inventory/item_data.gd" id="4_g23ov"]
+[ext_resource type="Resource" uid="uid://dl1om727hvp2e" path="res://assets/resources/weapons/DC-15S_weapon.tres" id="5_g23ov"]
+
+[resource]
+script = ExtResource("4_g23ov")
+item_type = "Weapon"
+item_name = "DC-15S"
+item_effect = "Heavy Blaster Rifle"
+icon = ExtResource("2_pb4pc")
+size = Vector2i(2, 1)
+hotbar_icon = ExtResource("1_sgyly")
+item_model = ExtResource("3_q2khj")
+is_stackable = true
+max_stack_size = 2
+weapon_stats = ExtResource("5_g23ov")
+ammo = 50
+hand_pos = Vector3(0.26, -0.19, -0.15)

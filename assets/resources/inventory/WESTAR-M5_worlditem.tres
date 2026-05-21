@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://uyqtfwviwxll"]
+
+[ext_resource type="Texture2D" uid="uid://boksxc6efn6wr" path="res://assets/textures/items/weapons/hotbar icons/WESTARM5_Hotbar.png" id="1_n1a0s"]
+[ext_resource type="Texture2D" uid="uid://cvfueky56i8cf" path="res://assets/textures/items/weapons/icons/WESTARM5_Inventory.png" id="2_1hyjd"]
+[ext_resource type="PackedScene" uid="uid://bmdrxo74r8ven" path="res://assets/scenes/items/models/weapons/blasters/WESTAR-M5/WESTAR-M5.tscn" id="3_n1a0s"]
+[ext_resource type="Script" uid="uid://bmsou0jk4d6cx" path="res://assets/scripts/inventory/item_data.gd" id="4_dyeen"]
+[ext_resource type="Resource" uid="uid://davju60ant70f" path="res://assets/resources/weapons/WESTAR-M5_weapon.tres" id="5_1hyjd"]
+
+[resource]
+script = ExtResource("4_dyeen")
+item_type = "Weapon"
+item_name = "WESTAR-M5"
+icon = ExtResource("2_1hyjd")
+size = Vector2i(2, 1)
+hotbar_icon = ExtResource("1_n1a0s")
+item_model = ExtResource("3_n1a0s")
+max_stack_size = 2
+weapon_stats = ExtResource("5_1hyjd")
+ammo = 50
+hand_pos = Vector3(0.235, -0.295, -0.595)

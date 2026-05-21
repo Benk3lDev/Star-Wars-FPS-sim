@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://qhmfi4r2dd45"]
 
 [ext_resource type="Script" uid="uid://tpk6juvs3lvk" path="res://assets/scripts/components/attributes_component.gd" id="1_0vb0h"]
-[ext_resource type="Resource" uid="uid://crr2o7cvsjo3g" path="res://assets/resources/characters/enemies/clonetrooper_attributes.tres" id="2_dbcc7"]
+[ext_resource type="Resource" uid="uid://crr2o7cvsjo3g" path="res://assets/resources/characters/NPCs/enemies/clonetrooper_attributes.tres" id="2_dbcc7"]
 
 [node name="AttributesComponent" type="Node" unique_id=1931749227]
 script = ExtResource("1_0vb0h")
