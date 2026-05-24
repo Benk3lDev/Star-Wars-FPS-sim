@@ -1,4 +1,4 @@
-extends Node3D
+class_name EquipmentManager extends Node3D
 
 @onready var hand_anchor = $"../HandAnchor"
 @export var weapon_controller : WeaponController

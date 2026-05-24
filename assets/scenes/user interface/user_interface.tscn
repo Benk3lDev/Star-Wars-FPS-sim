@@ -17,7 +17,7 @@ script = ExtResource("1_ak586")
 
 [node name="ReticleTexture" type="TextureRect" parent="Reticle" unique_id=149970354]
 layout_mode = 1
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 16.0
+offset_bottom = 16.0
 mouse_filter = 2
 texture = ExtResource("2_kd74p")

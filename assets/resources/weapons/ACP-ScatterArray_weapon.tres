@@ -13,4 +13,4 @@ projectile_speed = 90.0
 weapon_model = ExtResource("3_h2uvq")
 projectile_scene = ExtResource("1_mhfdx")
 pellet_count = 5
-spread_angle = 0.2
+spread_angle = 0.1

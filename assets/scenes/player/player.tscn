@@ -122,7 +122,7 @@ script = ExtResource("4_7ahtn")
 
 [node name="HandAnchor" type="Node3D" parent="CameraController/Camera3D" unique_id=1608898906]
 
-[node name="EquipmentManager" type="Node3D" parent="CameraController/Camera3D" unique_id=1904989666 node_paths=PackedStringArray("weapon_controller")]
+[node name="EquipmentManager" type="Node3D" parent="CameraController/Camera3D" unique_id=1904989666 node_paths=PackedStringArray("weapon_controller") groups=["equipment_manager"]]
 script = ExtResource("6_c8ixa")
 weapon_controller = NodePath("../../../Components/WeaponController")
 

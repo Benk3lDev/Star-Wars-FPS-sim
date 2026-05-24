@@ -33,6 +33,7 @@ enabled=PackedStringArray("res://addons/func_godot/plugin.cfg", "res://addons/go
 [global_group]
 
 player=""
+equipment_manager=""
 
 [importer_defaults]
 

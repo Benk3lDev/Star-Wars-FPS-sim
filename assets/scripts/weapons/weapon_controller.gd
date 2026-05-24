@@ -58,9 +58,13 @@ func fire_weapon() -> void:
 			_spawn_projectile()
 
 func _perform_hitscan() -> void:
-	if not camera: return
-	var space_state = camera.get_world_3d().direct_space_state
-	var from = camera.global_position
+	if not is_instance_valid(Managers.equipment_manager) or not is_instance_valid(Managers.equipment_manager.active_muzzle_node):
+		return
+	
+	var muzzle = Managers.equipment_manager.active_muzzle_node
+	
+	var space_state = muzzle.get_world_3d().direct_space_state
+	var from = muzzle.global_position
 	var accuracy_spread = (100 - current_weapon.accuracy) / 1000.0
 	
 	for i in current_weapon.pellet_count:
