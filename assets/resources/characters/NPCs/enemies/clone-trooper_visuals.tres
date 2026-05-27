@@ -1,9 +1,11 @@
-[gd_resource type="Resource" script_class="NPCVisuals" format=3 uid="uid://dhsl4fp6xlfbi"]
+[gd_resource type="Resource" script_class="NPCResource" format=3 uid="uid://dhsl4fp6xlfbi"]
 
-[ext_resource type="Script" uid="uid://0q0ffmyql0y6" path="res://assets/scripts/characters/NPCs/NPC_visuals.gd" id="1_wxfxj"]
+[ext_resource type="Script" uid="uid://0q0ffmyql0y6" path="res://assets/scripts/characters/NPCs/NPC_resource.gd" id="1_wxfxj"]
 [ext_resource type="SpriteFrames" uid="uid://c7r00kgls1dao" path="res://assets/sprites/characters/enemies/clone trooper/clone-trooper_spriteframes.tres" id="2_0k2kc"]
 
 [resource]
 script = ExtResource("1_wxfxj")
 sprite_frames = ExtResource("2_0k2kc")
+vertical_offset = 1.4060000000000001
+horizontal_offset = -0.447
 metadata/_custom_type_script = "uid://0q0ffmyql0y6"

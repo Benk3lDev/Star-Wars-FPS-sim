@@ -67,6 +67,7 @@ state_chart = NodePath("StateChart")
 camera_effects = NodePath("CameraController/Camera3D")
 weapon_controller = NodePath("Components/WeaponController")
 step_handler = NodePath("Components/StepHandler")
+faction = 2
 
 [node name="StateChartDebugger" parent="." unique_id=1240893149 instance=ExtResource("2_urp6f")]
 anchors_preset = 0
@@ -149,8 +150,9 @@ attributes = NodePath("../AttributesComponent")
 skills_list = Array[ExtResource("14_8l2ex")]([ExtResource("15_vn88y"), ExtResource("16_n45th"), ExtResource("17_avvtr"), ExtResource("18_tstuq"), ExtResource("19_r2oq8"), ExtResource("20_2m2ie"), ExtResource("21_lg2mx"), ExtResource("22_avyy0")])
 is_cybernetic = true
 
-[node name="HealthComponent" parent="Components" unique_id=763287296 node_paths=PackedStringArray("skills_component") instance=ExtResource("14_vf118")]
+[node name="HealthComponent" parent="Components" unique_id=763287296 node_paths=PackedStringArray("skills_component", "actor") instance=ExtResource("14_vf118")]
 skills_component = NodePath("../SkillsComponent")
+actor = NodePath("../..")
 
 [node name="StateChart" type="Node" parent="." unique_id=1980311667]
 script = ExtResource("5_n7ghd")
@@ -465,8 +467,7 @@ script = ExtResource("33_3oaqr")
 [connection signal="state_processing" from="StateChart/Root/Movement/Grounded/Moving/Jogging" to="StateMachine/MovementState/GroundedState/MovingState/JoggingState" method="_on_jogging_state_processing"]
 [connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Moving/Walking" to="." method="walk"]
 [connection signal="state_processing" from="StateChart/Root/Movement/Grounded/Moving/Walking" to="StateMachine/MovementState/GroundedState/MovingState/WalkingState" method="_on_walking_state_processing"]
-[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Moving/Sprinting" to="." method="_on_sprinting_state_entered"]
-[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Moving/Sprinting" to="." method="sprint"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Moving/Sprinting" to="StateMachine/MovementState/GroundedState/MovingState/SprintingState" method="_on_sprinting_state_entered"]
 [connection signal="state_processing" from="StateChart/Root/Movement/Grounded/Moving/Sprinting" to="StateMachine/MovementState/GroundedState/MovingState/SprintingState" method="_on_sprinting_state_processing"]
 [connection signal="state_processing" from="StateChart/Root/Movement/Airborne" to="StateMachine/MovementState/AirborneState" method="_on_airborne_state_processing"]
 [connection signal="state_processing" from="StateChart/Root/Movement/Airborne/Jump" to="StateMachine/MovementState/AirborneState/JumpState" method="_on_jump_state_processing"]

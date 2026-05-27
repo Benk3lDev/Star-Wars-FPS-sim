@@ -1,0 +1,197 @@
+[gd_scene format=3 uid="uid://d06pt0u26bmog"]
+
+[ext_resource type="Script" uid="uid://cim2rtgrm3gh0" path="res://assets/scripts/characters/NPCs/StateMachines/NPC_state_machine.gd" id="1_est25"]
+[ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="2_4ci8n"]
+[ext_resource type="Script" uid="uid://c1vp0ojjvaby1" path="res://addons/godot_state_charts/parallel_state.gd" id="3_yf6ve"]
+[ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="4_83gta"]
+[ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="5_lfyec"]
+[ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="6_uqjne"]
+[ext_resource type="Script" uid="uid://cug41s1ay3ou3" path="res://assets/scripts/characters/NPCs/StateMachines/states/idle_state.gd" id="7_j4qtb"]
+[ext_resource type="Script" uid="uid://ct4ojf0ji5s1h" path="res://assets/scripts/characters/NPCs/StateMachines/states/walk_state.gd" id="8_0y8k7"]
+[ext_resource type="Script" uid="uid://c5pyln613gfoj" path="res://assets/scripts/characters/NPCs/StateMachines/states/alert_idle_state.gd" id="9_4ci8n"]
+[ext_resource type="Script" uid="uid://ckfy84gq0fnth" path="res://assets/scripts/characters/NPCs/StateMachines/states/alert_walk_state.gd" id="10_lfyec"]
+[ext_resource type="Script" uid="uid://d2w8obiwkngi4" path="res://assets/scripts/characters/NPCs/StateMachines/states/alerted_search.gd" id="11_j4qtb"]
+[ext_resource type="Script" uid="uid://cbqg5x14e1mg1" path="res://assets/scripts/characters/NPCs/StateMachines/states/aim_state.gd" id="11_uqjne"]
+[ext_resource type="Script" uid="uid://bbqpu8y1wjp2v" path="res://assets/scripts/characters/NPCs/StateMachines/states/fire_state.gd" id="12_j4qtb"]
+
+[node name="NPCStateMachine" type="Node" unique_id=1854717263]
+script = ExtResource("1_est25")
+
+[node name="StateChart" type="Node" parent="." unique_id=1452781962]
+script = ExtResource("2_4ci8n")
+metadata/_custom_type_script = "uid://couw105c3bde4"
+
+[node name="Root" type="Node" parent="StateChart" unique_id=874606168]
+script = ExtResource("3_yf6ve")
+
+[node name="Movement" type="Node" parent="StateChart/Root" unique_id=576580346]
+script = ExtResource("4_83gta")
+initial_state = NodePath("Grounded")
+
+[node name="Grounded" type="Node" parent="StateChart/Root/Movement" unique_id=1159606092]
+script = ExtResource("4_83gta")
+initial_state = NodePath("AtEase")
+
+[node name="AtEase" type="Node" parent="StateChart/Root/Movement/Grounded" unique_id=1932744756]
+script = ExtResource("4_83gta")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/Root/Movement/Grounded/AtEase" unique_id=1522025529]
+script = ExtResource("5_lfyec")
+
+[node name="Walk" type="Node" parent="StateChart/Root/Movement/Grounded/AtEase" unique_id=845901306]
+script = ExtResource("5_lfyec")
+
+[node name="OnIdle" type="Node" parent="StateChart/Root/Movement/Grounded/AtEase" unique_id=1237307891]
+script = ExtResource("6_uqjne")
+to = NodePath("../Idle")
+event = &"OnIdle"
+delay_in_seconds = "0.0"
+
+[node name="OnWalk" type="Node" parent="StateChart/Root/Movement/Grounded/AtEase" unique_id=2059025480]
+script = ExtResource("6_uqjne")
+to = NodePath("../Walk")
+event = &"OnWalk"
+delay_in_seconds = "0.0"
+
+[node name="Alerted" type="Node" parent="StateChart/Root/Movement/Grounded" unique_id=2078170385]
+script = ExtResource("4_83gta")
+initial_state = NodePath("AlertIdle")
+
+[node name="AlertIdle" type="Node" parent="StateChart/Root/Movement/Grounded/Alerted" unique_id=1388570743]
+script = ExtResource("5_lfyec")
+
+[node name="AlertWalk" type="Node" parent="StateChart/Root/Movement/Grounded/Alerted" unique_id=1855190890]
+script = ExtResource("5_lfyec")
+
+[node name="OnAlertIdle" type="Node" parent="StateChart/Root/Movement/Grounded/Alerted" unique_id=1906351506]
+script = ExtResource("6_uqjne")
+to = NodePath("../AlertIdle")
+event = &"OnAlertIdle"
+delay_in_seconds = "0.0"
+
+[node name="OnAlertWalk" type="Node" parent="StateChart/Root/Movement/Grounded/Alerted" unique_id=2008919846]
+script = ExtResource("6_uqjne")
+to = NodePath("../AlertWalk")
+event = &"OnAlertWalk"
+delay_in_seconds = "0.0"
+
+[node name="Combat" type="Node" parent="StateChart/Root/Movement/Grounded" unique_id=632179463]
+script = ExtResource("4_83gta")
+initial_state = NodePath("Aim")
+
+[node name="Aim" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=996706156]
+script = ExtResource("5_lfyec")
+
+[node name="Fire" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=428457272]
+script = ExtResource("5_lfyec")
+
+[node name="Reload" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=1848252227]
+script = ExtResource("5_lfyec")
+
+[node name="Run" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=2050312920]
+script = ExtResource("5_lfyec")
+
+[node name="OnAim" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=1994111008]
+script = ExtResource("6_uqjne")
+to = NodePath("../Aim")
+event = &"OnAim"
+delay_in_seconds = "0.0"
+
+[node name="OnFire" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=216294236]
+script = ExtResource("6_uqjne")
+to = NodePath("../Fire")
+event = &"OnFire"
+delay_in_seconds = "0.0"
+
+[node name="OnReload" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=684598174]
+script = ExtResource("6_uqjne")
+to = NodePath("../Reload")
+event = &"OnReload"
+delay_in_seconds = "0.0"
+
+[node name="OnRun" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=1962931984]
+script = ExtResource("6_uqjne")
+to = NodePath("../Run")
+event = &"OnRun"
+delay_in_seconds = "0.0"
+
+[node name="OnAtEase" type="Node" parent="StateChart/Root/Movement/Grounded" unique_id=601376899]
+script = ExtResource("6_uqjne")
+to = NodePath("../AtEase")
+event = &"OnAtEase"
+delay_in_seconds = "0.0"
+
+[node name="OnAlerted" type="Node" parent="StateChart/Root/Movement/Grounded" unique_id=1841125039]
+script = ExtResource("6_uqjne")
+to = NodePath("../Alerted")
+event = &"OnAlerted"
+delay_in_seconds = "0.0"
+
+[node name="OnCombat" type="Node" parent="StateChart/Root/Movement/Grounded" unique_id=777051367]
+script = ExtResource("6_uqjne")
+to = NodePath("../Combat")
+event = &"OnCombat"
+delay_in_seconds = "0.0"
+
+[node name="Airborne" type="Node" parent="StateChart/Root/Movement" unique_id=874802735]
+script = ExtResource("4_83gta")
+
+[node name="OnGrounded" type="Node" parent="StateChart/Root/Movement" unique_id=704483145]
+script = ExtResource("6_uqjne")
+to = NodePath("../Grounded")
+event = &"OnGrounded"
+delay_in_seconds = "0.0"
+
+[node name="OnAirborne" type="Node" parent="StateChart/Root/Movement" unique_id=1909644087]
+script = ExtResource("6_uqjne")
+to = NodePath("../Airborne")
+event = &"OnAirborne"
+delay_in_seconds = "0.0"
+
+[node name="StateScripts" type="Node" parent="." unique_id=1114168824]
+
+[node name="MovementState" type="Node" parent="StateScripts" unique_id=413360955]
+
+[node name="GroundedState" type="Node" parent="StateScripts/MovementState" unique_id=50187923]
+
+[node name="AtEaseState" type="Node" parent="StateScripts/MovementState/GroundedState" unique_id=453731314]
+
+[node name="IdleState" type="Node" parent="StateScripts/MovementState/GroundedState/AtEaseState" unique_id=1295181923]
+script = ExtResource("7_j4qtb")
+
+[node name="WalkState" type="Node" parent="StateScripts/MovementState/GroundedState/AtEaseState" unique_id=284543514]
+script = ExtResource("8_0y8k7")
+
+[node name="AlertedState" type="Node" parent="StateScripts/MovementState/GroundedState" unique_id=1634193343]
+
+[node name="AlertedIdleState" type="Node" parent="StateScripts/MovementState/GroundedState/AlertedState" unique_id=755962375]
+script = ExtResource("9_4ci8n")
+
+[node name="AlertedWalkState" type="Node" parent="StateScripts/MovementState/GroundedState/AlertedState" unique_id=1387879379]
+script = ExtResource("10_lfyec")
+
+[node name="AlertedSearch" type="Node" parent="StateScripts/MovementState/GroundedState/AlertedState" unique_id=1198532233]
+script = ExtResource("11_j4qtb")
+
+[node name="CombatState" type="Node" parent="StateScripts/MovementState/GroundedState" unique_id=750037162]
+
+[node name="AimState" type="Node" parent="StateScripts/MovementState/GroundedState/CombatState" unique_id=2101128660]
+script = ExtResource("11_uqjne")
+
+[node name="FireState" type="Node" parent="StateScripts/MovementState/GroundedState/CombatState" unique_id=1139258629]
+script = ExtResource("12_j4qtb")
+
+[node name="ReloadState" type="Node" parent="StateScripts/MovementState/GroundedState/CombatState" unique_id=851051578]
+
+[node name="RunState" type="Node" parent="StateScripts/MovementState/GroundedState/CombatState" unique_id=1545354488]
+
+[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/AtEase/Idle" to="StateScripts/MovementState/GroundedState/AtEaseState/IdleState" method="_on_idle_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Movement/Grounded/AtEase/Idle" to="StateScripts/MovementState/GroundedState/AtEaseState/IdleState" method="_on_idle_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/AtEase/Walk" to="StateScripts/MovementState/GroundedState/AtEaseState/WalkState" method="_on_walk_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Movement/Grounded/AtEase/Walk" to="StateScripts/MovementState/GroundedState/AtEaseState/WalkState" method="_on_walk_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Alerted/AlertIdle" to="StateScripts/MovementState/GroundedState/AlertedState/AlertedIdleState" method="_on_alert_idle_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Movement/Grounded/Alerted/AlertIdle" to="StateScripts/MovementState/GroundedState/AlertedState/AlertedIdleState" method="_on_alert_idle_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Alerted/AlertWalk" to="StateScripts/MovementState/GroundedState/AlertedState/AlertedWalkState" method="_on_alert_walk_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Combat/Aim" to="StateScripts/MovementState/GroundedState/CombatState/AimState" method="_on_aim_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Combat/Fire" to="StateScripts/MovementState/GroundedState/CombatState/FireState" method="_on_fire_state_entered"]

@@ -17,10 +17,12 @@ class_name PlayerController extends CharacterBody3D
 @export_group("Speed")
 @export var default_speed : float = 5
 @export var walk_speed : float = 3
-var current_speed_modifier = 0
+var current_speed_modifier : float = 0.0
 @export_category("Jump Settings")
 @export var jump_velocity : float = 4.5
 @export var fall_velocity_threshold : float = -5.0
+@export_category("Combat Settings")
+@export var faction : GameManager.Faction
 
 @onready var standing_collision = $StandingCollision
 @onready var crouching_collision = $CrouchingCollision
@@ -44,7 +46,22 @@ var previous_velocity : Vector3
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready() -> void:
+	add_to_group("actors")
 	InventoryGlobal.set_player_reference(self)
+	
+	# --- EXPLICIT PIPELINE RUN ---
+	# Link the Attributes component directly to the Skills component
+	if is_instance_valid(skills) and is_instance_valid(attributes):
+		skills.attributes = attributes
+		
+		# Trigger the exact function that runs recalculate_all_stats()
+		skills.initialize_skills()
+		
+		print("✅ [PLAYER PIPELINE] Calculations executed successfully!")
+		print("   -> Calculated Sprint Speed: ", skills.sprint_speed)
+		print("   -> Calculated Crouch Speed: ", skills.crouch_speed)
+	else:
+		push_error("❌ [PLAYER PIPELINE] Critical initialization error: Components missing.")
 
 
 func stand() -> void:

@@ -1,66 +1,57 @@
 [gd_scene format=3 uid="uid://c8w7x0gkxs3ra"]
 
 [ext_resource type="Script" uid="uid://fu1wud2qqllr" path="res://assets/scripts/characters/NPCs/NPC.gd" id="1_7yvs6"]
-[ext_resource type="Resource" uid="uid://dhsl4fp6xlfbi" path="res://assets/resources/characters/NPCs/clone-trooper_visuals.tres" id="2_7yvs6"]
-[ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="15_fr5mf"]
-[ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="16_4rbr8"]
-[ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="17_6bv7o"]
-[ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="18_tmjmd"]
+[ext_resource type="Script" uid="uid://cwwi26n6rra70" path="res://assets/scripts/characters/NPCs/npc_vision_sensor.gd" id="2_7ksfg"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_axbca"]
+radius = 0.35
+height = 2.1
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rs6y"]
 radius = 0.35
-height = 1.5776367
+height = 1.5
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_1jtut"]
 radius = 0.25
 
 [node name="NPC" type="CharacterBody3D" unique_id=1965243391]
 script = ExtResource("1_7yvs6")
-visual_data = ExtResource("2_7yvs6")
 
-[node name="Body" type="CollisionShape3D" parent="." unique_id=380008671]
-transform = Transform3D(1, 0, 0, 0, 1.0242481, 0, 0, 0, 1, 0, -0.19335747, 0)
-shape = SubResource("CapsuleShape3D_0rs6y")
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1664708414]
+path_desired_distance = 1.5
+target_desired_distance = 2.0
+navigation_layers = 4
+path_search_max_distance = 5.0
+debug_enabled = true
+debug_use_custom = true
+debug_path_custom_color = Color(1, 0, 1, 1)
+debug_path_custom_point_size = 16.5
 
-[node name="Head" type="CollisionShape3D" parent="." unique_id=2106283105]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75136256, 0)
-shape = SubResource("SphereShape3D_1jtut")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1797212343]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
+shape = SubResource("CapsuleShape3D_axbca")
 
 [node name="SpriteAnchor" type="Node3D" parent="." unique_id=313682682]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00016963482, 0.40973973, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0053011775, 0)
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="SpriteAnchor" unique_id=1669821726]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4134533, 0)
 pixel_size = 0.023
 billboard = 2
 texture_filter = 0
 animation = &""
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1664708414]
-path_desired_distance = 0.5
-avoidance_enabled = true
+[node name="NPCVisionSensor" type="Node3D" parent="." unique_id=1299494011]
+script = ExtResource("2_7ksfg")
 
-[node name="StateChart" type="Node" parent="." unique_id=2085350762]
-script = ExtResource("15_fr5mf")
-metadata/_custom_type_script = "uid://couw105c3bde4"
+[node name="HitboxArea" type="Area3D" parent="." unique_id=945521836]
+collision_layer = 4
+collision_mask = 0
 
-[node name="Root" type="Node" parent="StateChart" unique_id=223487484]
-script = ExtResource("16_4rbr8")
-initial_state = NodePath("Idle")
+[node name="Body" type="CollisionShape3D" parent="HitboxArea" unique_id=380008671]
+transform = Transform3D(1, 0, 0, 0, 1.0242481, 0, 0, 0, 1, 0, 0.768, 0)
+shape = SubResource("CapsuleShape3D_0rs6y")
 
-[node name="Idle" type="Node" parent="StateChart/Root" unique_id=1061560423]
-script = ExtResource("17_6bv7o")
-
-[node name="Follow" type="Node" parent="StateChart/Root" unique_id=468343136]
-script = ExtResource("17_6bv7o")
-
-[node name="ToIdle" type="Node" parent="StateChart/Root" unique_id=535983125]
-script = ExtResource("18_tmjmd")
-to = NodePath("../Idle")
-event = &"ToIdle"
-delay_in_seconds = "0.0"
-
-[node name="ToFollow" type="Node" parent="StateChart/Root" unique_id=817348621]
-script = ExtResource("18_tmjmd")
-to = NodePath("../Follow")
-event = &"ToFollow"
-delay_in_seconds = "0.0"
+[node name="Head" type="CollisionShape3D" parent="HitboxArea" unique_id=2106283105]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8166399, 0)
+shape = SubResource("SphereShape3D_1jtut")

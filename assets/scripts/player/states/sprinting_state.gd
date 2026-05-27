@@ -1,6 +1,7 @@
 extends PlayerState
 
 func _on_sprinting_state_entered() -> void:
+	print("PlayerSprint")
 	player_controller.sprint()
 
 func _on_sprinting_state_processing(delta: float) -> void:	

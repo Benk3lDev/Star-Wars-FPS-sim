@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="HostileBehavior" format=3 uid="uid://b2q7umqohuu7h"]
+
+[ext_resource type="Script" uid="uid://b1jphb6twov0f" path="res://assets/scripts/characters/NPCs/behaviors/hostile_behavior.gd" id="1_ql8ff"]
+
+[resource]
+script = ExtResource("1_ql8ff")
+enemy_factions = Array[int]([1, 2])
+metadata/_custom_type_script = "uid://b1jphb6twov0f"
