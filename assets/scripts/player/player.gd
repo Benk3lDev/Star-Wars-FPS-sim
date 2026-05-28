@@ -22,7 +22,8 @@ var current_speed_modifier : float = 0.0
 @export var jump_velocity : float = 4.5
 @export var fall_velocity_threshold : float = -5.0
 @export_category("Combat Settings")
-@export var faction : GameManager.Faction
+@export var true_faction : GameManager.Faction
+var faction : GameManager.Faction
 
 @onready var standing_collision = $StandingCollision
 @onready var crouching_collision = $CrouchingCollision
@@ -49,19 +50,39 @@ func _ready() -> void:
 	add_to_group("actors")
 	InventoryGlobal.set_player_reference(self)
 	
-	# --- EXPLICIT PIPELINE RUN ---
-	# Link the Attributes component directly to the Skills component
+	# --- ENFORCED INITIATION SEQUENCE ---
 	if is_instance_valid(skills) and is_instance_valid(attributes):
+		# 1. Provide attributes to the skills script and force recalculate_all_stats()
 		skills.attributes = attributes
+		skills.initialize_skills() 
+		print("✅ [PLAYER READY] Step 1: Skills compiled. Max HP calculated as: ", skills.max_hp)
 		
-		# Trigger the exact function that runs recalculate_all_stats()
-		skills.initialize_skills()
-		
-		print("✅ [PLAYER PIPELINE] Calculations executed successfully!")
-		print("   -> Calculated Sprint Speed: ", skills.sprint_speed)
-		print("   -> Calculated Crouch Speed: ", skills.crouch_speed)
+		# 2. Inject the fully loaded skills data down into your health component
+		if is_instance_valid(health):
+			health.skills_component = skills
+			
+			# 3. Force the health component to set its current_health to max_hp right now
+			if health.has_method("initialize_health"):
+				health.initialize_health()
+			else:
+				# Direct manual assignment safety net if your function name varies
+				health.max_health = skills.max_hp
+				health.current_health = skills.max_hp
+				health.is_alive = true
+				
+			print("❤️ [PLAYER READY] Step 2: Health synchronized! Current Health: ", health.current_health)
 	else:
-		push_error("❌ [PLAYER PIPELINE] Critical initialization error: Components missing.")
+		push_error("❌ [PLAYER READY] Pipeline Error: Missing core component references.")
+
+
+## Returns the current faction the world sees. 
+## If wearing an enemy uniform, this returns that enemy uniform's faction.
+func get_displayed_faction() -> GameManager.Faction:
+	# TODO: Hook this into your inventory data later!
+	# Example pseudo-logic:
+	# if inventory_data.equipped_armor_faction != GameManager.Faction.NONE:
+	#     return inventory_data.equipped_armor_faction
+	return faction # Fallback to default if no armor is equipped
 
 
 func stand() -> void:

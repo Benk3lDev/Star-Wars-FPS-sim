@@ -15,7 +15,7 @@ func _on_alerted_idle_state_entered() -> void:
 			if is_instance_valid(npc) and npc.current_macro_state == npc.MacroState.ALERTED:
 				if is_instance_valid(npc.state_chart):
 					print("⏭️ [ALERTED IDLE] Finished reaction delay. Advancing to AlertedWalk.")
-					npc.state_chart.send_event("OnAlertWalk")
+					npc.state_chart.send_event("OnAlertedWalk")
 		)
 
 func _on_alerted_idle_state_physics_processing(delta: float) -> void:

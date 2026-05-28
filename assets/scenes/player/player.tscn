@@ -67,7 +67,7 @@ state_chart = NodePath("StateChart")
 camera_effects = NodePath("CameraController/Camera3D")
 weapon_controller = NodePath("Components/WeaponController")
 step_handler = NodePath("Components/StepHandler")
-faction = 2
+true_faction = 2
 
 [node name="StateChartDebugger" parent="." unique_id=1240893149 instance=ExtResource("2_urp6f")]
 anchors_preset = 0

@@ -54,45 +54,61 @@ func _on_hit_detected(body: Node3D, shape_id: int) -> void:
 	
 	var health: HealthComponent = null
 	
-	# --- HORIZONTAL AND VERTICAL SEARCH ---
-	# 1. Cast body to a plain variant to bypass the Node3D compile-time type constraint
+	# --- UNIFIED HEALTH LOOKUP ENGINE ---
+	# FIX A: Direct Class Check
+	# If the object we hit *is* the health component itself (like a hitbox area shape)
 	var generic_body: Node = body
 	if generic_body is HealthComponent:
 		health = generic_body as HealthComponent
 	
-	# 2. Check if the HealthComponent is a child of the node we hit
+	# FIX B: Check the target object's direct script properties
+	# Since your player script has an explicit '@onready var health : HealthComponent',
+	# we can bypass scene tree path lookups entirely by pulling the variable from memory!
+	if not health and "health" in body and is_instance_valid(body.get("health")):
+		health = body.get("health") as HealthComponent
+		
+	# FIX C: Flat scene tree path search fallbacks (For NPCs or nested structures)
 	if not health:
 		health = body.get_node_or_null("HealthComponent") as HealthComponent
-		if not health:
-			health = body.get_node_or_null("Components/HealthComponent") as HealthComponent
+	if not health:
+		health = body.get_node_or_null("Components/HealthComponent") as HealthComponent
 			
-	# 3. If the raycast hit a sub-collision shape, check the parent node's children
+	# FIX D: Parent container lookups (If a limb collider hitbox shape was struck)
 	if not health and body.get_parent():
 		var parent = body.get_parent()
-		health = parent.get_node_or_null("HealthComponent") as HealthComponent
+		if "health" in parent and is_instance_valid(parent.get("health")):
+			health = parent.get("health") as HealthComponent
+		if not health:
+			health = parent.get_node_or_null("HealthComponent") as HealthComponent
 		if not health:
 			health = parent.get_node_or_null("Components/HealthComponent") as HealthComponent
 			
-			
-	# 4. Deep search check: Scan the immediate children of the hit body using loose typing
+	# FIX E: Deep recursive tree sweep as a definitive backup safety net
 	if not health:
 		for child in body.get_children():
 			if child.is_class("HealthComponent") or child.get_script() == HealthComponent:
 				health = child as HealthComponent
 				break
-			# Also check inside a "Components" grouping node if you used one
 			if child.name == "Components":
 				for sub_child in child.get_children():
 					if sub_child.get_script() == HealthComponent:
 						health = sub_child as HealthComponent
 						break
 
-	# --- EXECUTE DAMAGE ---
-	if health:
-		print("Successfully found HealthComponent on: ", health.get_parent().name)
-		health.take_damage(int(damage), "blaster", null, shape_id)
+# --- EXECUTE DAMAGE PIPELINE ---
+	if is_instance_valid(health):
+		print("🎯 [PROJECTILE DATA SUCCESS] Found HealthComponent attached to: ", health.get_parent().name)
+		print("   -> Damage Passed: ", damage) # FIX: Removed the undeclared damage_type variable here
+		print("   -> Target is_alive status flag: ", health.get("is_alive"))
+		
+		# Direct dynamic call using .call() to bypass compile-time static type casting bugs
+		if health.has_method("take_damage"):
+			health.call("take_damage", int(damage), "blaster", null, shape_id)
+			print("✅ [PROJECTILE PIPELINE] take_damage method invoked successfully!")
+		else:
+			push_error("❌ [PROJECTILE FAILURE] The found HealthComponent node does not contain a take_damage function!")
 	else:
-		push_warning("Projectile hit " + body.name + " but couldn't find a HealthComponent among its children or parents!")
+		push_warning("❌ [PROJECTILE WARNING] Hit body '" + body.name + "' but health variable remains completely null!")
 	
 	queue_free()
 

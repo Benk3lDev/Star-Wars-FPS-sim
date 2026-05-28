@@ -10,6 +10,12 @@ class_name NPC extends CharacterBody3D
 @export var max_sight_distance: float = 20.0
 @export_range(0.0, 360.0) var field_of_view: float = 90.0
 
+@export_group("AI Alert Parameters")
+## The coordinates the AI will walk toward to investigate a threat
+var alert_target_position: Vector3 = Vector3.ZERO
+## Tracks if we are currently performing the regional search loop
+var is_searching_alert_zone: bool = false
+
 @export_group("AI Behavior")
 @export var behavior_profile: NPCBehaviorProfile
 @export var state_machine_scene: PackedScene
@@ -29,12 +35,18 @@ var current_macro_state: MacroState = MacroState.AT_EASE
 @onready var nav_agent : NavigationAgent3D = $NavigationAgent3D
 @onready var sprite : AnimatedSprite3D = $SpriteAnchor/AnimatedSprite3D
 @onready var vision : NPCVisionSensor = $NPCVisionSensor
+@onready var weapon_controller : Node = $NPCWeaponController
 
 # Active runtime components
 var active_sm: Node = null
 var state_chart: StateChart = null
 var current_combat_target: CharacterBody3D = null
 var is_dead: bool = false
+var true_faction : GameManager.Faction
+var faction : GameManager.Faction
+var active_weapon_item : ItemData = null
+var active_weapon_stats : Weapon = null
+var current_ammo: int = 0
 
 #animation components
 var anim_prefix : String
@@ -48,18 +60,30 @@ func _ready() -> void:
 		
 	if npc_resource and npc_resource.sprite_frames:
 		sprite.sprite_frames = npc_resource.sprite_frames
-		
-	if inventory_data:
-		inventory_data = inventory_data.duplicate()
 
-	# Enforce a strict chronological initialization sequence
+	# --- UNIFIED INVENTORY PARSING REGION ---
+	if inventory_data:
+		# Deep duplicate ensures unique runtime counters for individual enemy copies
+		inventory_data = inventory_data.duplicate(true)
+		
+		# Find our gun item in the container array
+		active_weapon_item = inventory_data.get_first_weapon_item()
+		
+		if active_weapon_item:
+			# Unnest the embedded weapon stats resource block
+			active_weapon_stats = active_weapon_item.weapon_stats
+			
+			# Pull baseline runtime stats (like ammo) from either item variable fields or weapons
+			current_ammo = active_weapon_stats.max_ammo
+			
+			print("🎒 [INVENTORY] NPC '", name, "' equipped: ", active_weapon_stats.weapon_name)
+			print("   -> Target Shooting Range: ", active_weapon_stats.range, "m | Initial Magazine: ", current_ammo)
+		else:
+			print("🎒 [INVENTORY] NPC '", name, "' spawned completely unarmed.")
+
+	# Chronological pipeline initializers
 	_execute_npc_stat_pipeline()
-	
-	# Instantiate state machines only AFTER core data metrics are fully built
 	initialize_modular_behavior()
-	
-	print("🌍 [MAP DIAGNOSTIC] Current World 3D Navigation Map RID: ", get_world_3d().get_navigation_map())
-	print("🤖 [MAP DIAGNOSTIC] Agent Navigation Map RID: ", nav_agent.get_navigation_map())
 
 
 func _execute_npc_stat_pipeline() -> void:

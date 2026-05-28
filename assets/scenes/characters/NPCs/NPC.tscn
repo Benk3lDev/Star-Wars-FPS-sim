@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://fu1wud2qqllr" path="res://assets/scripts/characters/NPCs/NPC.gd" id="1_7yvs6"]
 [ext_resource type="Script" uid="uid://cwwi26n6rra70" path="res://assets/scripts/characters/NPCs/npc_vision_sensor.gd" id="2_7ksfg"]
+[ext_resource type="Script" uid="uid://ht2g28na5avf" path="res://assets/scripts/characters/NPCs/Components/npc_weapon_controller.gd" id="3_axbca"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_axbca"]
 radius = 0.35
@@ -35,7 +36,7 @@ shape = SubResource("CapsuleShape3D_axbca")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0053011775, 0)
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="SpriteAnchor" unique_id=1669821726]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4134533, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3919253, 0)
 pixel_size = 0.023
 billboard = 2
 texture_filter = 0
@@ -55,3 +56,10 @@ shape = SubResource("CapsuleShape3D_0rs6y")
 [node name="Head" type="CollisionShape3D" parent="HitboxArea" unique_id=2106283105]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8166399, 0)
 shape = SubResource("SphereShape3D_1jtut")
+
+[node name="Muzzle" type="Marker3D" parent="." unique_id=1251574739]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23178661, 1.6452851, -1.4168599)
+
+[node name="NPCWeaponController" type="Node" parent="." unique_id=553315007 node_paths=PackedStringArray("muzzle_node")]
+script = ExtResource("3_axbca")
+muzzle_node = NodePath("../Muzzle")

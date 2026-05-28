@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://d2w8obiwkngi4" path="res://assets/scripts/characters/NPCs/StateMachines/states/alerted_search.gd" id="11_j4qtb"]
 [ext_resource type="Script" uid="uid://cbqg5x14e1mg1" path="res://assets/scripts/characters/NPCs/StateMachines/states/aim_state.gd" id="11_uqjne"]
 [ext_resource type="Script" uid="uid://bbqpu8y1wjp2v" path="res://assets/scripts/characters/NPCs/StateMachines/states/fire_state.gd" id="12_j4qtb"]
+[ext_resource type="Script" uid="uid://c6ubpavmaktg3" path="res://assets/scripts/characters/NPCs/StateMachines/states/combat_run_state.gd" id="14_j4qtb"]
 
 [node name="NPCStateMachine" type="Node" unique_id=1854717263]
 script = ExtResource("1_est25")
@@ -56,64 +57,73 @@ delay_in_seconds = "0.0"
 
 [node name="Alerted" type="Node" parent="StateChart/Root/Movement/Grounded" unique_id=2078170385]
 script = ExtResource("4_83gta")
-initial_state = NodePath("AlertIdle")
+initial_state = NodePath("AlertedIdle")
 
-[node name="AlertIdle" type="Node" parent="StateChart/Root/Movement/Grounded/Alerted" unique_id=1388570743]
+[node name="AlertedIdle" type="Node" parent="StateChart/Root/Movement/Grounded/Alerted" unique_id=1388570743]
 script = ExtResource("5_lfyec")
 
-[node name="AlertWalk" type="Node" parent="StateChart/Root/Movement/Grounded/Alerted" unique_id=1855190890]
+[node name="AlertedWalk" type="Node" parent="StateChart/Root/Movement/Grounded/Alerted" unique_id=1855190890]
 script = ExtResource("5_lfyec")
 
-[node name="OnAlertIdle" type="Node" parent="StateChart/Root/Movement/Grounded/Alerted" unique_id=1906351506]
+[node name="AlertedSearch" type="Node" parent="StateChart/Root/Movement/Grounded/Alerted" unique_id=115022182]
+script = ExtResource("5_lfyec")
+
+[node name="OnAlertedIdle" type="Node" parent="StateChart/Root/Movement/Grounded/Alerted" unique_id=1906351506]
 script = ExtResource("6_uqjne")
-to = NodePath("../AlertIdle")
-event = &"OnAlertIdle"
+to = NodePath("../AlertedIdle")
+event = &"OnAlertedIdle"
 delay_in_seconds = "0.0"
 
-[node name="OnAlertWalk" type="Node" parent="StateChart/Root/Movement/Grounded/Alerted" unique_id=2008919846]
+[node name="OnAlertedWalk" type="Node" parent="StateChart/Root/Movement/Grounded/Alerted" unique_id=2008919846]
 script = ExtResource("6_uqjne")
-to = NodePath("../AlertWalk")
-event = &"OnAlertWalk"
+to = NodePath("../AlertedWalk")
+event = &"OnAlertedWalk"
+delay_in_seconds = "0.0"
+
+[node name="OnAlertedSearch" type="Node" parent="StateChart/Root/Movement/Grounded/Alerted" unique_id=1556663625]
+script = ExtResource("6_uqjne")
+to = NodePath("../AlertedSearch")
+event = &"OnAlertedSearch"
 delay_in_seconds = "0.0"
 
 [node name="Combat" type="Node" parent="StateChart/Root/Movement/Grounded" unique_id=632179463]
 script = ExtResource("4_83gta")
-initial_state = NodePath("Aim")
+initial_state = NodePath("CombatRun")
 
-[node name="Aim" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=996706156]
+[node name="CombatAim" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=996706156]
 script = ExtResource("5_lfyec")
 
-[node name="Fire" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=428457272]
+[node name="CombatFire" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=428457272]
 script = ExtResource("5_lfyec")
 
-[node name="Reload" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=1848252227]
+[node name="CombatReload" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=1848252227]
 script = ExtResource("5_lfyec")
 
-[node name="Run" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=2050312920]
+[node name="CombatRun" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=2050312920]
 script = ExtResource("5_lfyec")
 
-[node name="OnAim" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=1994111008]
+[node name="OnCombatAim" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=1994111008]
 script = ExtResource("6_uqjne")
-to = NodePath("../Aim")
-event = &"OnAim"
+to = NodePath("../CombatAim")
+event = &"OnCombatAim"
 delay_in_seconds = "0.0"
 
-[node name="OnFire" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=216294236]
+[node name="OnCombatFire" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=216294236]
 script = ExtResource("6_uqjne")
-to = NodePath("../Fire")
-event = &"OnFire"
+to = NodePath("../CombatFire")
+event = &"OnCombatFire"
 delay_in_seconds = "0.0"
 
-[node name="OnReload" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=684598174]
+[node name="OnCombatReload" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=684598174]
 script = ExtResource("6_uqjne")
-to = NodePath("../Reload")
-event = &"OnReload"
+to = NodePath("../CombatReload")
+event = &"OnCombatReload"
 delay_in_seconds = "0.0"
 
-[node name="OnRun" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=1962931984]
+[node name="OnCombatRun" type="Node" parent="StateChart/Root/Movement/Grounded/Combat" unique_id=1962931984]
 script = ExtResource("6_uqjne")
-to = NodePath("../Run")
-event = &"OnRun"
+to = NodePath("../CombatRun")
+event = &"OnCombatRun"
 delay_in_seconds = "0.0"
 
 [node name="OnAtEase" type="Node" parent="StateChart/Root/Movement/Grounded" unique_id=601376899]
@@ -176,22 +186,30 @@ script = ExtResource("11_j4qtb")
 
 [node name="CombatState" type="Node" parent="StateScripts/MovementState/GroundedState" unique_id=750037162]
 
-[node name="AimState" type="Node" parent="StateScripts/MovementState/GroundedState/CombatState" unique_id=2101128660]
+[node name="CombatAimState" type="Node" parent="StateScripts/MovementState/GroundedState/CombatState" unique_id=2101128660]
 script = ExtResource("11_uqjne")
 
-[node name="FireState" type="Node" parent="StateScripts/MovementState/GroundedState/CombatState" unique_id=1139258629]
+[node name="CombatFireState" type="Node" parent="StateScripts/MovementState/GroundedState/CombatState" unique_id=1139258629]
 script = ExtResource("12_j4qtb")
 
-[node name="ReloadState" type="Node" parent="StateScripts/MovementState/GroundedState/CombatState" unique_id=851051578]
+[node name="CombatReloadState" type="Node" parent="StateScripts/MovementState/GroundedState/CombatState" unique_id=851051578]
 
-[node name="RunState" type="Node" parent="StateScripts/MovementState/GroundedState/CombatState" unique_id=1545354488]
+[node name="CombatRunState" type="Node" parent="StateScripts/MovementState/GroundedState/CombatState" unique_id=1545354488]
+script = ExtResource("14_j4qtb")
 
 [connection signal="state_entered" from="StateChart/Root/Movement/Grounded/AtEase/Idle" to="StateScripts/MovementState/GroundedState/AtEaseState/IdleState" method="_on_idle_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/Root/Movement/Grounded/AtEase/Idle" to="StateScripts/MovementState/GroundedState/AtEaseState/IdleState" method="_on_idle_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/Movement/Grounded/AtEase/Walk" to="StateScripts/MovementState/GroundedState/AtEaseState/WalkState" method="_on_walk_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/Root/Movement/Grounded/AtEase/Walk" to="StateScripts/MovementState/GroundedState/AtEaseState/WalkState" method="_on_walk_state_physics_processing"]
-[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Alerted/AlertIdle" to="StateScripts/MovementState/GroundedState/AlertedState/AlertedIdleState" method="_on_alert_idle_state_entered"]
-[connection signal="state_physics_processing" from="StateChart/Root/Movement/Grounded/Alerted/AlertIdle" to="StateScripts/MovementState/GroundedState/AlertedState/AlertedIdleState" method="_on_alert_idle_state_physics_processing"]
-[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Alerted/AlertWalk" to="StateScripts/MovementState/GroundedState/AlertedState/AlertedWalkState" method="_on_alert_walk_state_entered"]
-[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Combat/Aim" to="StateScripts/MovementState/GroundedState/CombatState/AimState" method="_on_aim_state_entered"]
-[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Combat/Fire" to="StateScripts/MovementState/GroundedState/CombatState/FireState" method="_on_fire_state_entered"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Alerted/AlertedIdle" to="StateScripts/MovementState/GroundedState/AlertedState/AlertedIdleState" method="_on_alerted_idle_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Movement/Grounded/Alerted/AlertedIdle" to="StateScripts/MovementState/GroundedState/AlertedState/AlertedIdleState" method="_on_alerted_idle_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Alerted/AlertedWalk" to="StateScripts/MovementState/GroundedState/AlertedState/AlertedWalkState" method="_on_alerted_walk_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Movement/Grounded/Alerted/AlertedWalk" to="StateScripts/MovementState/GroundedState/AlertedState/AlertedWalkState" method="_on_alerted_walk_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Alerted/AlertedSearch" to="StateScripts/MovementState/GroundedState/AlertedState/AlertedSearch" method="_on_alerted_search_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Movement/Grounded/Alerted/AlertedSearch" to="StateScripts/MovementState/GroundedState/AlertedState/AlertedSearch" method="_on_alerted_search_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Combat/CombatAim" to="StateScripts/MovementState/GroundedState/CombatState/CombatAimState" method="_on_combat_aim_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Movement/Grounded/Combat/CombatAim" to="StateScripts/MovementState/GroundedState/CombatState/CombatAimState" method="_on_combat_aim_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Combat/CombatFire" to="StateScripts/MovementState/GroundedState/CombatState/CombatFireState" method="_on_combat_fire_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Movement/Grounded/Combat/CombatFire" to="StateScripts/MovementState/GroundedState/CombatState/CombatFireState" method="_on_combat_fire_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Combat/CombatRun" to="StateScripts/MovementState/GroundedState/CombatState/CombatRunState" method="_on_combat_run_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Movement/Grounded/Combat/CombatRun" to="StateScripts/MovementState/GroundedState/CombatState/CombatRunState" method="_on_combat_run_state_physics_processing"]

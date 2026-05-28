@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_wxfxj")
 sprite_frames = ExtResource("2_0k2kc")
-vertical_offset = 1.4060000000000001
+vertical_offset = 1.406
 horizontal_offset = -0.447
+name = "Clone Trooper"
 metadata/_custom_type_script = "uid://0q0ffmyql0y6"

@@ -6,5 +6,5 @@ class_name NPCResource extends Resource
 @export var vertical_offset : float
 @export var horizontal_offset : float
 @export_group("Identity")
-@export var faction : GameManager.Faction
 @export var name : String
+@export var faction : GameManager.Faction

@@ -7,7 +7,7 @@ func _on_alerted_walk_state_entered() -> void:
 	print("🐾 [ALERTED WALK] Walking to investigate last known coordinates.")
 	if is_instance_valid(npc):
 		npc.current_macro_state = npc.MacroState.ALERTED
-		npc.anim_prefix = "walknocombat"
+		npc.anim_prefix = "walkcombat"
 		path_initialized = false
 		
 		await get_tree().physics_frame
@@ -46,7 +46,7 @@ func _on_alerted_walk_state_physics_processing(delta: float) -> void:
 		# Micro transition event to enter local grid scanning patterns
 		if is_instance_valid(npc.state_chart):
 			print("🎯 [ALERTED WALK] Position reached. Triggering local area search pattern.")
-			npc.state_chart.send_event("OnAlertSearch")
+			npc.state_chart.send_event("OnAlertedSearch")
 		return
 
 	var next_path_pos: Vector3 = npc.nav_agent.get_next_path_position()

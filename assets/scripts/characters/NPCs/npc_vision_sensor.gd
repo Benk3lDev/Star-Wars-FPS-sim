@@ -14,7 +14,7 @@ func _ready() -> void:
 
 ## Pure sensor scan. Returns the closest visible enemy right now, caching nothing.
 func scan_for_enemies() -> CharacterBody3D:
-	if not npc or npc.is_dead or not npc.npc_resource:
+	if not npc or npc.is_dead:
 		return null
 
 	# Scan for dynamic entities registered in our automated group pool
@@ -26,19 +26,17 @@ func scan_for_enemies() -> CharacterBody3D:
 		if target == npc:
 			continue 
 			
-		# --- DIAGNOSTIC SENSOR LOGGER ---
-		# Safely grab whatever faction this actor has right now
-		var discovered_faction = GameManager.Faction.CIVILIAN
-		if "npc_resource" in target and target.npc_resource and "faction" in target.npc_resource:
-			discovered_faction = target.npc_resource.faction
-		elif target.has_method("get") and target.get("faction") != null:
-			discovered_faction = target.get("faction")
-		elif "faction" in target:
-			discovered_faction = target.faction
+		# --- DYNAMIC ROOT LAYER UNIFICATION ---
+		# Read the displayed uniform faction directly from the CharacterBody3D root variables
+		var discovered_faction = target.faction if "faction" in target else GameManager.Faction.CIVILIAN
 
+		# CRITICAL MATH RULE FIX: You must evaluate line of sight FIRST, 
+		# before executing faction behavior profile rules!
 		if is_entity_visible(target):
 			var hostile_match = is_hostile_towards(target)
-			print("👁️ [VISION SCAN] Spotted Actor: '", target.name, "' | Faction: ", GameManager.Faction.keys()[discovered_faction], " | Is Hostile? ", hostile_match)
+			
+			# Print out feedback logs cleanly matching your GameManager key indicators
+			print("👁️ [VISION SCAN] Spotted Actor: '", target.name, "' | Displayed Faction: ", GameManager.Faction.keys()[discovered_faction], " | Hostile Match? ", hostile_match)
 			
 			if hostile_match:
 				var origin_pos = head_node.global_position if head_node else npc.global_position
@@ -53,25 +51,14 @@ func scan_for_enemies() -> CharacterBody3D:
 	return closest_enemy
 
 func is_hostile_towards(target: Node) -> bool:
-	# Ensure our own data is fully valid before proceeding
-	if not npc or not npc.npc_resource:
+	if not npc:
 		return false
 		
-	var my_faction = npc.npc_resource.faction
-	var target_faction = GameManager.Faction.CIVILIAN # Pure default fallback
-	
-	# 1. ROBUST FACTION EXTRACTION: Check if it's an NPC or the Player
-	if "npc_resource" in target and target.npc_resource and "faction" in target.npc_resource:
-		# It's an NPC, pull the faction from its custom resource data
-		target_faction = target.npc_resource.faction
-	elif target.has_method("get") and target.get("faction") != null:
-		# Safe engine-level look up for the player's script property
-		target_faction = target.get("faction")
-	elif "faction" in target:
-		# Final structural safety fallback
-		target_faction = target.faction
+	# FIX: Read the uniform faction variable straight off your NPC's main body root scope!
+	var my_faction = npc.faction
+	var target_faction = target.faction if "faction" in target else GameManager.Faction.CIVILIAN
 
-	# 2. MATCH YOUR SPECIFIC RELATIONS MATRIX
+	# MATCH YOUR SPECIFIC RELATIONS MATRIX
 	match my_faction:
 		GameManager.Faction.REPUBLIC:
 			return target_faction == GameManager.Faction.CIS or \
@@ -106,12 +93,10 @@ func is_entity_visible(target: CharacterBody3D) -> bool:
 	if is_instance_valid(head_node):
 		vision_origin = head_node.global_position
 		
-	# 1. High-precision proximity checking
 	var distance = vision_origin.distance_to(target.global_position)
 	if distance > npc.max_sight_distance:
 		return false
 		
-	# 2. Field of View Cone Checking
 	var to_target = (target.global_position - vision_origin)
 	to_target.y = 0.0
 	to_target = to_target.normalized()
@@ -126,24 +111,19 @@ func is_entity_visible(target: CharacterBody3D) -> bool:
 	if dot_product < fov_threshold:
 		return false
 		
-	# 3. Raycast Occlusion Checking (Prevents X-Ray Vision through walls)
 	return _has_line_of_sight(vision_origin, target)
 
 func _has_line_of_sight(origin: Vector3, target: CharacterBody3D) -> bool:
 	var space_state = get_world_3d().direct_space_state
-	
-	# Raycast from our eye sensor position to the target's center chest height (approx +1.0 meter up)
 	var target_chest = target.global_position + Vector3(0, 1.0, 0)
 	var query = PhysicsRayQueryParameters3D.create(origin, target_chest)
 	
-	# Exclude the scanning NPC so the raycast doesn't hit its own collision shapes
 	query.exclude = [npc.get_rid()]
 	query.collide_with_bodies = true
 	query.collide_with_areas = false
 
 	var result = space_state.intersect_ray(query)
 	if result:
-		# If the first physical object our ray hits is the target actor, sight is clear!
 		return result.collider == target
 		
 	return false
