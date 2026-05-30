@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Consumable" format=3 uid="uid://gau7fstq3qg5"]
+
+[ext_resource type="Script" uid="uid://xo2lqkab34og" path="res://assets/scripts/consumables/consumable.gd" id="1_dh1op"]
+
+[resource]
+script = ExtResource("1_dh1op")
+consumable_name = "E5C Ammo"
+consumable_type = "Ammunition"
+ammo = 30

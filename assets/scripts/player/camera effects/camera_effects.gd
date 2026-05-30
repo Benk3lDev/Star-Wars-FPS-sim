@@ -28,7 +28,7 @@ class_name CameraEffects extends Camera3D
 @export_range(0.0, 0.1, 0.001) var bob_pitch: float = 0.05
 @export_range(0.0, 0.1, 0.001) var bob_roll: float = 0.025
 @export_range(0.0, 0.4, 0.001) var bob_up: float = 0.005
-@export_range(3.0, 8.0, 0.1) var bob_frequency: float = 6.0
+@export_range(3.0, 100.0, 0.1) var bob_frequency: float = 6.0
 
 
 
@@ -106,7 +106,7 @@ func calculate_view_offset(delta):
 
 	# Damage Kick
 	if enable_damage_kick:
-		var damage_ratio = max(0,0, _damage_timer / damage_time)
+		var damage_ratio = max(0.0, _damage_timer / damage_time)
 		angles.x += damage_ratio * _damage_pitch
 		angles.z += damage_ratio * _damage_roll
 

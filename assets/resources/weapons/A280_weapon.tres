@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("2_4ks3b")
-weapon_name = "ACP Scatter Array"
+weapon_name = "A280"
 max_ammo = 50
 fire_rate = 15.0
 projectile_speed = 90.0
@@ -14,3 +14,4 @@ is_hit_scan = false
 weapon_model = ExtResource("3_3qh5a")
 projectile_scene = ExtResource("1_4x64l")
 spread_angle = 0.1
+reload_time = 2.0

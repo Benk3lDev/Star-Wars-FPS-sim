@@ -49,6 +49,7 @@
 [ext_resource type="Script" uid="uid://gt0susdwqx7q" path="res://assets/scripts/weapons/states/weapon_firing_state.gd" id="31_svfgx"]
 [ext_resource type="Script" uid="uid://y0kepwhl55m0" path="res://assets/scripts/user interface/interaction_label.gd" id="33_3oaqr"]
 [ext_resource type="Script" uid="uid://dip8cvc6fguav" path="res://assets/scripts/weapons/states/weapon_empty_state.gd" id="34_nhni2"]
+[ext_resource type="Script" uid="uid://do7kqs8yhotny" path="res://assets/scripts/player/states/reload_state.gd" id="49_vn88y"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
 
@@ -114,6 +115,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 fov = 70.0
 script = ExtResource("4_7lmhl")
 player = NodePath("../..")
+bob_up = 0.078
+bob_frequency = 42.3
 
 [node name="InteractionRaycast" type="RayCast3D" parent="CameraController/Camera3D" unique_id=1863295613]
 target_position = Vector3(0, 0, -3)
@@ -406,6 +409,10 @@ script = ExtResource("8_urp6f")
 [node name="Empty" type="Node" parent="WeaponStateChart/Root" unique_id=1243768598]
 script = ExtResource("8_urp6f")
 
+[node name="Reload" type="Node" parent="WeaponStateChart/Root" unique_id=650437759]
+script = ExtResource("8_urp6f")
+metadata/_custom_type_script = "uid://cytafq8i1y8qm"
+
 [node name="OnIdle" type="Node" parent="WeaponStateChart/Root" unique_id=69768229]
 script = ExtResource("9_bwjto")
 to = NodePath("../Idle")
@@ -424,6 +431,13 @@ to = NodePath("../Empty")
 event = &"OnEmpty"
 delay_in_seconds = "0.0"
 
+[node name="OnReload" type="Node" parent="WeaponStateChart/Root" unique_id=1524423008]
+script = ExtResource("9_bwjto")
+to = NodePath("../Reload")
+event = &"OnReload"
+delay_in_seconds = "0.0"
+metadata/_custom_type_script = "uid://cf1nsco3w0mf6"
+
 [node name="WeaponStateMachine" type="Node" parent="." unique_id=1712541240 node_paths=PackedStringArray("weapon_controller")]
 unique_name_in_owner = true
 script = ExtResource("31_c8ixa")
@@ -437,6 +451,9 @@ script = ExtResource("31_a187t")
 
 [node name="EmptyState" type="Node" parent="WeaponStateMachine" unique_id=419225363]
 script = ExtResource("34_nhni2")
+
+[node name="ReloadState" type="Node" parent="WeaponStateMachine" unique_id=697956238]
+script = ExtResource("49_vn88y")
 
 [node name="Interact_UI" type="CanvasLayer" parent="." unique_id=376521560]
 
@@ -484,3 +501,4 @@ script = ExtResource("33_3oaqr")
 [connection signal="state_processing" from="WeaponStateChart/Root/Firing" to="WeaponStateMachine/FiringState" method="_on_firing_state_processing"]
 [connection signal="state_entered" from="WeaponStateChart/Root/Empty" to="WeaponStateMachine/EmptyState" method="_on_empty_state_entered"]
 [connection signal="state_processing" from="WeaponStateChart/Root/Empty" to="WeaponStateMachine/EmptyState" method="_on_empty_state_processing"]
+[connection signal="state_entered" from="WeaponStateChart/Root/Reload" to="WeaponStateMachine/ReloadState" method="_on_reload_state_entered"]

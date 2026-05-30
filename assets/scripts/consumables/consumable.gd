@@ -6,3 +6,4 @@ class_name Consumable extends Resource
 @export var damage_type : String = ""
 @export var healing : float = 0
 @export var cyber_mana_recharge : float = 0
+@export var ammo : int = 0

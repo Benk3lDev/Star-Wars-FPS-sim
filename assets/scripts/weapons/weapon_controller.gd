@@ -57,6 +57,94 @@ func fire_weapon() -> void:
 		else:
 			_spawn_projectile()
 
+
+func reload_weapon() -> bool:
+	if not current_weapon:
+		return false
+		
+	print("🔄 [PLAYER RELOAD] Tracking tactical ammo cell depletion mechanics...")
+	
+	var wm = get_tree().get_first_node_in_group("weapon_manager")
+	if not wm or wm.current_equipped_item == null:
+		return false
+
+	# 1. Calculate how many individual bullets the gun has spent/needs to hit max capacity
+	var current_gun_ammo: int = wm.current_equipped_item.ammo
+	var max_gun_capacity: int = current_weapon.max_ammo
+	var ammo_needed: int = max_gun_capacity - current_gun_ammo
+
+	if ammo_needed <= 0:
+		print("ℹ️ [PLAYER RELOAD] Weapon chamber is already fully loaded.")
+		return false
+
+	# 2. SCAN THE TETRIS GRID DATA ARCHITECTURE FOR AN AMMO ITEM WITH ROUNDS REMAINING
+	var found_item: ItemData = null
+	var expected_ammo_name: String = current_weapon.weapon_name + " Ammo"
+
+	for item in InventoryGlobal.slot_data:
+		if is_instance_valid(item):
+			if item.item_type == "Consumable" and item.item_name == expected_ammo_name:
+				# Ensure it possesses your custom Consumable sub-resource and has at least 1 loose bullet left
+				if item.consumable_stats != null and item.consumable_stats.ammo > 0:
+					found_item = item
+					break
+
+	if not found_item:
+		print("❌ [PLAYER RELOAD] Out of ammunition! No matching boxes containing rounds found in slots.")
+		return false
+
+	# 3. TACTICAL REFILL CALCULATIONS
+	var available_bullets: int = found_item.consumable_stats.ammo
+	
+	# Determine how many bullets we can physically transfer over on this specific frame
+	var bullets_to_transfer: int = min(ammo_needed, available_bullets)
+	
+	# 4. MUTATE BOTH DATA HOOK VALUES IN MEMORY
+	found_item.consumable_stats.ammo -= bullets_to_transfer
+	wm.current_equipped_item.ammo += bullets_to_transfer
+	
+	print("📦 [PLAYER RELOAD] Siphoned ", bullets_to_transfer, " bullets out of inventory pack cell.")
+	print("   -> Inventory Item Remaining Round Count: ", found_item.consumable_stats.ammo)
+	print("   -> Weapon Current Chamber Loaded Ammo: ", wm.current_equipped_item.ammo)
+
+# 5. FIXED: STACK-AWARE TETRIS SECTOR ERASURE LOOP
+	# If the active consumable box reads exactly 0 bullets, evaluate the stack quantity
+	if found_item.consumable_stats.ammo <= 0:
+		if found_item.quantity > 1:
+			# Scenario A: We have more boxes in this item stack.
+			# Deduct one box from the stack quantity count.
+			found_item.quantity -= 1
+			
+			# Reset the bullet reservoir back to full capacity for the next box in the stack!
+			# We read the max capacity from your pre-made ItemData default assignment, 
+			# or match your weapon's max magazine cap blueprint settings.
+			if found_item.weapon_stats != null:
+				found_item.consumable_stats.ammo = found_item.weapon_stats.max_ammo
+			elif current_weapon != null:
+				found_item.consumable_stats.ammo = current_weapon.max_ammo
+				
+			print("📦 [PLAYER RELOAD] Box empty, but stack remains! Reduced quantity to: ", found_item.quantity, " | Opened fresh box with ammo: ", found_item.consumable_stats.ammo)
+		
+		else:
+			# Scenario B: This was the very last box in the stack (quantity == 1).
+			# Completely scrub its presence from the database matrix array slots!
+			print("🗑️ [PLAYER RELOAD] Last box in stack completely drained! Wiping grid tile nodes clean.")
+			
+			# Loop across the entire grid size array to catch all indices this multi-slot item occupied
+			for i in range(InventoryGlobal.slot_data.size()):
+				if InventoryGlobal.slot_data[i] == found_item:
+					InventoryGlobal.slot_data[i] = null # Overwrite with null to free up the grid space
+
+	# 6. REFRESH VISUAL GRID CANVAS TILES
+	if is_instance_valid(InventoryGlobal.ui_node):
+		var grid_ui = InventoryGlobal.ui_node.get_node_or_null("inventory_grid")
+		if is_instance_valid(grid_ui) and grid_ui.has_method("refresh_ui"):
+			print("🎨 [PLAYER RELOAD] Forcing UI canvas redraw...")
+			grid_ui.refresh_ui()
+			
+	return true
+
+
 func _perform_hitscan() -> void:
 	if not is_instance_valid(Managers.equipment_manager) or not is_instance_valid(Managers.equipment_manager.active_muzzle_node):
 		return

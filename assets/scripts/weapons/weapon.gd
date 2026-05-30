@@ -1,6 +1,7 @@
 class_name Weapon extends Resource
 
 @export var weapon_name: String = "Pistol"
+@export var weapon_skill_key : String
 @export var damage: float = 25.0
 @export var max_ammo: int = 12
 @export var fire_rate: float = 2.0
@@ -14,3 +15,4 @@ class_name Weapon extends Resource
 @export var pellet_count: int = 1
 @export var spread_angle: float = 0.0
 @export var muzzle_node_name: String = "Muzzle"
+@export var reload_time : float = 0.0

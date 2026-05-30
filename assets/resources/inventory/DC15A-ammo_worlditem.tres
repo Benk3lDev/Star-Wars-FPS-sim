@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bcnm1qm52f0cn"]
+
+[ext_resource type="Texture2D" uid="uid://cofg8ha0mmnwg" path="res://assets/textures/items/weapons/hotbar icons/test_item1_hotbar.png" id="2_8ryam"]
+[ext_resource type="Texture2D" uid="uid://lgbqjklnp3s8" path="res://assets/textures/items/weapons/icons/test_item1.png" id="3_kx1s1"]
+[ext_resource type="PackedScene" uid="uid://dou7n5l6kjd6f" path="res://assets/scenes/items/models/test_item1.tscn" id="4_d35as"]
+[ext_resource type="Script" uid="uid://bmsou0jk4d6cx" path="res://assets/scripts/inventory/item_data.gd" id="5_5wge4"]
+
+[resource]
+script = ExtResource("5_5wge4")
+item_type = "Consumable"
+item_name = "DC-15A Ammo"
+item_effect = "Item made for testing healing items"
+icon = ExtResource("3_kx1s1")
+size = Vector2i(1, 1)
+hotbar_icon = ExtResource("2_8ryam")
+item_model = ExtResource("4_d35as")
+is_stackable = true
+max_stack_size = 10
+ammo = 20
+hand_pos = Vector3(0.2, -0.2, -1)

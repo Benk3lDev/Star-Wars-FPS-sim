@@ -1,29 +1,26 @@
 class_name SkillsComponent extends Node
 
-
 @export var attributes : AttributesComponent
 @export var skills_list : Array[SkillData] = []
-
 @export var is_cybernetic : bool
 
 var skills : Dictionary = {}
 
 var max_hp : int
-var hp_boost : float# multiplier for using health items
+var hp_boost : float
 var max_stamina : int
-var stamina_regen : float#multiplier for regenerating stamina
+var stamina_regen : float
 var stamina_depletion_mult : float = 1.0
 var max_cybernetic_mana : int
-var cm_boost : float# multiplier for using cybernetic mana items
-var shock_dam_res : float# shock/electrical damage resistance
-var blaster_dam_res : float # blaster damage resistance
-var bullet_dam_res : float# sluglugger damage resistance
-var phys_dam_res : float# melee damage resistance
+var cm_boost : float
+var shock_dam_res : float
+var blaster_dam_res : float 
+var bullet_dam_res : float
+var phys_dam_res : float
 var explosive_dam_res : float
 var poison_dam_res : float
 var sprint_speed : float
 var crouch_speed : float
-
 
 func initialize_skills() -> void:
 	skills.clear()
@@ -41,20 +38,15 @@ func recalculate_all_stats() -> void:
 		push_error("SkillsComponent failed to calculate: character_attributes is missing!")
 		return
 	
-	var light_blaster_total = skills["light_blasters_skill"].get_total_value(attrs)
-	var heavy_blaster_total = skills["heavy_blasters_skill"].get_total_value(attrs)
-	var melee_total = skills["melee_skill"].get_total_value(attrs)
-	var explosives = skills["explosives_skill"].get_total_value(attrs)
-	var mechanics = skills["mechanics_skill"].get_total_value(attrs)
-	var splicing = skills["splicing_skill"].get_total_value(attrs)
-	var medical = skills["medical_skill"].get_total_value(attrs)
-	var stealth = skills["stealth_skill"].get_total_value(attrs)
+	# Fetch dynamic values using your automated method to verify key integrity on startup
+	var medical_total = get_weapon_skill_total("medical_skill")
+	var mechanics_total = get_weapon_skill_total("mechanics_skill")
+	var stealth_total = get_weapon_skill_total("stealth_skill")
 	
-	# Your dynamic Star Wars RPG formula logic runs purely
 	var vit_bonus = (5.0 / 2.0) * attrs.vitality
 	max_hp = 200 + int(vit_bonus * vit_bonus)
 	
-	hp_boost = (medical / 100) + 1
+	hp_boost = (float(medical_total) / 100.0) + 1.0
 	
 	var const_bonus = 2 * (attrs.constitution - 1)
 	max_stamina = 100 + (const_bonus * const_bonus)
@@ -63,7 +55,23 @@ func recalculate_all_stats() -> void:
 	
 	if is_cybernetic:
 		max_cybernetic_mana = 100 + (attrs.intelligence * 10)
-		cm_boost = 1 + (mechanics * 0.1)
+		cm_boost = 1.0 + (float(mechanics_total) * 0.1)
 	
-	sprint_speed = 6.0 + ((attrs.dexterity - 1) * 0.1)
-	crouch_speed = 2.0 + (attrs.dexterity * 0.01)
+	# Fetch stealth total or fallback dexterity attributes smoothly
+	var dexterity_stat = float(attrs.dexterity)
+	sprint_speed = 6.0 + ((dexterity_stat - 1.0) * 0.1)
+	crouch_speed = 2.0 + (dexterity_stat * 0.01)
+
+
+## THE UNIVERSAL BRIDGE: Keep this exactly as you have it established!
+func get_weapon_skill_total(skill_key: String) -> int:
+	if not attributes or not attributes.character_attributes:
+		return 0
+		
+	# Verify that the key requested exists in our active skill registry dictionary
+	if skills.has(skill_key) and skills[skill_key] != null:
+		var skill_resource = skills[skill_key]
+		if skill_resource.has_method("get_total_value"):
+			return int(skill_resource.get_total_value(attributes.character_attributes))
+			
+	return 0

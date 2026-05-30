@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("2_ixouu")
 weapon_name = "E5C"
+weapon_skill_key = "light_blasters_skill"
 max_ammo = 50
 fire_rate = 15.0
 is_automatic = true
@@ -15,3 +16,4 @@ is_hit_scan = false
 weapon_model = ExtResource("3_cu5v7")
 projectile_scene = ExtResource("1_af7au")
 spread_angle = 0.1
+reload_time = 4.5
