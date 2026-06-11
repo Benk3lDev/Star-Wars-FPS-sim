@@ -35,19 +35,23 @@ func _process(_delta: float) -> void:
 	   not is_instance_valid(equipment_manager) or \
 	   not is_instance_valid(weapon_manager) or \
 	   not is_instance_valid(equipment_manager.active_muzzle_node) or \
-	   not weapon_manager.current_equipped_item:
+	   not weapon_manager.current_equipped_item or \
+	   not weapon_manager.current_equipped_item.weapon_stats:
 		show()
 		var screen_center = get_viewport_rect().size / 2.0
 		reticle_texture.global_position = screen_center - (reticle_texture.size / 2.0)
 		return
 		
-	# Target the live "Muzzle" marker sitting inside your weapon item model scene
+	# Target the permanent "Muzzle" marker teleported by the EquipmentManager
 	var muzzle = equipment_manager.active_muzzle_node
 	var weapon_range = weapon_manager.current_equipped_item.weapon_stats.range
 		
 	# --- 3D TO 2D TRACKING LOOP ---
-	# Calculate a 3D position vector directly out in front of where the muzzle barrel points
-	var muzzle_forward_point = muzzle.global_position + (-muzzle.global_transform.basis.z * weapon_range)
+	# FIX: Instead of checking the muzzle node's individual local transform basis,
+	# we extract the camera's true forward Z-direction vector and project it 
+	# starting outward directly from the muzzle's active 3D coordinates.
+	var camera_forward = -camera.global_transform.basis.z
+	var muzzle_forward_point = muzzle.global_position + (camera_forward * weapon_range)
 	
 	# Fall back to screen center if the weapon points behind the camera view plane
 	if camera.is_position_behind(muzzle_forward_point):

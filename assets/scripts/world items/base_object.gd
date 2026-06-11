@@ -12,6 +12,14 @@ class_name BaseObject extends RigidBody3D
 
 
 func _ready():
+	# Ensure the object is completely unfrozen and ready to slide/react to forces on spawn
+	freeze = false
+	freeze_mode = RigidBody3D.FREEZE_MODE_KINEMATIC # Best freeze mode for carrying
+	
+	# Force physics engine wake up
+	sleeping = false
+	can_sleep = true
+	
 	if object_data:
 		load_item_model()
 
@@ -37,14 +45,22 @@ func _setup_collisions(node: Node):
 	for child in node.get_children():
 		if child is MeshInstance3D:
 			var col_shape_node = CollisionShape3D.new()
-			col_shape_node.shape = child.mesh.create_convex_shape()
+			
+			# Use decompose option if available for clean hull baking
+			col_shape_node.shape = child.mesh.create_convex_shape(true, true)
 			add_child(col_shape_node)
 			
-			col_shape_node.transform = child.transform
+			# --- THE COORDINATE MATRIX FIX ---
+			# Instead of reading the local 'child.transform', calculate its global 3D transform 
+			# relative to the master RigidBody3D root node context.
+			# This pins the collision box directly onto the visual mesh where it belongs!
+			col_shape_node.global_transform = child.global_transform
+			# ----------------------------------
 			
 			if Engine.is_editor_hint():
 				col_shape_node.owner = get_tree().edited_scene_root
 		
+		# Recursively process lower nodes down the tree structure hierarchy
 		_setup_collisions(child)
 
 

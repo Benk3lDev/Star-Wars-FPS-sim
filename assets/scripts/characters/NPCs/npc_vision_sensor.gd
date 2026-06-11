@@ -35,18 +35,12 @@ func scan_for_enemies() -> CharacterBody3D:
 		if is_entity_visible(target):
 			var hostile_match = is_hostile_towards(target)
 			
-			# Print out feedback logs cleanly matching your GameManager key indicators
-			print("👁️ [VISION SCAN] Spotted Actor: '", target.name, "' | Displayed Faction: ", GameManager.Faction.keys()[discovered_faction], " | Hostile Match? ", hostile_match)
-			
 			if hostile_match:
 				var origin_pos = head_node.global_position if head_node else npc.global_position
 				var distance = origin_pos.distance_to(target.global_position)
 				if distance < closest_distance:
 					closest_distance = distance
 					closest_enemy = target
-		
-	if closest_enemy:
-		print("🎯 [SENSOR RESULT] Locked onto closest target: ", closest_enemy.name)
 		
 	return closest_enemy
 

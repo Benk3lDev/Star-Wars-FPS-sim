@@ -1,22 +1,21 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bcbjq5edbnnb0"]
 
-[ext_resource type="Texture2D" uid="uid://dwlhj5wmy7cqb" path="res://assets/textures/items/weapons/hotbar icons/DC15A_Hotbar.png" id="1_qum51"]
-[ext_resource type="Texture2D" uid="uid://bqkd4ll2rg0pa" path="res://assets/textures/items/weapons/icons/DC15A_Inventory.png" id="2_5ifhg"]
+[ext_resource type="Texture2D" uid="uid://bj0oiqbwj2a2j" path="res://assets/textures/items/weapons/hotbar icons/DC-15A_hotbar.png" id="1_qum51"]
+[ext_resource type="Texture2D" uid="uid://dx06mgdkmbii4" path="res://assets/textures/items/weapons/icons/DC-15A_inventory.png" id="2_5ifhg"]
 [ext_resource type="PackedScene" uid="uid://c4emkrj7ev6x1" path="res://assets/scenes/items/models/weapons/blasters/DC15A/DC15A.tscn" id="3_qum51"]
 [ext_resource type="Script" uid="uid://bmsou0jk4d6cx" path="res://assets/scripts/inventory/item_data.gd" id="4_rq8ro"]
 [ext_resource type="Resource" uid="uid://bqorfknujgl4q" path="res://assets/resources/weapons/DC15A_weapon.tres" id="5_5ifhg"]
 
 [resource]
 script = ExtResource("4_rq8ro")
-item_type = "Weapon"
-item_name = "DC15A"
+item_name = "DC-15A"
 item_effect = "Heavy Blaster Rifle"
+item_type = "Weapon"
 icon = ExtResource("2_5ifhg")
 size = Vector2i(3, 1)
+max_stack_size = 1
 hotbar_icon = ExtResource("1_qum51")
 item_model = ExtResource("3_qum51")
-is_stackable = true
-max_stack_size = 2
 weapon_stats = ExtResource("5_5ifhg")
 ammo = 50
 hand_pos = Vector3(0.43, -0.415, -0.765)

@@ -9,7 +9,7 @@ class_name CameraEffects extends Camera3D
 @export var enable_damage_kick : bool = true
 @export var enable_weapon_kick : bool = true
 @export var enable_screen_shake : bool = true
-@export var enable_head_bob : bool = true
+@export var enable_head_bob : bool = false
 
 @export_category("Kick & Recoil Settings")
 @export_group("Run Tilt")

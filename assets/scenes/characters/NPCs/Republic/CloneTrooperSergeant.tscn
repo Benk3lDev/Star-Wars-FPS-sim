@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://cyxnamnasv412"]
+
+[ext_resource type="Script" uid="uid://fu1wud2qqllr" path="res://assets/scripts/characters/NPCs/NPC.gd" id="1_8om3l"]
+[ext_resource type="Resource" uid="uid://dhsl4fp6xlfbi" path="res://assets/resources/characters/NPCs/enemies/clone-trooper_visuals.tres" id="2_u41cr"]
+[ext_resource type="Script" uid="uid://bhsnrff5hyp1q" path="res://assets/scripts/characters/NPCs/NPCInventoryData.gd" id="3_i44ue"]
+[ext_resource type="Script" uid="uid://bmsou0jk4d6cx" path="res://assets/scripts/inventory/item_data.gd" id="4_icyr4"]
+[ext_resource type="Resource" uid="uid://bcbjq5edbnnb0" path="res://assets/resources/inventory/DC15A_worlditem.tres" id="5_isv2j"]
+[ext_resource type="Script" uid="uid://b1jphb6twov0f" path="res://assets/scripts/characters/NPCs/behaviors/hostile_behavior.gd" id="6_6dckg"]
+[ext_resource type="PackedScene" uid="uid://d06pt0u26bmog" path="res://assets/scenes/components/State Machines/NPC_state_machine.tscn" id="7_eu6ce"]
+[ext_resource type="Script" uid="uid://cwwi26n6rra70" path="res://assets/scripts/characters/NPCs/npc_vision_sensor.gd" id="8_0ynke"]
+[ext_resource type="Script" uid="uid://ht2g28na5avf" path="res://assets/scripts/characters/NPCs/Components/npc_weapon_controller.gd" id="9_vpmrn"]
+[ext_resource type="PackedScene" uid="uid://qhmfi4r2dd45" path="res://assets/scenes/components/attributes_component.tscn" id="10_map8k"]
+[ext_resource type="PackedScene" uid="uid://co3xk8k8h0g60" path="res://assets/scenes/components/health_component.tscn" id="11_xooqt"]
+[ext_resource type="PackedScene" uid="uid://blsentgir1nmw" path="res://assets/scenes/components/skills_component.tscn" id="12_t1lpi"]
+[ext_resource type="Script" uid="uid://p0imevumt74h" path="res://assets/scripts/characters/skill_data.gd" id="13_mj2kr"]
+[ext_resource type="Resource" uid="uid://cg4fq08lryl4p" path="res://assets/resources/characters/skills/light_blasters.tres" id="14_x4npk"]
+[ext_resource type="Resource" uid="uid://dd032slp2k7hh" path="res://assets/resources/characters/skills/heavy_blasters.tres" id="15_5t4xw"]
+[ext_resource type="Resource" uid="uid://c257cskegkyqw" path="res://assets/resources/characters/skills/melee.tres" id="16_x26gp"]
+[ext_resource type="Resource" uid="uid://dlbi8w3cr3srf" path="res://assets/resources/characters/skills/explosives.tres" id="17_mp4u4"]
+[ext_resource type="Resource" uid="uid://cly0321b7blte" path="res://assets/resources/characters/skills/mechanics.tres" id="18_8nwx0"]
+[ext_resource type="Resource" uid="uid://bolb3w15ccvf4" path="res://assets/resources/characters/skills/splicing.tres" id="19_7yvpq"]
+[ext_resource type="Resource" uid="uid://bl1ew7kajxjyf" path="res://assets/resources/characters/skills/medical.tres" id="20_pwmrj"]
+[ext_resource type="Resource" uid="uid://deri3hb4ie7xw" path="res://assets/resources/characters/skills/stealth.tres" id="21_mgkpi"]
+[ext_resource type="PackedScene" uid="uid://dxun7e4asf1rn" path="res://assets/scenes/components/squad_component.tscn" id="22_8om3l"]
+
+[sub_resource type="Resource" id="Resource_grjb4"]
+script = ExtResource("3_i44ue")
+slots = Array[ExtResource("4_icyr4")]([ExtResource("5_isv2j")])
+metadata/_custom_type_script = "uid://bhsnrff5hyp1q"
+
+[sub_resource type="Resource" id="Resource_5i7m4"]
+script = ExtResource("6_6dckg")
+metadata/_custom_type_script = "uid://b1jphb6twov0f"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_axbca"]
+radius = 0.35
+height = 2.0708008
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0rs6y"]
+radius = 0.35
+height = 1.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1jtut"]
+radius = 0.25
+
+[node name="CloneTrooperSergeant" type="CharacterBody3D" unique_id=1965243391 node_paths=PackedStringArray("attributes", "health_component", "skills_component")]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("1_8om3l")
+attributes = NodePath("AttributesComponent")
+npc_resource = ExtResource("2_u41cr")
+health_component = NodePath("HealthComponent")
+skills_component = NodePath("SkillsComponent")
+inventory_data = SubResource("Resource_grjb4")
+behavior_profile = SubResource("Resource_5i7m4")
+state_machine_scene = ExtResource("7_eu6ce")
+character_rank = 2
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1664708414]
+path_desired_distance = 1.5
+target_desired_distance = 2.0
+navigation_layers = 4
+path_search_max_distance = 5.0
+debug_enabled = true
+debug_use_custom = true
+debug_path_custom_color = Color(1, 0, 1, 1)
+debug_path_custom_point_size = 16.5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1797212343]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0341308, 0)
+shape = SubResource("CapsuleShape3D_axbca")
+
+[node name="SpriteAnchor" type="Node3D" parent="." unique_id=313682682]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0053011775, 0)
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="SpriteAnchor" unique_id=1669821726]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3919253, 0)
+pixel_size = 0.023
+billboard = 2
+texture_filter = 0
+animation = &""
+
+[node name="NPCVisionSensor" type="Node3D" parent="." unique_id=1299494011]
+script = ExtResource("8_0ynke")
+
+[node name="HitboxArea" type="Area3D" parent="." unique_id=945521836]
+collision_layer = 4
+collision_mask = 0
+
+[node name="Body" type="CollisionShape3D" parent="HitboxArea" unique_id=380008671]
+transform = Transform3D(1, 0, 0, 0, 1.0242481, 0, 0, 0, 1, 0, 0.768, 0)
+shape = SubResource("CapsuleShape3D_0rs6y")
+
+[node name="Head" type="CollisionShape3D" parent="HitboxArea" unique_id=2106283105]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8166399, 0)
+shape = SubResource("SphereShape3D_1jtut")
+
+[node name="Muzzle" type="Marker3D" parent="." unique_id=1251574739]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.23178661, 1.6452851, -1.4168599)
+
+[node name="NPCWeaponController" type="Node" parent="." unique_id=553315007 node_paths=PackedStringArray("muzzle_node")]
+script = ExtResource("9_vpmrn")
+muzzle_node = NodePath("../Muzzle")
+
+[node name="AttributesComponent" parent="." unique_id=1931749227 instance=ExtResource("10_map8k")]
+
+[node name="HealthComponent" parent="." unique_id=763287296 node_paths=PackedStringArray("skills_component", "actor") instance=ExtResource("11_xooqt")]
+skills_component = NodePath("../SkillsComponent")
+actor = NodePath("..")
+
+[node name="SkillsComponent" parent="." unique_id=891944786 node_paths=PackedStringArray("attributes") instance=ExtResource("12_t1lpi")]
+attributes = NodePath("../AttributesComponent")
+skills_list = Array[ExtResource("13_mj2kr")]([ExtResource("14_x4npk"), ExtResource("15_5t4xw"), ExtResource("16_x26gp"), ExtResource("17_mp4u4"), ExtResource("18_8nwx0"), ExtResource("19_7yvpq"), ExtResource("20_pwmrj"), ExtResource("21_mgkpi")])
+
+[node name="SquadComponent" parent="." unique_id=1856462713 instance=ExtResource("22_8om3l")]
+character_rank = 2

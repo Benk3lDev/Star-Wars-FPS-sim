@@ -1,8 +1,10 @@
+@tool
 class_name NPC extends CharacterBody3D
 
 @export var attributes : AttributesComponent
 @export var npc_resource : NPCResource 
 @export var health_component : HealthComponent
+@export var skills_component : SkillsComponent
 @export var inventory_data : NPCInventoryData
 
 # Centralized perception metrics
@@ -26,7 +28,25 @@ var is_searching_alert_zone: bool = false
 @export var custom_waypoints: Array[NodePath] = []
 @export var random_patrol_radius: float = 6.0
 
-# 1. Define the macro states
+# --- SHIFTED SQUAD RANK SETTINGS (ROOT SCOPE) ---
+enum Rank { REGULAR, CORPORAL, SERGEANT, LIEUTENANT }
+@export_group("Chain of Command")
+@export var character_rank : Rank = Rank.REGULAR
+@export var holds_defensive_tactics : bool = true
+
+# INSPECTOR CONFIGURATORS (The Paths)
+# These expose path pickers in the inspector for local instance overrides!
+@export var commanding_lieutenant_path : NodePath
+@export var squad_sergeant_path : NodePath
+@export var squad_corporal_path : NodePath
+
+# RUNTIME DATA REGISTRIES (The True Objects)
+# Other scripts will query these cached variables during gameplay frames
+var commanding_lieutenant : NPC = null
+var squad_sergeant : NPC = null
+var squad_corporal : NPC = null
+
+# 1. Define the macro states (Matched AT_EASE from your enum layout)
 enum MacroState { AT_EASE, ALERTED, COMBAT }
 
 # 2. Track the active state
@@ -48,7 +68,7 @@ var active_weapon_item : ItemData = null
 var active_weapon_stats : Weapon = null
 var current_ammo: int = 0
 
-#animation components
+# Animation components
 var anim_prefix : String
 const DIR_NAMES = ["_front", "_front_left", "_left", "_rear_left", "_rear", "_rear_right", "_right", "_front_right"]
 
@@ -63,17 +83,11 @@ func _ready() -> void:
 
 	# --- UNIFIED INVENTORY PARSING REGION ---
 	if inventory_data:
-		# Deep duplicate ensures unique runtime counters for individual enemy copies
 		inventory_data = inventory_data.duplicate(true)
-		
-		# Find our gun item in the container array
 		active_weapon_item = inventory_data.get_first_weapon_item()
 		
 		if active_weapon_item:
-			# Unnest the embedded weapon stats resource block
 			active_weapon_stats = active_weapon_item.weapon_stats
-			
-			# Pull baseline runtime stats (like ammo) from either item variable fields or weapons
 			current_ammo = active_weapon_stats.max_ammo
 			
 			print("🎒 [INVENTORY] NPC '", name, "' equipped: ", active_weapon_stats.weapon_name)
@@ -81,44 +95,40 @@ func _ready() -> void:
 		else:
 			print("🎒 [INVENTORY] NPC '", name, "' spawned completely unarmed.")
 
+	# --- RANK DATA LAYER SYNCHRONIZATION ---
+	_synchronize_squad_component_data()
+
 	# Chronological pipeline initializers
 	_execute_npc_stat_pipeline()
 	initialize_modular_behavior()
 
 
 func _execute_npc_stat_pipeline() -> void:
-	# Step 1: Ensure the baseline attributes component has its data ready
 	if not attributes or not attributes.character_attributes:
 		push_error("NPC Pipeline Broken: Attributes Component or data resource is missing!")
 		return
-		
-	# Step 2: Grab the skills component child node
-	var skills_component = get_node_or_null("SkillsComponent")
 	
-	# Step 3: Command Skills to run calculations from the bound Attributes
 	if is_instance_valid(skills_component):
-		skills_component.attributes = attributes # Explicit link verification
-		skills_component.initialize_skills()     # Run recalculate_all_stats()
+		skills_component.attributes = attributes 
+		skills_component.initialize_skills()     
 	else:
 		push_error("NPC Pipeline Broken: SkillsComponent node could not be found!")
 		return
 		
-	# Step 4: Command Health to bind the final calculation results from Skills
 	if is_instance_valid(health_component):
-		health_component.skills_component = skills_component # Explicit link verification
+		health_component.skills_component = skills_component 
 		health_component.initialize_health()
 	else:
 		push_error("NPC Pipeline Broken: HealthComponent node is missing or unassigned!")
 
+
 func initialize_modular_behavior() -> void:
 	if state_machine_scene:
 		active_sm = state_machine_scene.instantiate()
-		# INJECT FIRST: Pass the parent NPC reference downwards BEFORE adding to child tree
 		if active_sm.has_method("initialize_with_npc"):
 			active_sm.initialize_with_npc(self)
 		add_child(active_sm)
 		state_chart = active_sm.get_node("StateChart")
-		
 
 
 func _process(delta: float) -> void:
@@ -127,9 +137,119 @@ func _process(delta: float) -> void:
 	if is_instance_valid(sprite) and sprite.sprite_frames:
 		update_billboard_animation()
 		
-	# Weapon chart is now optional! The AI only needs a behavior profile, movement chart, and vision.
 	if behavior_profile and state_chart and is_instance_valid(vision):
 		behavior_profile.evaluate_behavior(self, vision, state_chart)
+
+
+## Automatically enforces root inspector rank selections down to your component logic
+func _synchronize_squad_component_data() -> void:
+	# 1. Resolve NodePath configurations into real memory objects
+	if commanding_lieutenant_path:
+		commanding_lieutenant = get_node_or_null(commanding_lieutenant_path) as NPC
+	if squad_sergeant_path:
+		squad_sergeant = get_node_or_null(squad_sergeant_path) as NPC
+	if squad_corporal_path:
+		squad_corporal = get_node_or_null(squad_corporal_path) as NPC
+
+	# 2. Grab the child SquadComponent node
+	var squad_comp = get_node_or_null("SquadComponent")
+	if not squad_comp:
+		squad_comp = get_node_or_null("Components/SquadComponent")
+		
+	if is_instance_valid(squad_comp):
+		# Push our root inspector rank setting onto the component logic variable
+		squad_comp.character_rank = int(character_rank)
+		
+		# PUSH RESOLVED TEMPLATE LINK DATA DOWNWARDS
+		squad_comp.commanding_lieutenant = commanding_lieutenant
+		squad_comp.squad_sergeant = squad_sergeant
+		squad_comp.squad_corporal = squad_corporal
+		
+		print("🎖️ [NPC ROOT] Initialized '", name, "' as rank: ", Rank.keys()[character_rank])
+		
+		# Regular grunts don't engage separate defensive hold mechanics, only leadership does
+		if character_rank == Rank.REGULAR:
+			holds_defensive_tactics = false
+
+
+# =================================================================
+# CHAIN OF COMMAND COMMUNICATIONS NETWORK Channels
+# =================================================================
+
+## Executed when an individual squad soldier reports an active target contact up to their supervisor
+func receive_trooper_tactical_report(spotted_threat: CharacterBody3D) -> void:
+	if is_dead: return
+	
+	# The leader locks on defensively right on the frame of report
+	if not is_instance_valid(current_combat_target):
+		current_combat_target = spotted_threat
+		alert_target_position = spotted_threat.global_position
+		if is_instance_valid(state_chart): 
+			state_chart.send_event("OnAlerted")
+		
+	print("🎖️ [SQUAD COMMAND] Leader '", name, "' acknowledging contact report! Ordering squad deployment.")
+	
+	# Group Alert Broadcast: Force the rest of the local platoon room to raise weapons
+	var my_squad = get_node_or_null("SquadComponent")
+	if not my_squad: 
+		my_squad = get_node_or_null("Components/SquadComponent")
+	
+	if my_squad:
+		for member in my_squad.squad_members:
+			if is_instance_valid(member) and not member.is_dead and member != self:
+				if not is_instance_valid(member.current_combat_target):
+					member.current_combat_target = spotted_threat
+					member.alert_target_position = spotted_threat.global_position
+					# Force-alert your troopers if they are still pacing peacefully
+					if is_instance_valid(member.state_chart) and member.current_macro_state == MacroState.AT_EASE:
+						member.state_chart.send_event("OnAlerted")
+
+
+## Executed via comm frequencies when a sub-squad Sergeant triggers a 60% wipe casualty event
+func receive_sergeant_distress_call(player_target: CharacterBody3D) -> void:
+	if is_dead: 
+		print("📡 [CHAIN OF COMMAND] Call failed: Lieutenant '", name, "' is KIA!")
+		return
+	
+	if character_rank != Rank.LIEUTENANT:
+		return
+		
+	print("🎖️ [LIEUTENANT COMMAND] Lieutenant '", name, "' broadcasting reinforcement orders to operational squads.")
+	
+	if current_macro_state != MacroState.COMBAT and is_instance_valid(state_chart):
+		current_combat_target = player_target
+		alert_target_position = player_target.global_position
+		state_chart.send_event("OnCombat")
+
+	# SCAN CHANNELS: Check every active actor currently loaded into the simulation
+	var all_actors = get_tree().get_nodes_in_group("actors")
+	for actor in all_actors:
+		if actor is NPC and actor != self and not actor.is_dead:
+			
+			var other_squad = actor.get_node_or_null("SquadComponent")
+			if not other_squad:
+				other_squad = actor.get_node_or_null("Components/SquadComponent")
+			
+			# 1. Check if the clone belongs to this Lieutenant's command division
+			if other_squad and other_squad.commanding_lieutenant == self:
+				
+				# 2. THE CHAIN OF COMMAND FILTER RULE:
+				# Check if this clone's specific squad still has an active leader alive!
+				if other_squad.has_qualifying_squad_leader():
+					# If their leadership is intact and they are sitting at ease, order deployment!
+					if actor.current_macro_state == MacroState.AT_EASE:
+						print("🚀 [LIEUTENANT BROADCAST] Dispatching operational trooper: ", actor.name)
+						
+						actor.current_combat_target = player_target
+						actor.alert_target_position = player_target.global_position
+						
+						if is_instance_valid(actor.state_chart):
+							actor.state_chart.send_event("OnCombat")
+				else:
+					# If the Sergeant and Corporal of this specific squad are dead, 
+					# they are cut off from the network and will not receive the order!
+					if Engine.get_process_frames() % 120 == 0: # Throttle logs so they don't spam
+						print("🔇 [LIEUTENANT BROADCAST] Squad link severed for: '", actor.name, "'. Leadership KIA. Order ignored.")
 
 
 func update_billboard_animation() -> void:
@@ -156,14 +276,12 @@ func update_billboard_animation() -> void:
 	if sprite.sprite_frames.has_animation(final_anim_name):
 		sprite.play(final_anim_name)
 	else:
-		# If "walk_front_left" doesn't exist, try falling back to standard "walk_front"
 		var simple_fallback = lookup_prefix + "_front"
 		if sprite.sprite_frames.has_animation(simple_fallback):
 			sprite.play(simple_fallback)
-		else:
-			sprite.play("idle_front")
+
 
 func _on_death() -> void:
 	is_dead = true
-	sprite.play("death-fromFront_front")
-	queue_free()
+	if is_instance_valid(sprite) and sprite.sprite_frames.has_animation("death-fromFront_front"):
+		sprite.play("death-fromFront_front")

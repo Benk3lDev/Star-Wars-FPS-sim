@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_dh1op")
-consumable_name = "E5C Ammo"
+consumable_name = "DC15A Ammo"
 consumable_type = "Ammunition"
 ammo = 30

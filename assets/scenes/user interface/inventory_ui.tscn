@@ -24,8 +24,8 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -324.0
-offset_bottom = 217.0
+offset_top = -455.0
+offset_bottom = 372.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -64,6 +64,7 @@ follow_focus = true
 [node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer" unique_id=2040725848]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 6
 alignment = 1
 
 [node name="ArmorContainer" type="VBoxContainer" parent="ColorRect/MarginContainer/VBoxContainer/ScrollContainer/HBoxContainer" unique_id=1444737135]

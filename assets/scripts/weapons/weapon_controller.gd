@@ -81,6 +81,9 @@ func reload_weapon() -> bool:
 	var found_item: ItemData = null
 	var expected_ammo_name: String = current_weapon.weapon_name + " Ammo"
 
+	print("🔍 [RELOAD DEBUG] Weapon name in resource file: '", current_weapon.weapon_name, "'")
+	print("🔍 [RELOAD DEBUG] Expected Ammo Item Name: '", expected_ammo_name, "'")
+
 	for item in InventoryGlobal.slot_data:
 		if is_instance_valid(item):
 			if item.item_type == "Consumable" and item.item_name == expected_ammo_name:
@@ -168,7 +171,7 @@ func _perform_hitscan() -> void:
 	
 		var to = from + direction.normalized() * current_weapon.range
 		var query = PhysicsRayQueryParameters3D.create(from, to)
-		query.collision_mask = 1
+		query.collision_mask = 3
 		var result = space_state.intersect_ray(query)
 
 		if result:

@@ -1,19 +1,21 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bhtiwadbeipxr"]
 
 [ext_resource type="Resource" uid="uid://bbpj0v8agrpls" path="res://assets/resources/consumables/bacta_tank_sm.tres" id="1_a28gv"]
-[ext_resource type="Texture2D" uid="uid://crma2pgoof3et" path="res://assets/textures/items/weapons/hotbar icons/test_item2_hotbar.png" id="1_dqc8c"]
-[ext_resource type="Texture2D" uid="uid://bkt7b85igh6l8" path="res://assets/textures/items/weapons/icons/test_item2.png" id="1_h8ybd"]
+[ext_resource type="Texture2D" uid="uid://8v3otturkwex" path="res://assets/textures/items/weapons/hotbar icons/test-item-2_hotbar.png" id="2_a28gv"]
 [ext_resource type="PackedScene" uid="uid://b25hyjfm7wvi8" path="res://assets/scenes/items/models/test_item_2.tscn" id="2_h8ybd"]
 [ext_resource type="Script" uid="uid://bmsou0jk4d6cx" path="res://assets/scripts/inventory/item_data.gd" id="3_a28gv"]
 
+[sub_resource type="Resource" id="Resource_dqc8c"]
+metadata/__load_path__ = "res://assets/textures/items/weapons/icons/test_item2.png"
+
 [resource]
 script = ExtResource("3_a28gv")
+item_name = "Test Item 2"
 armor_type = "Belt"
 item_type = "Consumable"
-item_name = "Test Item 2"
-icon = ExtResource("1_h8ybd")
+icon = SubResource("Resource_dqc8c")
 size = Vector2i(2, 1)
-hotbar_icon = ExtResource("1_dqc8c")
+hotbar_icon = ExtResource("2_a28gv")
 item_model = ExtResource("2_h8ybd")
 consumable_stats = ExtResource("1_a28gv")
 hand_pos = Vector3(0.2, -0.2, -2)

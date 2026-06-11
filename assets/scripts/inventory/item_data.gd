@@ -1,16 +1,21 @@
 class_name ItemData extends Resource
 
-@export_enum("Head", "Chest", "Belt", "Backpack") var armor_type: String
-@export_enum("Armor", "Weapon", "Consumable") var item_type : String
 
+@export_category("Item Details")
 @export var item_name : String = ""
 @export var item_effect : String = ""
+@export_enum("Head", "Chest", "Belt", "Backpack") var armor_type: String
+@export_enum("Armor", "Weapon", "Consumable") var item_type : String
+@export_category("Visual Settings")
+@export_group("Inventory")
 @export var icon : Texture2D
 @export var size : Vector2i
-@export var hotbar_icon : Texture2D
-@export var item_model : PackedScene
 @export var is_stackable : bool
 @export var max_stack_size : int
+@export var hotbar_icon : Texture2D
+@export_group("World")
+@export var item_model : PackedScene
+@export_category("Item Data")
 @export var weapon_stats: Weapon
 @export var consumable_stats : Consumable
 @export var ammo : int

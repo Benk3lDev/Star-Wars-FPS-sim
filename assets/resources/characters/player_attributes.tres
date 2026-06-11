@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_a4jwq")
-strength = 4
-vitality = 4
-constitution = 4
-dexterity = 4
-intelligence = 4
+strength = 8
+vitality = 8
+constitution = 8
+dexterity = 8
+intelligence = 8

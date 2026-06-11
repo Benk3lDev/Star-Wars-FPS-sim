@@ -52,6 +52,8 @@
 [ext_resource type="Script" uid="uid://do7kqs8yhotny" path="res://assets/scripts/player/states/reload_state.gd" id="49_vn88y"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4flbx"]
+radius = 0.35
+height = 2.071
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_pylmc"]
 
@@ -62,6 +64,8 @@ radius = 0.375
 height = 1.2
 
 [node name="player" type="CharacterBody3D" unique_id=199960749 node_paths=PackedStringArray("camera", "state_chart", "camera_effects", "weapon_controller", "step_handler")]
+collision_layer = 2
+collision_mask = 7
 script = ExtResource("1_4flbx")
 camera = NodePath("CameraController")
 state_chart = NodePath("StateChart")
@@ -95,7 +99,7 @@ shape = SubResource("SphereShape3D_pbfsw")
 target_position = Vector3(0, 1, 0)
 
 [node name="LeanCheck" type="ShapeCast3D" parent="." unique_id=2099134285]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -1, 0.5, 0)
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -1, 0.5847087, 0)
 shape = SubResource("CapsuleShape3D_7ahtn")
 
 [node name="WeaponManager" type="Node" parent="." unique_id=1039164214 node_paths=PackedStringArray("player") groups=["weapon_manager"]]
@@ -103,7 +107,7 @@ script = ExtResource("3_lxcnx")
 player = NodePath("..")
 
 [node name="CameraController" type="Node3D" parent="." unique_id=633576122 node_paths=PackedStringArray("player_controller", "component_mouse_capture")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7056074, 0)
 script = ExtResource("2_hqtel")
 player_controller = NodePath("..")
 component_mouse_capture = NodePath("../Components/MouseCapture")
@@ -111,7 +115,8 @@ lean_angle = 30.0
 lean_offset = 0.5
 
 [node name="Camera3D" type="Camera3D" parent="CameraController" unique_id=377077906 node_paths=PackedStringArray("player")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7332969, 0)
+keep_aspect = 0
 fov = 70.0
 script = ExtResource("4_7lmhl")
 player = NodePath("../..")
@@ -120,11 +125,13 @@ bob_frequency = 42.3
 
 [node name="InteractionRaycast" type="RayCast3D" parent="CameraController/Camera3D" unique_id=1863295613]
 target_position = Vector3(0, 0, -3)
-collision_mask = 2
+collision_mask = 4
 hit_from_inside = true
 script = ExtResource("4_7ahtn")
 
 [node name="HandAnchor" type="Node3D" parent="CameraController/Camera3D" unique_id=1608898906]
+
+[node name="Muzzle" type="Marker3D" parent="CameraController/Camera3D/HandAnchor" unique_id=722903890]
 
 [node name="EquipmentManager" type="Node3D" parent="CameraController/Camera3D" unique_id=1904989666 node_paths=PackedStringArray("weapon_controller") groups=["equipment_manager"]]
 script = ExtResource("6_c8ixa")

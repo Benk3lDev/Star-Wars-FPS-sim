@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://d2w8obiwkngi4" path="res://assets/scripts/characters/NPCs/StateMachines/states/alerted_search.gd" id="11_j4qtb"]
 [ext_resource type="Script" uid="uid://cbqg5x14e1mg1" path="res://assets/scripts/characters/NPCs/StateMachines/states/aim_state.gd" id="11_uqjne"]
 [ext_resource type="Script" uid="uid://bbqpu8y1wjp2v" path="res://assets/scripts/characters/NPCs/StateMachines/states/fire_state.gd" id="12_j4qtb"]
+[ext_resource type="Script" uid="uid://dmsqwhq43hdun" path="res://assets/scripts/characters/NPCs/StateMachines/states/combat_reload_state.gd" id="14_0y8k7"]
 [ext_resource type="Script" uid="uid://c6ubpavmaktg3" path="res://assets/scripts/characters/NPCs/StateMachines/states/combat_run_state.gd" id="14_j4qtb"]
 
 [node name="NPCStateMachine" type="Node" unique_id=1854717263]
@@ -193,6 +194,7 @@ script = ExtResource("11_uqjne")
 script = ExtResource("12_j4qtb")
 
 [node name="CombatReloadState" type="Node" parent="StateScripts/MovementState/GroundedState/CombatState" unique_id=851051578]
+script = ExtResource("14_0y8k7")
 
 [node name="CombatRunState" type="Node" parent="StateScripts/MovementState/GroundedState/CombatState" unique_id=1545354488]
 script = ExtResource("14_j4qtb")
@@ -211,5 +213,7 @@ script = ExtResource("14_j4qtb")
 [connection signal="state_physics_processing" from="StateChart/Root/Movement/Grounded/Combat/CombatAim" to="StateScripts/MovementState/GroundedState/CombatState/CombatAimState" method="_on_combat_aim_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Combat/CombatFire" to="StateScripts/MovementState/GroundedState/CombatState/CombatFireState" method="_on_combat_fire_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/Root/Movement/Grounded/Combat/CombatFire" to="StateScripts/MovementState/GroundedState/CombatState/CombatFireState" method="_on_combat_fire_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Combat/CombatReload" to="StateScripts/MovementState/GroundedState/CombatState/CombatReloadState" method="_on_combat_reload_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Root/Movement/Grounded/Combat/CombatReload" to="StateScripts/MovementState/GroundedState/CombatState/CombatReloadState" method="_on_combat_reload_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/Movement/Grounded/Combat/CombatRun" to="StateScripts/MovementState/GroundedState/CombatState/CombatRunState" method="_on_combat_run_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/Root/Movement/Grounded/Combat/CombatRun" to="StateScripts/MovementState/GroundedState/CombatState/CombatRunState" method="_on_combat_run_state_physics_processing"]

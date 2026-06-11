@@ -35,19 +35,33 @@ func _evaluate_post_fire_conditions() -> void:
 		return
 	
 	var target = npc.current_combat_target
-	
-	# Fallback out of Combat if target disappears completely out of memory
 	if not is_instance_valid(target):
 		npc.state_chart.send_event("OnAlerted")
 		return
 	
-	# If the player ducked behind cover or broke line of sight, switch back to chase/run
+	# If the player ducked behind cover or broke line of sight, chase immediately
 	if is_instance_valid(npc.vision) and not npc.vision.is_entity_visible(target):
-		print("🏃 [COMBAT FIRE] Target broke line of sight! Re-entering CombatRun pursuit.")
+		#print("🏃 [COMBAT FIRE] Target broke line of sight! Re-entering CombatRun pursuit.")
 		npc.state_chart.send_event("OnCombatRun")
 		return
 		
-	# If player is still visible, route back to Aim to re-check ammo capacity fields
+	# --- ADD THE RANGE SECURITY CHECK HERE ---
+	var npc_flat: Vector2 = Vector2(npc.global_position.x, npc.global_position.z)
+	var target_flat: Vector2 = Vector2(target.global_position.x, target.global_position.z)
+	var current_distance = npc_flat.distance_to(target_flat)
+
+	var weapon_max_range: float = 12.0
+	if npc.active_weapon_stats != null:
+		weapon_max_range = npc.active_weapon_stats.range
+
+	# If the player is outside our maximum range bubble, give chase!
+	if current_distance > weapon_max_range:
+		#print("🏃 [COMBAT FIRE] Target backed out of range (", current_distance, "m > ", weapon_max_range, "m). Resuming pursuit.")
+		npc.state_chart.send_event("OnCombatRun")
+		return
+	# ------------------------------------------
+		
+	# Safe to loop back to Aim only if player remains visible AND within range limits
 	npc.state_chart.send_event("OnCombatAim")
 
 # Connect this to your StateChart's Fire -> state_physics_processing(delta) signal

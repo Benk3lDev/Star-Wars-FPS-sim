@@ -22,7 +22,7 @@ script = ExtResource("1_gagv8")
 
 [node name="player" parent="CurrentLevel" unique_id=199960749 groups=["player"] instance=ExtResource("3_u44wh")]
 process_mode = 3
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0355, 0)
 
 [node name="UserInterface" parent="." unique_id=1085611445 instance=ExtResource("2_6sgls")]
 

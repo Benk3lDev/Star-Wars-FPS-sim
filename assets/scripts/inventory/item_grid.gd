@@ -1,6 +1,6 @@
 class_name ItemGrid extends GridContainer
 
-const SLOT_SIZE : int = 64
+const SLOT_SIZE : int = 128
 @export var inventory_slot_scene : PackedScene
 @export var item_canvas : Control
 @export var context_menu : PanelContainer
@@ -42,6 +42,21 @@ func create_slots() -> void:
 
 func refresh_ui() -> void:
 	if not item_canvas: return
+	
+	# --- THE ULTIMATE TIMING BRIDGE ---
+	# If the inventory just opened, wait exactly one frame for all parent panels, 
+	# layout UI margins, and resolution shifts to settle down in screen space.
+	if not is_inside_tree(): return
+	await get_tree().process_frame
+	
+	# Verify references are still valid after our microsecond pause
+	if not is_inside_tree() or not item_canvas: return
+	
+	# Snap your canvas to the exact finalized screen coordinates of this GridContainer
+	item_canvas.global_position = self.global_position
+	# ----------------------------------
+	
+	# Clear out old visual item instances safely
 	for child in item_canvas.get_children():
 		if child == preview_sprite: 
 			continue
@@ -56,20 +71,28 @@ func refresh_ui() -> void:
 			var icon_rect = TextureRect.new()
 			icon_rect.texture = current_resource.icon
 			icon_rect.layout_mode = 1 
-			icon_rect.expand_mode = TextureRect.EXPAND_KEEP_SIZE
-			icon_rect.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
-			icon_rect.size = Vector2(current_resource.size * SLOT_SIZE)
+			
+			# Upscaling pixel-art optimizations
+			icon_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			icon_rect.stretch_mode = TextureRect.STRETCH_SCALE
+			icon_rect.texture_filter = Control.TEXTURE_FILTER_NEAREST
+			
+			var coords = get_grid_coords_from_index(i)
+			var item_width = current_resource.size.x * SLOT_SIZE
+			var item_height = current_resource.size.y * SLOT_SIZE
+			icon_rect.size = Vector2(item_width, item_height)
+			
+			# CRITICAL INPUT FIX: Click pass-through to underlying grid slots
 			icon_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			
-			# If the placed item is rotated, match its static visuals and pivot anchor
+			# Rotation pivot calculations
 			if current_resource.is_rotated:
 				icon_rect.rotation_degrees = 90.0
-				# Pivot from top-left, shifting right by its visual height to keep it in-bounds
-				icon_rect.pivot_offset = Vector2.ZERO
-				var coords = get_grid_coords_from_index(i)
-				icon_rect.position = Vector2((coords.x + current_resource.size.y) * SLOT_SIZE, coords.y * SLOT_SIZE)
+				icon_rect.pivot_offset = Vector2(SLOT_SIZE / 2.0, SLOT_SIZE / 2.0)
+				icon_rect.position = Vector2(coords.x * SLOT_SIZE, coords.y * SLOT_SIZE)
 			else:
-				var coords = get_grid_coords_from_index(i)
+				icon_rect.rotation_degrees = 0.0
+				icon_rect.pivot_offset = Vector2.ZERO
 				icon_rect.position = Vector2(coords.x * SLOT_SIZE, coords.y * SLOT_SIZE)
 				
 			item_canvas.add_child(icon_rect)
@@ -281,7 +304,6 @@ func clear_slot_highlights() -> void:
 	hovered_slots.clear()
 
 
-# Hook clearing functionality into your existing breakdown loop
 func clear_drag_preview() -> void:
 	clear_slot_highlights()
 	last_calculated_origin = Vector2i(-1, -1)

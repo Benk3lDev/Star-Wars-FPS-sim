@@ -16,3 +16,7 @@ class_name Weapon extends Resource
 @export var spread_angle: float = 0.0
 @export var muzzle_node_name: String = "Muzzle"
 @export var reload_time : float = 0.0
+@export_category("Animation Settings")
+@export var base_animation_length : float = 2.0
+@export var weapon_sprite_frames : SpriteFrames
+@export var sprite_muzzle_offset : Vector3 = Vector3(0.15, -0.1, -0.4)

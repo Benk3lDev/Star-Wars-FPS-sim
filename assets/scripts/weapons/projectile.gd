@@ -49,7 +49,7 @@ func _on_hit_detected(body: Node3D, shape_id: int) -> void:
 		return
 	has_impacted = true
 	
-	print("Projectile hit: ", body.name, " at ", global_position, " | Shape ID: ", shape_id)
+	#print("Projectile hit: ", body.name, " at ", global_position, " | Shape ID: ", shape_id)
 	_spawn_impact_marker(global_position)
 	
 	var health: HealthComponent = null
@@ -97,14 +97,14 @@ func _on_hit_detected(body: Node3D, shape_id: int) -> void:
 
 # --- EXECUTE DAMAGE PIPELINE ---
 	if is_instance_valid(health):
-		print("🎯 [PROJECTILE DATA SUCCESS] Found HealthComponent attached to: ", health.get_parent().name)
-		print("   -> Damage Passed: ", damage) # FIX: Removed the undeclared damage_type variable here
-		print("   -> Target is_alive status flag: ", health.get("is_alive"))
+		#print("🎯 [PROJECTILE DATA SUCCESS] Found HealthComponent attached to: ", health.get_parent().name)
+		#print("   -> Damage Passed: ", damage) # FIX: Removed the undeclared damage_type variable here
+		#print("   -> Target is_alive status flag: ", health.get("is_alive"))
 		
 		# Direct dynamic call using .call() to bypass compile-time static type casting bugs
 		if health.has_method("take_damage"):
 			health.call("take_damage", int(damage), "blaster", null, shape_id)
-			print("✅ [PROJECTILE PIPELINE] take_damage method invoked successfully!")
+			#print("✅ [PROJECTILE PIPELINE] take_damage method invoked successfully!")
 		else:
 			push_error("❌ [PROJECTILE FAILURE] The found HealthComponent node does not contain a take_damage function!")
 	else:

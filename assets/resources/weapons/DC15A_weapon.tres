@@ -8,8 +8,9 @@
 script = ExtResource("2_ngq32")
 weapon_name = "DC15A"
 max_ammo = 50
-fire_rate = 5.0
+fire_rate = 100.0
 is_automatic = true
+range = 10.0
 projectile_speed = 120.0
 is_hit_scan = false
 weapon_model = ExtResource("3_eyyo1")

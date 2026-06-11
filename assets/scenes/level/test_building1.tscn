@@ -1,0 +1,275 @@
+[gd_scene format=3 uid="uid://d1g1ujhmhnj4m"]
+
+[ext_resource type="PackedScene" uid="uid://br751uc0dwgq8" path="res://assets/scenes/characters/NPCs/Republic/CloneTrooper.tscn" id="1_q7jq8"]
+[ext_resource type="PackedScene" uid="uid://cyxnamnasv412" path="res://assets/scenes/characters/NPCs/Republic/CloneTrooperSergeant.tscn" id="2_jf3pl"]
+[ext_resource type="PackedScene" uid="uid://rr6ts8f26atg" path="res://assets/scenes/characters/NPCs/Republic/CloneTrooperLieutenant.tscn" id="3_k4am5"]
+[ext_resource type="PackedScene" uid="uid://ciu4yehj1pjh6" path="res://assets/scenes/characters/NPCs/Republic/CloneTrooperCorporal.tscn" id="4_nas71"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_6ho2e"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_sfxpq"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[node name="TestBuilding" type="Node3D" unique_id=998614245]
+
+[node name="Geometry" type="Node3D" parent="." unique_id=844920295]
+
+[node name="GroundFloor" type="Node3D" parent="Geometry" unique_id=267280575]
+
+[node name="Floor" type="MeshInstance3D" parent="Geometry/GroundFloor" unique_id=1908271412]
+transform = Transform3D(20, 0, 0, 0, 0.5, 0, 0, 0, 20, 0, 0, 0)
+mesh = SubResource("BoxMesh_6ho2e")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/GroundFloor/Floor" unique_id=1502745020]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/GroundFloor/Floor/StaticBody3D" unique_id=1883306910]
+shape = SubResource("ConcavePolygonShape3D_sfxpq")
+
+[node name="Stairs" type="Node3D" parent="Geometry/GroundFloor" unique_id=1983506352]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -4)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Geometry/GroundFloor/Stairs" unique_id=1591341137]
+use_collision = true
+
+[node name="Step1" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D" unique_id=66744334]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.39999998, 0)
+size = Vector3(2, 0.3, 0.5)
+
+[node name="Step2" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D" unique_id=410974922]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0.55, -0.5)
+size = Vector3(2, 0.3, 0.5)
+
+[node name="Step3" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D" unique_id=174637325]
+transform = Transform3D(1, 0, 0, 0, 3, 0, 0, 0, 1, 0, 0.70000005, -1)
+size = Vector3(2, 0.3, 0.5)
+
+[node name="Step4" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D" unique_id=895476349]
+transform = Transform3D(1, 0, 0, 0, 4, 0, 0, 0, 1, 0, 0.85, -1.5)
+size = Vector3(2, 0.3, 0.5)
+
+[node name="Step5" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D" unique_id=2128566211]
+transform = Transform3D(1, 0, 0, 0, 5, 0, 0, 0, 1, 0, 1, -2)
+size = Vector3(2, 0.3, 0.5)
+
+[node name="Step6" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D" unique_id=259204643]
+transform = Transform3D(1, 0, 0, 0, 6, 0, 0, 0, 1, 0, 1.1500001, -2.5)
+size = Vector3(2, 0.3, 0.5)
+
+[node name="Step7" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D" unique_id=55963041]
+transform = Transform3D(1, 0, 0, 0, 7, 0, 0, 0, 1, 0, 1.3000001, -3)
+size = Vector3(2, 0.3, 0.5)
+
+[node name="Step8" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D" unique_id=1998502310]
+transform = Transform3D(1, 0, 0, 0, 8, 0, 0, 0, 1, 0, 1.45, -3.5)
+size = Vector3(2, 0.3, 0.5)
+
+[node name="Step9" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D" unique_id=1079396857]
+transform = Transform3D(2, 0, 0, 0, 9, 0, 0, 0, 1, -1, 1.6, -4.75)
+size = Vector3(2, 0.3, 2)
+
+[node name="Step10" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D" unique_id=515934325]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 10, 0, 8.742278e-08, 0, -1, -2, 1.75, -3.5)
+size = Vector3(2, 0.3, 0.5)
+
+[node name="Step11" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D" unique_id=1918848587]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 11, 0, 8.742278e-08, 0, -1, -2, 1.9000001, -3)
+size = Vector3(2, 0.3, 0.5)
+
+[node name="Step12" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D" unique_id=1845293394]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 12, 0, 8.742278e-08, 0, -1, -2, 2.0500002, -2.5)
+size = Vector3(2, 0.3, 0.5)
+
+[node name="Step13" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D" unique_id=540899779]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 13, 0, 8.742278e-08, 0, -1, -2, 2.2, -2)
+size = Vector3(2, 0.3, 0.5)
+
+[node name="Step14" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D" unique_id=1335173010]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 14, 0, 8.742278e-08, 0, -1, -2, 2.3500001, -1.5)
+size = Vector3(2, 0.3, 0.5)
+
+[node name="Step15" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D" unique_id=1952004865]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 15, 0, 8.742278e-08, 0, -1, -2, 2.5, -1)
+size = Vector3(2, 0.3, 0.5)
+
+[node name="Step16" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D" unique_id=315732378]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 16, 0, 8.742278e-08, 0, -1, -2, 2.65, -0.5)
+size = Vector3(2, 0.3, 0.5)
+
+[node name="Step17" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D" unique_id=230627954]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 17, 0, 1.509958e-07, 0, -1, -1, 2.8000002, 0)
+size = Vector3(4, 0.3, 0.5)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D/Step17" unique_id=448739135]
+transform = Transform3D(1, 0, -8.742278e-08, 0, 0.025, 0, 8.742278e-08, 0, 1, -1, -0.065000005, -0.18334508)
+operation = 2
+size = Vector3(2, 6.8, 1)
+
+[node name="SideWall" type="CSGBox3D" parent="Geometry/GroundFloor/Stairs/CSGCombiner3D" unique_id=989630920]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, 2.8, -2.75)
+size = Vector3(0.5, 5.1, 6)
+
+[node name="Walls" type="Node3D" parent="Geometry/GroundFloor" unique_id=1634825404]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Geometry/GroundFloor/Walls" unique_id=2121778137]
+use_collision = true
+
+[node name="WallZ+" type="CSGBox3D" parent="Geometry/GroundFloor/Walls/CSGCombiner3D" unique_id=1641967317]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 10)
+size = Vector3(20, 5.1, 0.5)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Geometry/GroundFloor/Walls/CSGCombiner3D/WallZ+" unique_id=1181955772]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.3, 0)
+operation = 2
+size = Vector3(2, 2.5, 1)
+
+[node name="WallZ-" type="CSGBox3D" parent="Geometry/GroundFloor/Walls/CSGCombiner3D" unique_id=414631921]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, -10)
+size = Vector3(20, 5.1, 0.5)
+
+[node name="WallX+" type="CSGBox3D" parent="Geometry/GroundFloor/Walls/CSGCombiner3D" unique_id=13880951]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.8, 0)
+size = Vector3(0.5, 5.1, 20)
+
+[node name="WallX-" type="CSGBox3D" parent="Geometry/GroundFloor/Walls/CSGCombiner3D" unique_id=429327313]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2.8, 0)
+size = Vector3(0.5, 5.1, 20)
+
+[node name="CentralRoom" type="Node3D" parent="Geometry/GroundFloor" unique_id=1842223860]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8482013, 0, 1.224607)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Geometry/GroundFloor/CentralRoom" unique_id=1371483183]
+transform = Transform3D(0.3, 0, 0, 0, 1, 0, 0, 0, 0.3, 0, 0, 0)
+use_collision = true
+
+[node name="WallZ+" type="CSGBox3D" parent="Geometry/GroundFloor/CentralRoom/CSGCombiner3D" unique_id=1803252181]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 10)
+size = Vector3(20, 5.1, 0.5)
+
+[node name="WallZ-" type="CSGBox3D" parent="Geometry/GroundFloor/CentralRoom/CSGCombiner3D" unique_id=769722317]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, -10)
+size = Vector3(20, 5.1, 0.5)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Geometry/GroundFloor/CentralRoom/CSGCombiner3D/WallZ-" unique_id=1056244624]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1500106, -1.3081663, 0)
+operation = 2
+size = Vector3(6.667, 2.5, 1)
+
+[node name="WallX+" type="CSGBox3D" parent="Geometry/GroundFloor/CentralRoom/CSGCombiner3D" unique_id=1444420832]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.8, 0)
+size = Vector3(0.5, 5.1, 20)
+
+[node name="WallX-" type="CSGBox3D" parent="Geometry/GroundFloor/CentralRoom/CSGCombiner3D" unique_id=1607987928]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2.8, 0)
+size = Vector3(0.5, 5.1, 20)
+
+[node name="CloneTrooper" parent="Geometry/GroundFloor/CentralRoom" unique_id=1965243391 instance=ExtResource("1_q7jq8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2371545, 0, -8.303076)
+custom_waypoints = Array[NodePath]([NodePath("../PatrolWaypoint1"), NodePath("../PatrolWaypoint2"), NodePath("../PatrolWaypoint3"), NodePath("../PatrolWaypoint4")])
+commanding_lieutenant_path = NodePath("../../../SecondFloor/CentralRoom/CloneTrooperLieutenant")
+squad_sergeant_path = NodePath("../CloneTrooperSergeant")
+squad_corporal_path = NodePath("../../../SecondFloor/CentralRoom/CloneTrooperCorporal")
+
+[node name="CloneTrooper2" parent="Geometry/GroundFloor/CentralRoom" unique_id=1347469063 instance=ExtResource("1_q7jq8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.077, 0, 5.4)
+custom_waypoints = Array[NodePath]([NodePath("../PatrolWaypoint1"), NodePath("../PatrolWaypoint2"), NodePath("../PatrolWaypoint3"), NodePath("../PatrolWaypoint4")])
+commanding_lieutenant_path = NodePath("../../../SecondFloor/CentralRoom/CloneTrooperLieutenant")
+squad_sergeant_path = NodePath("../CloneTrooperSergeant")
+squad_corporal_path = NodePath("../../../SecondFloor/CentralRoom/CloneTrooperCorporal")
+
+[node name="PatrolWaypoint1" type="Marker3D" parent="Geometry/GroundFloor/CentralRoom" unique_id=1402968809]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.237, 0, -8.303)
+
+[node name="PatrolWaypoint2" type="Marker3D" parent="Geometry/GroundFloor/CentralRoom" unique_id=518768785]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0765758, 0, -8.303)
+
+[node name="PatrolWaypoint3" type="Marker3D" parent="Geometry/GroundFloor/CentralRoom" unique_id=1016345187]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0765758, 0, 5.4004173)
+
+[node name="PatrolWaypoint4" type="Marker3D" parent="Geometry/GroundFloor/CentralRoom" unique_id=125339478]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.295935, 0, 5.4004173)
+
+[node name="CloneTrooperSergeant" parent="Geometry/GroundFloor/CentralRoom" unique_id=1037292594 instance=ExtResource("2_jf3pl")]
+random_patrol_radius = 1.0
+commanding_lieutenant_path = NodePath("../../../SecondFloor/CentralRoom/CloneTrooperLieutenant")
+squad_sergeant_path = NodePath(".")
+squad_corporal_path = NodePath("../../../SecondFloor/CentralRoom/CloneTrooperCorporal")
+
+[node name="SecondFloor" type="Node3D" parent="Geometry" unique_id=1735432653]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.6, 0)
+
+[node name="Walls" type="Node3D" parent="Geometry/SecondFloor" unique_id=60672116]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Geometry/SecondFloor/Walls" unique_id=1753249077]
+use_collision = true
+
+[node name="WallZ+" type="CSGBox3D" parent="Geometry/SecondFloor/Walls/CSGCombiner3D" unique_id=371050221]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 10)
+size = Vector3(20, 5.1, 0.5)
+
+[node name="WallZ-" type="CSGBox3D" parent="Geometry/SecondFloor/Walls/CSGCombiner3D" unique_id=1969703247]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, -10)
+size = Vector3(20, 5.1, 0.5)
+
+[node name="WallX+" type="CSGBox3D" parent="Geometry/SecondFloor/Walls/CSGCombiner3D" unique_id=993801052]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.8, 0)
+size = Vector3(0.5, 5.1, 20)
+
+[node name="WallX-" type="CSGBox3D" parent="Geometry/SecondFloor/Walls/CSGCombiner3D" unique_id=666719488]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2.8, 0)
+size = Vector3(0.5, 5.1, 20)
+
+[node name="CentralRoom" type="Node3D" parent="Geometry/SecondFloor" unique_id=1729777050]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8482013, 0, 1.224607)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Geometry/SecondFloor/CentralRoom" unique_id=1270134067]
+transform = Transform3D(0.3, 0, 0, 0, 1, 0, 0, 0, 0.3, 0, 0, 0)
+use_collision = true
+
+[node name="WallZ+" type="CSGBox3D" parent="Geometry/SecondFloor/CentralRoom/CSGCombiner3D" unique_id=1165120827]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, 10)
+size = Vector3(20, 5.1, 0.5)
+
+[node name="WallZ-" type="CSGBox3D" parent="Geometry/SecondFloor/CentralRoom/CSGCombiner3D" unique_id=1849296614]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, -10)
+size = Vector3(20, 5.1, 0.5)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Geometry/SecondFloor/CentralRoom/CSGCombiner3D/WallZ-" unique_id=819609302]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1500106, -1.3081663, 0)
+operation = 2
+size = Vector3(6.667, 2.5, 1)
+
+[node name="WallX+" type="CSGBox3D" parent="Geometry/SecondFloor/CentralRoom/CSGCombiner3D" unique_id=1406135875]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2.8, 0)
+size = Vector3(0.5, 5.1, 20)
+
+[node name="WallX-" type="CSGBox3D" parent="Geometry/SecondFloor/CentralRoom/CSGCombiner3D" unique_id=1899609228]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2.8, 0)
+size = Vector3(0.5, 5.1, 20)
+
+[node name="CloneTrooperLieutenant" parent="Geometry/SecondFloor/CentralRoom" unique_id=1208187276 instance=ExtResource("3_k4am5")]
+
+[node name="CloneTrooperCorporal" parent="Geometry/SecondFloor/CentralRoom" unique_id=530206257 instance=ExtResource("4_nas71")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.857697, 0, 5.769697)
+character_rank = 1
+commanding_lieutenant_path = NodePath("../CloneTrooperLieutenant")
+squad_corporal_path = NodePath(".")
+
+[node name="Floor" type="CSGCombiner3D" parent="Geometry/SecondFloor" unique_id=1539668187]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Geometry/SecondFloor/Floor" unique_id=940167873]
+size = Vector3(20, 0.5, 20)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Geometry/SecondFloor/Floor/CSGBox3D" unique_id=1115860165]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6.75)
+operation = 2
+size = Vector3(3.5, 0.5, 6)
+
+[node name="Ceiling" type="MeshInstance3D" parent="Geometry/SecondFloor" unique_id=803810619]
+transform = Transform3D(20, 0, 0, 0, 0.5, 0, 0, 0, 20, 0, 5.1999993, 0)
+mesh = SubResource("BoxMesh_6ho2e")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/SecondFloor/Ceiling" unique_id=141404508]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/SecondFloor/Ceiling/StaticBody3D" unique_id=469541580]
+shape = SubResource("ConcavePolygonShape3D_sfxpq")

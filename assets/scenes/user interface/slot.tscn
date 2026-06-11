@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://b3rgngtaadp5n" path="res://assets/scripts/inventory/slot.gd" id="2_mwdn5"]
 
 [node name="Slot" type="TextureRect" unique_id=2084455472]
-custom_minimum_size = Vector2(64, 64)
+custom_minimum_size = Vector2(128, 128)
 mouse_filter = 2
 texture = ExtResource("1_1g1eg")
 expand_mode = 1

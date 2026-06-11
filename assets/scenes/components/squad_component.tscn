@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dxun7e4asf1rn"]
+
+[ext_resource type="Script" uid="uid://gef8swd0cbev" path="res://assets/scripts/characters/NPCs/Components/squad_component.gd" id="1_fc7ci"]
+
+[node name="SquadComponent" type="Node" unique_id=1856462713]
+script = ExtResource("1_fc7ci")

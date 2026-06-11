@@ -27,7 +27,7 @@ var _step_smoothing: bool = false
 
 var offset_height : float
 
-const DEFAULT_HEIGHT : float = 0.5
+const DEFAULT_HEIGHT : float = 0.706
 
 
 func _ready() -> void:

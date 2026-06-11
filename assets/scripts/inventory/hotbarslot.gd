@@ -6,7 +6,7 @@ extends TextureRect
 func _ready() -> void:
 	InventoryGlobal.hotbar_updated.connect(_on_hotbar_updated)
 	InventoryGlobal.hotbar_selection_changed.connect(_on_hotbar_selection_changed)
-	custom_minimum_size = Vector2(64, 64)
+	custom_minimum_size = Vector2(128, 128)
 	_on_hotbar_selection_changed(InventoryGlobal.active_hotbar_index, null)
 
 func _gui_input(event: InputEvent) -> void:
